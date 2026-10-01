@@ -51,6 +51,12 @@ Implemented principles and remaining interface direction:
 
 ## Accepted vocabulary
 
+App distribution decision (2026-10-01): unpublished Aurora packages are exported
+as committed app-owned snapshots by `tools/vendor.py`. External checkout paths
+are for contributor development. App builds resolve both packages inside the
+app; explicit updates record provenance and refuse local vendor edits. Hosted
+publication remains unimplemented. See [installation](../user/installation.md).
+
 Integration feedback decisions (2026-10-01): fixed scopes expose immutable variants
 without controllers; per-entity generation returns foundation-only snapshots,
 while canonical app generation still requires every extension. Scheme choices

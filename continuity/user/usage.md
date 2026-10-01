@@ -54,6 +54,10 @@ The component preview illustrates color usage; it is not a native Flutter previe
 
 ## Add to project
 
+First [install the packages as an app-owned snapshot](installation.md).
+This command installs theme data only; it does not copy Aurora packages or
+change dependencies.
+
 ```powershell
 aurora generate --project C:\path\to\my_app
 ```

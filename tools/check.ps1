@@ -7,6 +7,8 @@ function Invoke-Checked {
     if ($LASTEXITCODE -ne 0) { throw "$Program failed with exit code $LASTEXITCODE" }
 }
 
+Invoke-Checked python @((Join-Path $repoRoot 'tools/test_vendor.py'))
+
 foreach ($package in @('packages/aurora', 'packages/aurora_flutter', 'examples/theater')) {
     Push-Location (Join-Path $repoRoot $package)
     try {

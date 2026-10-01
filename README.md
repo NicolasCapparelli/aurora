@@ -23,14 +23,25 @@ Flutter starting point. Replace `aurora/` with your checkout's actual location.
   required ticket colors, and an appearance selector. Palettes are illustrative,
   not official brand assets.
 
-These packages are local development packages (`publish_to: none`). Add the
-Flutter adapter as a path dependency while developing:
+These packages are not published (`publish_to: none`). For an app that builds
+independently of this checkout, export and commit an app-owned snapshot:
+
+```powershell
+python C:\path\to\aurora\tools\vendor.py --project C:\path\to\my_app
+```
+
+Then add the Flutter adapter as an app-relative path dependency:
 
 ```yaml
 dependencies:
   aurora_flutter:
-    path: /path/to/aurora/packages/aurora_flutter
+    path: vendor/aurora/aurora_flutter
 ```
+
+Both packages are copied together; the adapter's `../aurora` dependency stays
+inside the snapshot. Run `flutter pub get` and commit the vendor directory,
+pubspec, and app lockfile. See [installation and updates](continuity/user/installation.md).
+External checkout paths are only for deliberate Aurora contributor development.
 
 ## Define the contract once
 
@@ -309,8 +320,9 @@ flutter pub get
 flutter run -d chrome
 ```
 
-From the repository root, run `./tools/check.ps1` for dependency resolution,
-format checking, analysis, core tests, widget tests, and example analysis.
+From the repository root, run `./tools/check.ps1` for Python exporter tests,
+dependency resolution, format checking, analysis, core tests, widget tests,
+and example analysis. Python 3, Dart, and Flutter must be on PATH.
 The demo can also be compiled with `flutter build web` in `examples/theater`.
 
 Foundation accessors, explicit presets, and the Material bridge are generated

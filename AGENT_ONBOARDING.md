@@ -71,22 +71,33 @@ than promising that the Material bridge will theme every widget.
 
 ## 2. Install the current packages
 
-Aurora is currently a local development checkout (`publish_to: none`). Do not
-invent a hosted package version or run a hosted `pub add aurora_flutter`.
-From the **target Flutter app**, add a path dependency using the actual location:
+Aurora is not published (`publish_to: none`). Do not invent a hosted package
+version or run a hosted `pub add aurora_flutter`. Export an app-owned snapshot
+from the Aurora checkout using Python 3, then commit the entire result:
+
+```powershell
+python C:\path\to\aurora\tools\vendor.py --project C:\path\to\my_app
+```
+
+From the **target Flutter app**, use app-relative paths:
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
   aurora_flutter:
-    path: ../aurora/packages/aurora_flutter
+    path: vendor/aurora/aurora_flutter
 ```
 
-Preserve the rest of the pubspec. Keep both Aurora package directories together:
-the adapter depends on `../aurora`. Run `flutter pub get` in the target app.
+Preserve the rest of the pubspec. Keep both vendored package directories together:
+the adapter depends on its sibling `../aurora`, inside the app. Do not depend on
+the external checkout, absolute machine paths, or symlinked packages. For an
+existing integration, replace the external dependency path without changing its
+theme behavior. See [installation and updates](continuity/user/installation.md).
+Run `flutter pub get` in the target app and commit its lockfile along with the
+snapshot. Verify in a clean copy that has no sibling Aurora checkout.
 Import `package:aurora_flutter/aurora_flutter.dart`; it exports the core API too.
-For pure Dart work, depend on `packages/aurora` and import `aurora.dart` instead.
+For pure Dart work, depend on `vendor/aurora/aurora` and import `aurora.dart` instead.
 Check SDK constraints and dependency resolution; do not silently downgrade the
 app's toolchain or change Aurora's pinned generation dependency.
 The core pins `material_color_utilities` to 0.11.1 for reproducible output.

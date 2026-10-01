@@ -3,15 +3,16 @@
 ## Prerequisites
 
 - Dart SDK `>=3.6.0 <4.0.0` and Flutter `>=3.27.0` (pubspec constraints). Observed working: Dart 3.9.2, Flutter 3.35.3 on Windows 11.
-- PowerShell for `tools/check.ps1`; Python 3 only for `tools/generate_foundation.py`.
+- PowerShell and Python 3 for `tools/check.ps1` (exporter regression tests); Python 3 also runs `tools/vendor.py` and `tools/generate_foundation.py`.
 - Only external dependency of the core: `material_color_utilities` pinned to `0.11.1` (generator algorithm identity depends on it; see [architecture](architecture.md#generator-and-contrast)).
-- No services, secrets, or environment variables. Packages are local (`publish_to: none`); consumers use path dependencies.
+- No services, secrets, or environment variables. Packages are unpublished (`publish_to: none`); apps use [committed vendor snapshots](../user/installation.md) with app-relative path dependencies. Contributor packages/examples use repo-local paths.
 
 ## Commands
 
 | Purpose | Working dir | Command | Status |
 | --- | --- | --- | --- |
 | Full verification (pub get, format check, analyze, tests for all three projects) | repo root | `./tools/check.ps1` | Passed; latest run and scope in [status](../status.md#last-verified-state) |
+| Vendor exporter regression checks (Python 3) | repo root | `python tools/test_vendor.py` | See latest scope in status |
 | Core tests | `packages/aurora` | `dart pub get; dart test` | Passed; counts in status |
 | Adapter tests | `packages/aurora_flutter` | `flutter pub get; flutter test` | Passed via check.ps1; counts in status |
 | Format check | per package | `dart format --output=none --set-exit-if-changed ...` (path sets are in check.ps1) | Executed via check.ps1 |
