@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "wicked",
+  "name": "Wicked",
+  "primary": "#246b35",
+  "appearance": "both",
+  "preferredAppearance": "dark",
+  "contract": {
+    "id": "theater",
+    "version": 1,
+    "extensions": [
+      {"path": "theater.ticketBackground", "description": "Background of a theater ticket."},
+      {"path": "theater.onTicket", "description": "Text on a theater ticket."}
+    ]
+  },
+  "rules": {
+    "theater.ticketBackground": {"alias": "colors.primaryContainer"},
+    "theater.onTicket": {"alias": "colors.onPrimaryContainer"}
+  },
+  "contrastPairs": [
+    {"foreground": "theater.onTicket", "background": "theater.ticketBackground", "minimumRatio": 4.5}
+  ]
+}

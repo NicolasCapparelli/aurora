@@ -1,0 +1,11 @@
+name: aurora_theater_example
+description: A complete app-owned Aurora contract and reactive Flutter example.
+publish_to: none
+version: 0.1.0
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+dependencies:
+  aurora_flutter:
+    path: ../../packages/aurora_flutter
+  flutter:
+    sdk: flutter

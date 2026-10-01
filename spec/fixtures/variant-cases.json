@@ -1,0 +1,34 @@
+[
+  {
+    "name": "complete variant preserves transparency",
+    "mutations": [],
+    "expected": "valid",
+    "values": {"colors.primary": "#6750a4ff", "demo.ticket": "#12345678"}
+  },
+  {
+    "name": "whole-token alias resolves",
+    "mutations": [{"path": ["colors", "primary", "$value"], "operation": "set", "value": "{colors.secondary}"}],
+    "expected": "valid",
+    "values": {"colors.primary": "#625b71ff"}
+  },
+  {
+    "name": "app extension is required",
+    "mutations": [{"path": ["demo", "ticket"], "operation": "remove"}],
+    "expected": "validation"
+  },
+  {
+    "name": "foundation is required",
+    "mutations": [{"path": ["colors", "primary"], "operation": "remove"}],
+    "expected": "validation"
+  },
+  {
+    "name": "alias cycle fails",
+    "mutations": [{"path": ["colors", "primary", "$value"], "operation": "set", "value": "{colors.primary}"}],
+    "expected": "format"
+  },
+  {
+    "name": "out of range alpha fails",
+    "mutations": [{"path": ["demo", "ticket", "$value", "alpha"], "operation": "set", "value": 2}],
+    "expected": "format"
+  }
+]

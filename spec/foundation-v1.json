@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "namespace": "colors",
+  "tokens": [
+    {
+      "path": "colors.primary",
+      "type": "color",
+      "description": "Accent for prominent actions."
+    },
+    {
+      "path": "colors.onPrimary",
+      "type": "color",
+      "description": "Text and icons on primary."
+    },
+    {
+      "path": "colors.primaryContainer",
+      "type": "color",
+      "description": "Lower-emphasis container for prominent actions."
+    },
+    {
+      "path": "colors.onPrimaryContainer",
+      "type": "color",
+      "description": "Text and icons on primaryContainer."
+    },
+    {
+      "path": "colors.primaryFixed",
+      "type": "color",
+      "description": "Container accent that stays constant across appearances."
+    },
+    {
+      "path": "colors.primaryFixedDim",
+      "type": "color",
+      "description": "Stronger fixed primary accent."
+    },
+    {
+      "path": "colors.onPrimaryFixed",
+      "type": "color",
+      "description": "Text and icons on fixed primary accents."
+    },
+    {
+      "path": "colors.onPrimaryFixedVariant",
+      "type": "color",
+      "description": "Lower-emphasis content on fixed primary accents."
+    },
+    {
+      "path": "colors.secondary",
+      "type": "color",
+      "description": "Accent for less prominent actions."
+    },
+    {
+      "path": "colors.onSecondary",
+      "type": "color",
+      "description": "Text and icons on secondary."
+    },
+    {
+      "path": "colors.secondaryContainer",
+      "type": "color",
+      "description": "Lower-emphasis container for less prominent actions."
+    },
+    {
+      "path": "colors.onSecondaryContainer",
+      "type": "color",
+      "description": "Text and icons on secondaryContainer."
+    },
+    {
+      "path": "colors.secondaryFixed",
+      "type": "color",
+      "description": "Container accent that stays constant across appearances."
+    },
+    {
+      "path": "colors.secondaryFixedDim",
+      "type": "color",
+      "description": "Stronger fixed secondary accent."
+    },
+    {
+      "path": "colors.onSecondaryFixed",
+      "type": "color",
+      "description": "Text and icons on fixed secondary accents."
+    },
+    {
+      "path": "colors.onSecondaryFixedVariant",
+      "type": "color",
+      "description": "Lower-emphasis content on fixed secondary accents."
+    },
+    {
+      "path": "colors.tertiary",
+      "type": "color",
+      "description": "Accent for contrasting accents."
+    },
+    {
+      "path": "colors.onTertiary",
+      "type": "color",
+      "description": "Text and icons on tertiary."
+    },
+    {
+      "path": "colors.tertiaryContainer",
+      "type": "color",
+      "description": "Lower-emphasis container for contrasting accents."
+    },
+    {
+      "path": "colors.onTertiaryContainer",
+      "type": "color",
+      "description": "Text and icons on tertiaryContainer."
+    },
+    {
+      "path": "colors.tertiaryFixed",
+      "type": "color",
+      "description": "Container accent that stays constant across appearances."
+    },
+    {
+      "path": "colors.tertiaryFixedDim",
+      "type": "color",
+      "description": "Stronger fixed tertiary accent."
+    },
+    {
+      "path": "colors.onTertiaryFixed",
+      "type": "color",
+      "description": "Text and icons on fixed tertiary accents."
+    },
+    {
+      "path": "colors.onTertiaryFixedVariant",
+      "type": "color",
+      "description": "Lower-emphasis content on fixed tertiary accents."
+    },
+    {
+      "path": "colors.error",
+      "type": "color",
+      "description": "Error and destructive feedback."
+    },
+    {
+      "path": "colors.onError",
+      "type": "color",
+      "description": "Text and icons on error."
+    },
+    {
+      "path": "colors.errorContainer",
+      "type": "color",
+      "description": "Lower-emphasis error container."
+    },
+    {
+      "path": "colors.onErrorContainer",
+      "type": "color",
+      "description": "Text and icons on errorContainer."
+    },
+    {
+      "path": "colors.surface",
+      "type": "color",
+      "description": "Default page and component surface."
+    },
+    {
+      "path": "colors.onSurface",
+      "type": "color",
+      "description": "Primary text and icons on surfaces."
+    },
+    {
+      "path": "colors.surfaceDim",
+      "type": "color",
+      "description": "Dimmest surface tone."
+    },
+    {
+      "path": "colors.surfaceBright",
+      "type": "color",
+      "description": "Brightest surface tone."
+    },
+    {
+      "path": "colors.surfaceContainerLowest",
+      "type": "color",
+      "description": "Lowest surface container level."
+    },
+    {
+      "path": "colors.surfaceContainerLow",
+      "type": "color",
+      "description": "Low surface container level."
+    },
+    {
+      "path": "colors.surfaceContainer",
+      "type": "color",
+      "description": "Default distinct surface container."
+    },
+    {
+      "path": "colors.surfaceContainerHigh",
+      "type": "color",
+      "description": "High surface container level."
+    },
+    {
+      "path": "colors.surfaceContainerHighest",
+      "type": "color",
+      "description": "Highest surface container level."
+    },
+    {
+      "path": "colors.onSurfaceVariant",
+      "type": "color",
+      "description": "Lower-emphasis text and icons on surfaces."
+    },
+    {
+      "path": "colors.outline",
+      "type": "color",
+      "description": "Boundaries requiring emphasis."
+    },
+    {
+      "path": "colors.outlineVariant",
+      "type": "color",
+      "description": "Subtle decorative boundaries and dividers."
+    },
+    {
+      "path": "colors.shadow",
+      "type": "color",
+      "description": "Color of cast shadows."
+    },
+    {
+      "path": "colors.scrim",
+      "type": "color",
+      "description": "Color of obscuring modal overlays."
+    },
+    {
+      "path": "colors.inverseSurface",
+      "type": "color",
+      "description": "Surface contrasting with surrounding appearance."
+    },
+    {
+      "path": "colors.onInverseSurface",
+      "type": "color",
+      "description": "Text and icons on inverseSurface."
+    },
+    {
+      "path": "colors.inversePrimary",
+      "type": "color",
+      "description": "Primary accent on inverseSurface."
+    },
+    {
+      "path": "colors.surfaceTint",
+      "type": "color",
+      "description": "Accent used by Material surface tint treatments."
+    },
+    {
+      "path": "colors.success",
+      "type": "color",
+      "description": "Success feedback."
+    },
+    {
+      "path": "colors.onSuccess",
+      "type": "color",
+      "description": "Text and icons on success."
+    },
+    {
+      "path": "colors.successContainer",
+      "type": "color",
+      "description": "Lower-emphasis success container."
+    },
+    {
+      "path": "colors.onSuccessContainer",
+      "type": "color",
+      "description": "Text and icons on successContainer."
+    },
+    {
+      "path": "colors.warning",
+      "type": "color",
+      "description": "Warning feedback."
+    },
+    {
+      "path": "colors.onWarning",
+      "type": "color",
+      "description": "Text and icons on warning."
+    },
+    {
+      "path": "colors.warningContainer",
+      "type": "color",
+      "description": "Lower-emphasis warning container."
+    },
+    {
+      "path": "colors.onWarningContainer",
+      "type": "color",
+      "description": "Text and icons on warningContainer."
+    },
+    {
+      "path": "colors.info",
+      "type": "color",
+      "description": "Info feedback."
+    },
+    {
+      "path": "colors.onInfo",
+      "type": "color",
+      "description": "Text and icons on info."
+    },
+    {
+      "path": "colors.infoContainer",
+      "type": "color",
+      "description": "Lower-emphasis info container."
+    },
+    {
+      "path": "colors.onInfoContainer",
+      "type": "color",
+      "description": "Text and icons on infoContainer."
+    }
+  ]
+}

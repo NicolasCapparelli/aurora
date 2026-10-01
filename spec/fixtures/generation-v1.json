@@ -1,0 +1,2151 @@
+{
+  "algorithm": "aurora-tonal-v1-mcu-0.11.1",
+  "cases": [
+    {
+      "input": {
+        "name": "emerald",
+        "primary": "#246b35",
+        "appearances": [
+          "light",
+          "dark"
+        ],
+        "preferredAppearance": "light"
+      },
+      "values": {
+        "light": {
+          "colors.primary": "#36693eff",
+          "colors.onPrimary": "#ffffffff",
+          "colors.primaryContainer": "#b7f1baff",
+          "colors.onPrimaryContainer": "#002108ff",
+          "colors.primaryFixed": "#b7f1baff",
+          "colors.primaryFixedDim": "#9cd49fff",
+          "colors.onPrimaryFixed": "#002108ff",
+          "colors.onPrimaryFixedVariant": "#1d5128ff",
+          "colors.secondary": "#516351ff",
+          "colors.onSecondary": "#ffffffff",
+          "colors.secondaryContainer": "#d4e8d1ff",
+          "colors.onSecondaryContainer": "#0f1f11ff",
+          "colors.secondaryFixed": "#d4e8d1ff",
+          "colors.secondaryFixedDim": "#b8ccb6ff",
+          "colors.onSecondaryFixed": "#0f1f11ff",
+          "colors.onSecondaryFixedVariant": "#3a4b3aff",
+          "colors.tertiary": "#39656cff",
+          "colors.onTertiary": "#ffffffff",
+          "colors.tertiaryContainer": "#bdeaf3ff",
+          "colors.onTertiaryContainer": "#001f24ff",
+          "colors.tertiaryFixed": "#bdeaf3ff",
+          "colors.tertiaryFixedDim": "#a1ced7ff",
+          "colors.onTertiaryFixed": "#001f24ff",
+          "colors.onTertiaryFixedVariant": "#1f4d54ff",
+          "colors.error": "#ba1a1aff",
+          "colors.onError": "#ffffffff",
+          "colors.errorContainer": "#ffdad6ff",
+          "colors.onErrorContainer": "#410002ff",
+          "colors.surface": "#f7fbf2ff",
+          "colors.onSurface": "#181d18ff",
+          "colors.surfaceDim": "#d7dbd3ff",
+          "colors.surfaceBright": "#f7fbf2ff",
+          "colors.surfaceContainerLowest": "#ffffffff",
+          "colors.surfaceContainerLow": "#f1f5ecff",
+          "colors.surfaceContainer": "#ebefe7ff",
+          "colors.surfaceContainerHigh": "#e5e9e1ff",
+          "colors.surfaceContainerHighest": "#e0e4dbff",
+          "colors.onSurfaceVariant": "#424940ff",
+          "colors.outline": "#727970ff",
+          "colors.outlineVariant": "#c1c9beff",
+          "colors.shadow": "#000000ff",
+          "colors.scrim": "#000000ff",
+          "colors.inverseSurface": "#2d322cff",
+          "colors.onInverseSurface": "#eef2e9ff",
+          "colors.inversePrimary": "#9cd49fff",
+          "colors.surfaceTint": "#36693eff",
+          "colors.success": "#37693dff",
+          "colors.onSuccess": "#ffffffff",
+          "colors.successContainer": "#b8f1b9ff",
+          "colors.onSuccessContainer": "#002108ff",
+          "colors.warning": "#7e570fff",
+          "colors.onWarning": "#ffffffff",
+          "colors.warningContainer": "#ffddb0ff",
+          "colors.onWarningContainer": "#281800ff",
+          "colors.info": "#36618eff",
+          "colors.onInfo": "#ffffffff",
+          "colors.infoContainer": "#d1e4ffff",
+          "colors.onInfoContainer": "#001d36ff"
+        },
+        "dark": {
+          "colors.primary": "#9cd49fff",
+          "colors.onPrimary": "#003914ff",
+          "colors.primaryContainer": "#1d5128ff",
+          "colors.onPrimaryContainer": "#b7f1baff",
+          "colors.primaryFixed": "#b7f1baff",
+          "colors.primaryFixedDim": "#9cd49fff",
+          "colors.onPrimaryFixed": "#002108ff",
+          "colors.onPrimaryFixedVariant": "#1d5128ff",
+          "colors.secondary": "#b8ccb6ff",
+          "colors.onSecondary": "#243425ff",
+          "colors.secondaryContainer": "#3a4b3aff",
+          "colors.onSecondaryContainer": "#d4e8d1ff",
+          "colors.secondaryFixed": "#d4e8d1ff",
+          "colors.secondaryFixedDim": "#b8ccb6ff",
+          "colors.onSecondaryFixed": "#0f1f11ff",
+          "colors.onSecondaryFixedVariant": "#3a4b3aff",
+          "colors.tertiary": "#a1ced7ff",
+          "colors.onTertiary": "#00363dff",
+          "colors.tertiaryContainer": "#1f4d54ff",
+          "colors.onTertiaryContainer": "#bdeaf3ff",
+          "colors.tertiaryFixed": "#bdeaf3ff",
+          "colors.tertiaryFixedDim": "#a1ced7ff",
+          "colors.onTertiaryFixed": "#001f24ff",
+          "colors.onTertiaryFixedVariant": "#1f4d54ff",
+          "colors.error": "#ffb4abff",
+          "colors.onError": "#690005ff",
+          "colors.errorContainer": "#93000aff",
+          "colors.onErrorContainer": "#ffdad6ff",
+          "colors.surface": "#101510ff",
+          "colors.onSurface": "#e0e4dbff",
+          "colors.surfaceDim": "#101510ff",
+          "colors.surfaceBright": "#363a35ff",
+          "colors.surfaceContainerLowest": "#0b0f0bff",
+          "colors.surfaceContainerLow": "#181d18ff",
+          "colors.surfaceContainer": "#1c211cff",
+          "colors.surfaceContainerHigh": "#272b26ff",
+          "colors.surfaceContainerHighest": "#313630ff",
+          "colors.onSurfaceVariant": "#c1c9beff",
+          "colors.outline": "#8b9389ff",
+          "colors.outlineVariant": "#424940ff",
+          "colors.shadow": "#000000ff",
+          "colors.scrim": "#000000ff",
+          "colors.inverseSurface": "#e0e4dbff",
+          "colors.onInverseSurface": "#2d322cff",
+          "colors.inversePrimary": "#36693eff",
+          "colors.surfaceTint": "#9cd49fff",
+          "colors.success": "#9dd49eff",
+          "colors.onSuccess": "#013913ff",
+          "colors.successContainer": "#1e5128ff",
+          "colors.onSuccessContainer": "#b8f1b9ff",
+          "colors.warning": "#f2be6eff",
+          "colors.onWarning": "#442c00ff",
+          "colors.warningContainer": "#614000ff",
+          "colors.onWarningContainer": "#ffddb0ff",
+          "colors.info": "#a0cafdff",
+          "colors.onInfo": "#003258ff",
+          "colors.infoContainer": "#1a4975ff",
+          "colors.onInfoContainer": "#d1e4ffff"
+        }
+      },
+      "contrast": [
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimary",
+          "background": "colors.primary",
+          "minimumRatio": 4.5,
+          "ratio": 6.467420483437834,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryContainer",
+          "background": "colors.primaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.352952809365009,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondary",
+          "background": "colors.secondary",
+          "minimumRatio": 4.5,
+          "ratio": 6.45474930021066,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryContainer",
+          "background": "colors.secondaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.28221133163478,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiary",
+          "background": "colors.tertiary",
+          "minimumRatio": 4.5,
+          "ratio": 6.457593336333913,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryContainer",
+          "background": "colors.tertiaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.284902091038788,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onError",
+          "background": "colors.error",
+          "minimumRatio": 4.5,
+          "ratio": 6.460555052499582,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onErrorContainer",
+          "background": "colors.errorContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.25965913654373,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSuccess",
+          "background": "colors.success",
+          "minimumRatio": 4.5,
+          "ratio": 6.460625050090705,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSuccessContainer",
+          "background": "colors.successContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.366167597678986,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onWarning",
+          "background": "colors.warning",
+          "minimumRatio": 4.5,
+          "ratio": 6.447057585895022,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onWarningContainer",
+          "background": "colors.warningContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.286761048421475,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onInfo",
+          "background": "colors.info",
+          "minimumRatio": 4.5,
+          "ratio": 6.446997155758876,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onInfoContainer",
+          "background": "colors.infoContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.223949448019274,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.352952809365009,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.214893991379376,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.099200476506816,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.45682006638873,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.28221133163478,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.236130565710157,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.087137835025077,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.495458895064311,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.284902091038788,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.219005857288262,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.090464492923859,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.483150856362896,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 16.318860105582306,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 8.870526670277071,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 12.18681714321454,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 6.624450837573802,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 16.318860105582306,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 8.870526670277071,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 17.104131604139166,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 9.297380735223324,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 15.485220106880309,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 8.417380691081734,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 14.68751218551592,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.983766495863924,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 13.90681280595619,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 7.55939772114268,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 13.267686561703814,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 7.211984583298858,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onInverseSurface",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 11.540365074541036,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.inversePrimary",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 7.687138430938197,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.outline",
+          "background": "colors.surface",
+          "minimumRatio": 3.0,
+          "ratio": 4.277145656753246,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimary",
+          "background": "colors.primary",
+          "minimumRatio": 4.5,
+          "ratio": 7.7297143700268105,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryContainer",
+          "background": "colors.primaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.214893991379376,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondary",
+          "background": "colors.secondary",
+          "minimumRatio": 4.5,
+          "ratio": 7.753471954762814,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryContainer",
+          "background": "colors.secondaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.236130565710157,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiary",
+          "background": "colors.tertiary",
+          "minimumRatio": 4.5,
+          "ratio": 7.727147762015473,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryContainer",
+          "background": "colors.tertiaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.219005857288262,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onError",
+          "background": "colors.error",
+          "minimumRatio": 4.5,
+          "ratio": 7.716637440809738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onErrorContainer",
+          "background": "colors.errorContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.239033063855644,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSuccess",
+          "background": "colors.success",
+          "minimumRatio": 4.5,
+          "ratio": 7.735064339026557,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSuccessContainer",
+          "background": "colors.successContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.212581613912895,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onWarning",
+          "background": "colors.warning",
+          "minimumRatio": 4.5,
+          "ratio": 7.6995737528815305,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onWarningContainer",
+          "background": "colors.warningContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.236456043817545,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInfo",
+          "background": "colors.info",
+          "minimumRatio": 4.5,
+          "ratio": 7.7395637460301465,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInfoContainer",
+          "background": "colors.infoContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.2110860382860436,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.352952809365009,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.214893991379376,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.099200476506816,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.45682006638873,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.28221133163478,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.236130565710157,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.087137835025077,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.495458895064311,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.284902091038788,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.219005857288262,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.090464492923859,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.483150856362896,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 14.329697287914184,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 10.877820922991738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 14.329697287914184,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.877820922991738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 8.982548736962576,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 6.8187453391031925,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 14.980543511431984,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 11.371885000242221,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 13.267686561703814,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 10.071637633428727,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 12.68979728059156,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 9.632955923204648,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 11.158822297804528,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 8.470777032350927,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 9.576887587733243,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 7.269914087218533,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInverseSurface",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 10.154489811606865,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.inversePrimary",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 5.016782484077172,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.outline",
+          "background": "colors.surface",
+          "minimumRatio": 3.0,
+          "ratio": 5.834470170155482,
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "three-seeds",
+        "primary": "#246b35",
+        "secondary": "#b3261e",
+        "tertiary": "#0061a4",
+        "appearances": [
+          "light",
+          "dark"
+        ],
+        "preferredAppearance": "light"
+      },
+      "values": {
+        "light": {
+          "colors.primary": "#36693eff",
+          "colors.onPrimary": "#ffffffff",
+          "colors.primaryContainer": "#b7f1baff",
+          "colors.onPrimaryContainer": "#002108ff",
+          "colors.primaryFixed": "#b7f1baff",
+          "colors.primaryFixedDim": "#9cd49fff",
+          "colors.onPrimaryFixed": "#002108ff",
+          "colors.onPrimaryFixedVariant": "#1d5128ff",
+          "colors.secondary": "#b4271fff",
+          "colors.onSecondary": "#ffffffff",
+          "colors.secondaryContainer": "#ffdad5ff",
+          "colors.onSecondaryContainer": "#410001ff",
+          "colors.secondaryFixed": "#ffdad5ff",
+          "colors.secondaryFixedDim": "#ffb4aaff",
+          "colors.onSecondaryFixed": "#410001ff",
+          "colors.onSecondaryFixedVariant": "#910809ff",
+          "colors.tertiary": "#0061a4ff",
+          "colors.onTertiary": "#ffffffff",
+          "colors.tertiaryContainer": "#d1e4ffff",
+          "colors.onTertiaryContainer": "#001d36ff",
+          "colors.tertiaryFixed": "#d1e4ffff",
+          "colors.tertiaryFixedDim": "#9fcaffff",
+          "colors.onTertiaryFixed": "#001d36ff",
+          "colors.onTertiaryFixedVariant": "#00497dff",
+          "colors.error": "#ba1a1aff",
+          "colors.onError": "#ffffffff",
+          "colors.errorContainer": "#ffdad6ff",
+          "colors.onErrorContainer": "#410002ff",
+          "colors.surface": "#f7fbf2ff",
+          "colors.onSurface": "#181d18ff",
+          "colors.surfaceDim": "#d7dbd3ff",
+          "colors.surfaceBright": "#f7fbf2ff",
+          "colors.surfaceContainerLowest": "#ffffffff",
+          "colors.surfaceContainerLow": "#f1f5ecff",
+          "colors.surfaceContainer": "#ebefe7ff",
+          "colors.surfaceContainerHigh": "#e5e9e1ff",
+          "colors.surfaceContainerHighest": "#e0e4dbff",
+          "colors.onSurfaceVariant": "#424940ff",
+          "colors.outline": "#727970ff",
+          "colors.outlineVariant": "#c1c9beff",
+          "colors.shadow": "#000000ff",
+          "colors.scrim": "#000000ff",
+          "colors.inverseSurface": "#2d322cff",
+          "colors.onInverseSurface": "#eef2e9ff",
+          "colors.inversePrimary": "#9cd49fff",
+          "colors.surfaceTint": "#36693eff",
+          "colors.success": "#37693dff",
+          "colors.onSuccess": "#ffffffff",
+          "colors.successContainer": "#b8f1b9ff",
+          "colors.onSuccessContainer": "#002108ff",
+          "colors.warning": "#7e570fff",
+          "colors.onWarning": "#ffffffff",
+          "colors.warningContainer": "#ffddb0ff",
+          "colors.onWarningContainer": "#281800ff",
+          "colors.info": "#36618eff",
+          "colors.onInfo": "#ffffffff",
+          "colors.infoContainer": "#d1e4ffff",
+          "colors.onInfoContainer": "#001d36ff"
+        },
+        "dark": {
+          "colors.primary": "#9cd49fff",
+          "colors.onPrimary": "#003914ff",
+          "colors.primaryContainer": "#1d5128ff",
+          "colors.onPrimaryContainer": "#b7f1baff",
+          "colors.primaryFixed": "#b7f1baff",
+          "colors.primaryFixedDim": "#9cd49fff",
+          "colors.onPrimaryFixed": "#002108ff",
+          "colors.onPrimaryFixedVariant": "#1d5128ff",
+          "colors.secondary": "#ffb4aaff",
+          "colors.onSecondary": "#690003ff",
+          "colors.secondaryContainer": "#910809ff",
+          "colors.onSecondaryContainer": "#ffdad5ff",
+          "colors.secondaryFixed": "#ffdad5ff",
+          "colors.secondaryFixedDim": "#ffb4aaff",
+          "colors.onSecondaryFixed": "#410001ff",
+          "colors.onSecondaryFixedVariant": "#910809ff",
+          "colors.tertiary": "#9fcaffff",
+          "colors.onTertiary": "#003258ff",
+          "colors.tertiaryContainer": "#00497dff",
+          "colors.onTertiaryContainer": "#d1e4ffff",
+          "colors.tertiaryFixed": "#d1e4ffff",
+          "colors.tertiaryFixedDim": "#9fcaffff",
+          "colors.onTertiaryFixed": "#001d36ff",
+          "colors.onTertiaryFixedVariant": "#00497dff",
+          "colors.error": "#ffb4abff",
+          "colors.onError": "#690005ff",
+          "colors.errorContainer": "#93000aff",
+          "colors.onErrorContainer": "#ffdad6ff",
+          "colors.surface": "#101510ff",
+          "colors.onSurface": "#e0e4dbff",
+          "colors.surfaceDim": "#101510ff",
+          "colors.surfaceBright": "#363a35ff",
+          "colors.surfaceContainerLowest": "#0b0f0bff",
+          "colors.surfaceContainerLow": "#181d18ff",
+          "colors.surfaceContainer": "#1c211cff",
+          "colors.surfaceContainerHigh": "#272b26ff",
+          "colors.surfaceContainerHighest": "#313630ff",
+          "colors.onSurfaceVariant": "#c1c9beff",
+          "colors.outline": "#8b9389ff",
+          "colors.outlineVariant": "#424940ff",
+          "colors.shadow": "#000000ff",
+          "colors.scrim": "#000000ff",
+          "colors.inverseSurface": "#e0e4dbff",
+          "colors.onInverseSurface": "#2d322cff",
+          "colors.inversePrimary": "#36693eff",
+          "colors.surfaceTint": "#9cd49fff",
+          "colors.success": "#9dd49eff",
+          "colors.onSuccess": "#013913ff",
+          "colors.successContainer": "#1e5128ff",
+          "colors.onSuccessContainer": "#b8f1b9ff",
+          "colors.warning": "#f2be6eff",
+          "colors.onWarning": "#442c00ff",
+          "colors.warningContainer": "#614000ff",
+          "colors.onWarningContainer": "#ffddb0ff",
+          "colors.info": "#a0cafdff",
+          "colors.onInfo": "#003258ff",
+          "colors.infoContainer": "#1a4975ff",
+          "colors.onInfoContainer": "#d1e4ffff"
+        }
+      },
+      "contrast": [
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimary",
+          "background": "colors.primary",
+          "minimumRatio": 4.5,
+          "ratio": 6.467420483437834,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryContainer",
+          "background": "colors.primaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.352952809365009,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondary",
+          "background": "colors.secondary",
+          "minimumRatio": 4.5,
+          "ratio": 6.460240282324918,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryContainer",
+          "background": "colors.secondaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.256086627306722,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiary",
+          "background": "colors.tertiary",
+          "minimumRatio": 4.5,
+          "ratio": 6.469610774956685,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryContainer",
+          "background": "colors.tertiaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.223949448019274,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onError",
+          "background": "colors.error",
+          "minimumRatio": 4.5,
+          "ratio": 6.460555052499582,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onErrorContainer",
+          "background": "colors.errorContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.25965913654373,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSuccess",
+          "background": "colors.success",
+          "minimumRatio": 4.5,
+          "ratio": 6.460625050090705,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSuccessContainer",
+          "background": "colors.successContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.366167597678986,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onWarning",
+          "background": "colors.warning",
+          "minimumRatio": 4.5,
+          "ratio": 6.447057585895022,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onWarningContainer",
+          "background": "colors.warningContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.286761048421475,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onInfo",
+          "background": "colors.info",
+          "minimumRatio": 4.5,
+          "ratio": 6.446997155758876,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onInfoContainer",
+          "background": "colors.infoContainer",
+          "minimumRatio": 4.5,
+          "ratio": 13.223949448019274,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.352952809365009,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.214893991379376,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.099200476506816,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.45682006638873,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.256086627306722,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.242125386743878,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.088917231246032,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.5118230334022424,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.223949448019274,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.226025304467739,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.062045323658948,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.498251064045875,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 16.318860105582306,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 8.870526670277071,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 12.18681714321454,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 6.624450837573802,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 16.318860105582306,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 8.870526670277071,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 17.104131604139166,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 9.297380735223324,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 15.485220106880309,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 8.417380691081734,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 14.68751218551592,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.983766495863924,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 13.90681280595619,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 7.55939772114268,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 13.267686561703814,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 7.211984583298858,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.onInverseSurface",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 11.540365074541036,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.inversePrimary",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 7.687138430938197,
+          "status": "pass"
+        },
+        {
+          "appearance": "light",
+          "foreground": "colors.outline",
+          "background": "colors.surface",
+          "minimumRatio": 3.0,
+          "ratio": 4.277145656753246,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimary",
+          "background": "colors.primary",
+          "minimumRatio": 4.5,
+          "ratio": 7.7297143700268105,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryContainer",
+          "background": "colors.primaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.214893991379376,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondary",
+          "background": "colors.secondary",
+          "minimumRatio": 4.5,
+          "ratio": 7.716116421070317,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryContainer",
+          "background": "colors.secondaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.242125386743878,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiary",
+          "background": "colors.tertiary",
+          "minimumRatio": 4.5,
+          "ratio": 7.742756443998025,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryContainer",
+          "background": "colors.tertiaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.226025304467739,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onError",
+          "background": "colors.error",
+          "minimumRatio": 4.5,
+          "ratio": 7.716637440809738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onErrorContainer",
+          "background": "colors.errorContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.239033063855644,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSuccess",
+          "background": "colors.success",
+          "minimumRatio": 4.5,
+          "ratio": 7.735064339026557,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSuccessContainer",
+          "background": "colors.successContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.212581613912895,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onWarning",
+          "background": "colors.warning",
+          "minimumRatio": 4.5,
+          "ratio": 7.6995737528815305,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onWarningContainer",
+          "background": "colors.warningContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.236456043817545,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInfo",
+          "background": "colors.info",
+          "minimumRatio": 4.5,
+          "ratio": 7.7395637460301465,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInfoContainer",
+          "background": "colors.infoContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.2110860382860436,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.352952809365009,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.214893991379376,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.099200476506816,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.45682006638873,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.256086627306722,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.242125386743878,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.088917231246032,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.5118230334022424,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.223949448019274,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.226025304467739,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.062045323658948,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.498251064045875,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 14.329697287914184,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 10.877820922991738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 14.329697287914184,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.877820922991738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 8.982548736962576,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 6.8187453391031925,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 14.980543511431984,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 11.371885000242221,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 13.267686561703814,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 10.071637633428727,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 12.68979728059156,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 9.632955923204648,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 11.158822297804528,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 8.470777032350927,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 9.576887587733243,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 7.269914087218533,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInverseSurface",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 10.154489811606865,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.inversePrimary",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 5.016782484077172,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.outline",
+          "background": "colors.surface",
+          "minimumRatio": 3.0,
+          "ratio": 5.834470170155482,
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "dark-only",
+        "primary": "#ffffff",
+        "appearances": [
+          "dark"
+        ],
+        "preferredAppearance": "dark"
+      },
+      "values": {
+        "dark": {
+          "colors.primary": "#82d3e0ff",
+          "colors.onPrimary": "#00363dff",
+          "colors.primaryContainer": "#004f58ff",
+          "colors.onPrimaryContainer": "#9eeffdff",
+          "colors.primaryFixed": "#9eeffdff",
+          "colors.primaryFixedDim": "#82d3e0ff",
+          "colors.onPrimaryFixed": "#001f24ff",
+          "colors.onPrimaryFixedVariant": "#004f58ff",
+          "colors.secondary": "#b1cbd0ff",
+          "colors.onSecondary": "#1c3438ff",
+          "colors.secondaryContainer": "#334b4fff",
+          "colors.onSecondaryContainer": "#cde7ecff",
+          "colors.secondaryFixed": "#cde7ecff",
+          "colors.secondaryFixedDim": "#b1cbd0ff",
+          "colors.onSecondaryFixed": "#051f23ff",
+          "colors.onSecondaryFixedVariant": "#334b4fff",
+          "colors.tertiary": "#bac6eaff",
+          "colors.onTertiary": "#24304dff",
+          "colors.tertiaryContainer": "#3b4664ff",
+          "colors.onTertiaryContainer": "#dae2ffff",
+          "colors.tertiaryFixed": "#dae2ffff",
+          "colors.tertiaryFixedDim": "#bac6eaff",
+          "colors.onTertiaryFixed": "#0e1b37ff",
+          "colors.onTertiaryFixedVariant": "#3b4664ff",
+          "colors.error": "#ffb4abff",
+          "colors.onError": "#690005ff",
+          "colors.errorContainer": "#93000aff",
+          "colors.onErrorContainer": "#ffdad6ff",
+          "colors.surface": "#0e1415ff",
+          "colors.onSurface": "#dee3e5ff",
+          "colors.surfaceDim": "#0e1415ff",
+          "colors.surfaceBright": "#343a3bff",
+          "colors.surfaceContainerLowest": "#090f10ff",
+          "colors.surfaceContainerLow": "#171d1eff",
+          "colors.surfaceContainer": "#1b2122ff",
+          "colors.surfaceContainerHigh": "#252b2cff",
+          "colors.surfaceContainerHighest": "#303637ff",
+          "colors.onSurfaceVariant": "#bfc8caff",
+          "colors.outline": "#899294ff",
+          "colors.outlineVariant": "#3f484aff",
+          "colors.shadow": "#000000ff",
+          "colors.scrim": "#000000ff",
+          "colors.inverseSurface": "#dee3e5ff",
+          "colors.onInverseSurface": "#2b3133ff",
+          "colors.inversePrimary": "#006874ff",
+          "colors.surfaceTint": "#82d3e0ff",
+          "colors.success": "#9dd49eff",
+          "colors.onSuccess": "#013913ff",
+          "colors.successContainer": "#1e5128ff",
+          "colors.onSuccessContainer": "#b8f1b9ff",
+          "colors.warning": "#f2be6eff",
+          "colors.onWarning": "#442c00ff",
+          "colors.warningContainer": "#614000ff",
+          "colors.onWarningContainer": "#ffddb0ff",
+          "colors.info": "#a0cafdff",
+          "colors.onInfo": "#003258ff",
+          "colors.infoContainer": "#1a4975ff",
+          "colors.onInfoContainer": "#d1e4ffff"
+        }
+      },
+      "contrast": [
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimary",
+          "background": "colors.primary",
+          "minimumRatio": 4.5,
+          "ratio": 7.738457608465559,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryContainer",
+          "background": "colors.primaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.178650920832722,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondary",
+          "background": "colors.secondary",
+          "minimumRatio": 4.5,
+          "ratio": 7.712831108520237,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryContainer",
+          "background": "colors.secondaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.184396729706469,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiary",
+          "background": "colors.tertiary",
+          "minimumRatio": 4.5,
+          "ratio": 7.697116935109099,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryContainer",
+          "background": "colors.tertiaryContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.258816443439659,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onError",
+          "background": "colors.error",
+          "minimumRatio": 4.5,
+          "ratio": 7.716637440809738,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onErrorContainer",
+          "background": "colors.errorContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.239033063855644,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSuccess",
+          "background": "colors.success",
+          "minimumRatio": 4.5,
+          "ratio": 7.735064339026557,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSuccessContainer",
+          "background": "colors.successContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.212581613912895,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onWarning",
+          "background": "colors.warning",
+          "minimumRatio": 4.5,
+          "ratio": 7.6995737528815305,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onWarningContainer",
+          "background": "colors.warningContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.236456043817545,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInfo",
+          "background": "colors.info",
+          "minimumRatio": 4.5,
+          "ratio": 7.7395637460301465,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInfoContainer",
+          "background": "colors.infoContainer",
+          "minimumRatio": 4.5,
+          "ratio": 7.2110860382860436,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.27809631958089,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.178650920832722,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixed",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.10523340993435,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onPrimaryFixedVariant",
+          "background": "colors.primaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.463278875035644,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.236478185845549,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.184396729706469,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixed",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.04519026614361,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSecondaryFixedVariant",
+          "background": "colors.secondaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.452253317240764,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 13.24838240564841,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixed",
+          "minimumRatio": 4.5,
+          "ratio": 7.258816443439659,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixed",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.038541429167745,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onTertiaryFixedVariant",
+          "background": "colors.tertiaryFixedDim",
+          "minimumRatio": 4.5,
+          "ratio": 5.500137855556316,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 14.363941153150083,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surface",
+          "minimumRatio": 4.5,
+          "ratio": 10.915578379862014,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 14.363941153150083,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceDim",
+          "minimumRatio": 4.5,
+          "ratio": 10.915578379862014,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 8.94239587184182,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceBright",
+          "minimumRatio": 4.5,
+          "ratio": 6.795587784863432,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 14.920524596338069,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLowest",
+          "minimumRatio": 4.5,
+          "ratio": 11.338542393308947,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 13.181128299869464,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerLow",
+          "minimumRatio": 4.5,
+          "ratio": 10.01672434871323,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 12.60443802709229,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainer",
+          "minimumRatio": 4.5,
+          "ratio": 9.57848056824336,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 11.108561235987775,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHigh",
+          "minimumRatio": 4.5,
+          "ratio": 8.441720107738625,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurface",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 9.496571088441085,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onSurfaceVariant",
+          "background": "colors.surfaceContainerHighest",
+          "minimumRatio": 4.5,
+          "ratio": 7.216721716593562,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.onInverseSurface",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 10.2053753414035,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.inversePrimary",
+          "background": "colors.inverseSurface",
+          "minimumRatio": 4.5,
+          "ratio": 5.019613884705457,
+          "status": "pass"
+        },
+        {
+          "appearance": "dark",
+          "foreground": "colors.outline",
+          "background": "colors.surface",
+          "minimumRatio": 3.0,
+          "ratio": 5.845489203839352,
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}
