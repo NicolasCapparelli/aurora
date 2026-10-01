@@ -61,5 +61,5 @@ Map<AuroraColorToken, AuroraColor> materialRoleValues(DynamicScheme scheme) => {
       AuroraFoundation.inverseSurface: AuroraColor(scheme.inverseSurface),
       AuroraFoundation.onInverseSurface: AuroraColor(scheme.inverseOnSurface),
       AuroraFoundation.inversePrimary: AuroraColor(scheme.inversePrimary),
-      AuroraFoundation.surfaceTint: AuroraColor(scheme.surfaceTint),
+      AuroraFoundation.surfaceTint: AuroraColor(scheme.primary),
     };

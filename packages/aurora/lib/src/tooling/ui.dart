@@ -17,6 +17,7 @@ const generatorHtml = r'''<!doctype html>
 <label>Secondary seed <small>optional</small><input name="secondary" placeholder="Generated from primary" pattern="#[a-fA-F0-9]{6}"></label>
 <label>Tertiary seed <small>optional</small><input name="tertiary" placeholder="Generated from primary" pattern="#[a-fA-F0-9]{6}"></label>
 <label>Generate<select name="appearance"><option value="both">Light and dark</option><option value="light">Light only</option><option value="dark">Dark only</option></select></label>
+<label>Scheme<select name="scheme"><option>tonalSpot</option><option>fidelity</option><option>vibrant</option><option>expressive</option><option>content</option><option>monochrome</option><option>neutral</option><option>rainbow</option><option>fruitSalad</option></select></label>
 <details><summary>Status color seeds</summary><p>Leave blank to use Aurora's defaults.</p>
 <label>Success<input name="success" placeholder="#146c2e" pattern="#[a-fA-F0-9]{6}"></label>
 <label>Warning<input name="warning" placeholder="#805600" pattern="#[a-fA-F0-9]{6}"></label>

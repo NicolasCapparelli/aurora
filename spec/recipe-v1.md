@@ -12,6 +12,12 @@ and opaque CSS hex `primary`. Optional seed strings: `secondary`, `tertiary`,
 `light` or `dark`, defaults to the first requested appearance, and must be present
 in the generated variants. Concrete appearance keys never accept `system`.
 
+`scheme` optionally selects `tonalSpot` (default), `fidelity`, `vibrant`,
+`expressive`, `content`, `monochrome`, `neutral`, `rainbow`, or `fruitSalad`.
+Names are exact and case-sensitive; unknown names and non-string values are
+rejected. This additive v1 field selects the versioned strategy described in
+`generation-v1.md`; omission preserves all existing outputs.
+
 `contract` defaults to `{ "id": "aurora-foundation", "version": 1 }`. An explicit
 contract requires an `id`, with optional positive integer `version` (default 1)
 and `extensions` (default empty array). Every extension is an object with required

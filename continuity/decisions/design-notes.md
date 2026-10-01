@@ -29,11 +29,11 @@ decisions are separated from proposals; this is not yet an implementation spec.
 ## Theme generator: shared logic implemented
 
 The pure Dart core now accepts seed colors and returns complete validated themes,
-known-pair contrast diagnostics, and JSON-compatible manifests. See `generator.md`.
+known-pair contrast diagnostics, and JSON-compatible manifests. See [generator guide](../developer/generator.md).
 The packaged CLI now opens a plain HTML/CSS/JavaScript browser tool using this
 same code through a local Dart server. It includes color pickers and project
 installation. The agent CLI accepts portable JSON recipes without a browser.
-See `cli.md` and `spec/recipe-v1.md`.
+See [CLI usage](../user/usage.md) and `spec/recipe-v1.md`.
 
 Implemented principles and remaining interface direction:
 
@@ -50,6 +50,17 @@ Implemented principles and remaining interface direction:
   full app contracts are supported through portable agent recipes.
 
 ## Accepted vocabulary
+
+Integration feedback decisions (2026-10-01): fixed scopes expose immutable variants
+without controllers; per-entity generation returns foundation-only snapshots,
+while canonical app generation still requires every extension. Scheme choices
+are additive versioned strategies pinned to MCU 0.11.1, with unchanged default
+fixtures and independent status palettes. Flutter notifications are synchronous
+after accepted mutations; the portable runtime stream stays async. Brightness
+conversions belong only in the adapter. Settings helpers restore selection without
+persistence IO. Typed token declarations remain the extension-access mechanism;
+contract codegen is deferred. Status ThemeExtensions derive existing tokens and
+add no required foundation roles.
 
 | Term | Meaning |
 | --- | --- |
@@ -127,7 +138,7 @@ Sources:
 - Color tokens are typed; completeness is enforced at construction/import time.
   Generated required app-contract constructors remain a potential later addition.
 - DTCG v1 is one complete variant per document, supporting nested groups,
-  structured sRGB colors, and whole-token aliases. See `dtcg-profile.md`.
+  structured sRGB colors, and whole-token aliases. See [DTCG profile](../data/dtcg-profile.md).
 - Starter palettes are explicit values; they do not automatically supply app
   extensions or invent unavailable variants. Generation is an explicit operation.
 - `spec/` contains a generated language-neutral foundation and shared JSON

@@ -54,6 +54,25 @@ final class AuroraContrastCheck {
 /// opaque background; translucent backgrounds require a backing color and are
 /// reported as unknown. No colors are changed by diagnostics.
 abstract final class AuroraContrast {
+  /// Highest measured contrast, retaining the first candidate on ties.
+  /// Rejects unknown backing colors and empty candidate sets.
+  static AuroraColor bestOn(
+      AuroraColor background, Iterable<AuroraColor> candidates) {
+    if (background.alpha != 255) {
+      throw ArgumentError('Readable foreground needs an opaque background');
+    }
+    AuroraColor? best;
+    var highest = -1.0;
+    for (final candidate in candidates) {
+      final measured = ratio(candidate, background)!;
+      if (measured > highest) {
+        best = candidate;
+        highest = measured;
+      }
+    }
+    return best ?? (throw ArgumentError('Provide at least one candidate'));
+  }
+
   static double? ratio(AuroraColor foreground, AuroraColor background) {
     if (background.alpha != 255) return null;
     final alpha = foreground.alpha / 255;

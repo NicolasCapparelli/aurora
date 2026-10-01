@@ -7,6 +7,19 @@ import 'foundation.dart';
 import 'material_roles.dart';
 import 'theme.dart';
 
+/// Material palette strategies at contrast level zero, pinned to MCU 0.11.1.
+enum AuroraGenerationScheme {
+  tonalSpot,
+  fidelity,
+  vibrant,
+  expressive,
+  content,
+  monochrome,
+  neutral,
+  rainbow,
+  fruitSalad
+}
+
 enum AuroraPalette {
   primary,
   secondary,
@@ -55,6 +68,7 @@ final class AuroraGenerationRequest {
     required String id,
     required String name,
     required AuroraColor primary,
+    AuroraGenerationScheme scheme = AuroraGenerationScheme.tonalSpot,
     AuroraColor? secondary,
     AuroraColor? tertiary,
     AuroraColor? success,
@@ -132,7 +146,8 @@ final class AuroraGenerationRequest {
         Map.unmodifiable(variantValues.map((key, value) => MapEntry(
             key, Map<AuroraColorToken, AuroraColor>.unmodifiable(value)))),
         Map.unmodifiable(rules),
-        List.unmodifiable(pairs));
+        List.unmodifiable(pairs),
+        scheme);
   }
 
   AuroraGenerationRequest._(
@@ -145,7 +160,9 @@ final class AuroraGenerationRequest {
       this.values,
       this.variantValues,
       this.rules,
-      this.contrastPairs);
+      this.contrastPairs,
+      this.scheme);
+  final AuroraGenerationScheme scheme;
   final AuroraContract contract;
   final String id;
   final String name;
@@ -159,13 +176,25 @@ final class AuroraGenerationRequest {
 }
 
 final class AuroraGenerationResult {
-  AuroraGenerationResult._(this.theme, Iterable<AuroraContrastCheck> checks)
+  AuroraGenerationResult._(
+      this.theme, Iterable<AuroraContrastCheck> checks, this.scheme)
       : checks = List.unmodifiable(checks);
   final AuroraTheme theme;
   final List<AuroraContrastCheck> checks;
-  String get algorithm => AuroraGenerator.algorithm;
+  final AuroraGenerationScheme scheme;
+  String get algorithm => AuroraGenerator.algorithmFor(scheme);
   List<AuroraContrastCheck> get issues => List.unmodifiable(
       checks.where((check) => check.status != AuroraContrastStatus.pass));
+
+  /// Printable diagnostics without logging or other IO in the portable core.
+  String debugReport() => issues.isEmpty
+      ? 'No declared contrast issues.'
+      : issues
+          .map((check) => '${check.appearance.name}: '
+              '${check.pair.foreground.path} / ${check.pair.background.path}: '
+              '${check.status.name}, ratio ${check.ratio?.toStringAsFixed(2) ?? "unknown"} '
+              '(minimum ${check.pair.minimumRatio})')
+          .join('\n');
 
   /// An Aurora manifest with DTCG variant documents; not itself a DTCG document.
   Map<String, Object?> toJson() => {
@@ -190,11 +219,29 @@ final class AuroraGenerationResult {
 abstract final class AuroraGenerator {
   static const algorithm = 'aurora-tonal-v1-mcu-0.11.1';
 
+  static String algorithmFor(AuroraGenerationScheme scheme) =>
+      scheme == AuroraGenerationScheme.tonalSpot
+          ? algorithm
+          : 'aurora-${scheme.name}-v1-mcu-0.11.1';
+
+  /// Foundation-only snapshots for per-entity branding. Never registers a theme
+  /// or supplies values for an app contract's extensions.
+  static Map<AuroraAppearance, AuroraThemeVariant> variants(AuroraColor seed,
+          {AuroraGenerationScheme scheme = AuroraGenerationScheme.tonalSpot}) =>
+      generate(AuroraGenerationRequest(
+        contract: AuroraContract(id: 'aurora-foundation'),
+        id: 'seed',
+        name: 'Seed',
+        primary: seed,
+        scheme: scheme,
+      )).theme.variants;
+
   static AuroraGenerationResult generate(AuroraGenerationRequest request) {
     final variants = <AuroraThemeVariant>[];
     final checks = <AuroraContrastCheck>[];
     for (final appearance in request.appearances) {
-      final scheme = _scheme(request.seeds[AuroraPalette.primary]!, appearance);
+      final scheme = _scheme(
+          request.seeds[AuroraPalette.primary]!, appearance, request.scheme);
       final primaryScheme = DynamicScheme(
           sourceColorArgb: scheme.sourceColorArgb,
           variant: scheme.variant,
@@ -282,16 +329,36 @@ abstract final class AuroraGenerator {
             name: request.name,
             variants: variants,
             preferredAppearance: request.preferredAppearance),
-        checks);
+        checks,
+        request.scheme);
   }
 
   static AuroraColor _toneColor(TonalPalette palette, double tone) =>
       AuroraColor(Hct.from(palette.hue, palette.chroma, tone).toInt());
 
-  static DynamicScheme _scheme(AuroraColor seed, AuroraAppearance appearance) =>
-      SchemeTonalSpot(
-        sourceColorHct: Hct.fromInt(seed.argb),
-        isDark: appearance == AuroraAppearance.dark,
-        contrastLevel: 0,
-      );
+  static DynamicScheme _scheme(AuroraColor seed, AuroraAppearance appearance,
+      [AuroraGenerationScheme scheme = AuroraGenerationScheme.tonalSpot]) {
+    final hct = Hct.fromInt(seed.argb);
+    final dark = appearance == AuroraAppearance.dark;
+    return switch (scheme) {
+      AuroraGenerationScheme.tonalSpot =>
+        SchemeTonalSpot(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.fidelity =>
+        SchemeFidelity(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.vibrant =>
+        SchemeVibrant(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.expressive =>
+        SchemeExpressive(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.content =>
+        SchemeContent(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.monochrome =>
+        SchemeMonochrome(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.neutral =>
+        SchemeNeutral(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.rainbow =>
+        SchemeRainbow(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+      AuroraGenerationScheme.fruitSalad =>
+        SchemeFruitSalad(sourceColorHct: hct, isDark: dark, contrastLevel: 0),
+    };
+  }
 }

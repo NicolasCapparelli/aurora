@@ -89,6 +89,9 @@ Import `package:aurora_flutter/aurora_flutter.dart`; it exports the core API too
 For pure Dart work, depend on `packages/aurora` and import `aurora.dart` instead.
 Check SDK constraints and dependency resolution; do not silently downgrade the
 app's toolchain or change Aurora's pinned generation dependency.
+The core pins `material_color_utilities` to 0.11.1 for reproducible output.
+A Flutter upgrade that requires another version can break dependency resolution;
+resolve that deliberately in Aurora rather than overriding the pin in the app.
 
 ## 3. Establish the contract and theme registry
 
@@ -260,6 +263,12 @@ IDs/preferences and deliberately handle retired themes or unavailable variants.
 
 ### Feature-only migration
 
+For a fixed preview, use `AuroraScope.fixed(variant: variant, child: ...)`.
+It owns no controller and ignores platform brightness. Aurora token reads and
+native Material widgets use that snapshot; `Aurora.controllerOf` throws within
+the fixed scope, even when an outer engine has a controller. Replace the variant
+to update the preview. Side-by-side light/dark previews need two fixed scopes.
+
 Place AuroraScope around the requested subtree and retain the outer app theme.
 Create/dispose the controller in that feature's owner. Read Aurora values from
 descendant contexts. Nested scopes may be independent. A dialog pushed onto an
@@ -280,6 +289,32 @@ settings, and widgets separate using the app's existing architecture conventions
 Implement the actual requested app, not just a themed starter screen.
 
 ## 5. Use the agent generator when useful
+
+For per-item branding, generate once per seed outside widget builds:
+
+```dart
+final branded = AuroraGenerator.variants(brandColor.auroraColor,
+    scheme: AuroraGenerationScheme.fidelity);
+final tokens = branded[AuroraAppearance.light]!.tokens;
+final foreground = AuroraContrast.bestOn(tokens.primaryContainer,
+    [tokens.onPrimaryContainer, AuroraColor.hex('#000000'), AuroraColor.hex('#ffffff')]);
+```
+
+These are foundation-only snapshots with their own contract; they do not enter
+the app's theme registry or satisfy its required extensions. For a scoped app
+feature that needs extensions, generate against the canonical app contract and
+provide every extension value/rule. `bestOn` returns the candidate with highest
+contrast; it does not guarantee a threshold and requires an opaque background.
+`result.debugReport()` formats generation issues without logging them.
+
+The default single-seed generation at contrast level zero matches Flutter's
+`ColorScheme.fromSeed` tonal-spot values for all 46 supported Material roles on
+the verified SDK. Other scheme names are `fidelity`, `vibrant`, `expressive`,
+`content`, `monochrome`, `neutral`, `rainbow`, and `fruitSalad`. Supply `scheme:`
+on `AuroraGenerationRequest`, or `"scheme": "fidelity"` in a recipe. Explicit
+overrides and additional secondary/tertiary seeds change this comparison.
+The MCU pin preserves Aurora output across upgrades; recheck equality after a
+Flutter upgrade rather than assuming future SDK algorithms remain identical.
 
 Agents should use JSON mode; opening the visual generator is optional. From the
 Aurora checkout's `packages/aurora` directory, resolve dependencies once:
@@ -358,6 +393,104 @@ Cover behavior rather than implementation details:
 - Controller ownership is correct; injected controllers survive engine unmount.
 - Existing settings restoration and important screens still work when applicable.
 
+### Widget test recipe
+
+Construct a complete registry outside the test's widget build, then exercise an
+injected engine with Flutter's test platform dispatcher:
+
+```dart
+testWidgets('system selection follows brightness', (tester) async {
+  tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+  addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+  final controller = AuroraController(
+    contract: appContract, themes: appThemes,
+    initialSelection: AuroraSelection(themeId: appThemes.first.id),
+    fallback: AuroraVariantFallback.reject,
+  );
+  addTearDown(controller.dispose);
+  await tester.pumpWidget(AuroraEngine(
+    controller: controller,
+    builder: (context, theme) => MaterialApp(theme: theme,
+      home: Builder(builder: (context) => Text(Aurora.of(context).appearance.name))),
+  ));
+  expect(find.text('dark'), findsOneWidget);
+  tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+  await tester.pumpAndSettle();
+  expect(find.text('light'), findsOneWidget);
+  expect(controller.state.selection.themeId, appThemes.first.id);
+});
+```
+
+For same-look migrations, generate using the old seed and scheme, compare
+`variant.toColorScheme()` with `ColorScheme.fromSeed(seedColor: oldSeed,
+brightness: variant.appearance.brightness, dynamicSchemeVariant: oldScheme)`
+role by role, and test component styling separately. A full role comparison is
+in [from_seed_test.dart](packages/aurora_flutter/test/from_seed_test.dart).
+Controller listeners run synchronously after successful mutations; widgets still
+need a pump, and MaterialApp animations may need `pumpAndSettle`.
+
+### State-layer and persistence recipe
+
+At bootstrap, initialize Flutter, load stored settings, create the stable
+contract/themes, restore selection, and construct the controller. Hold it in
+the app's services owner and inject it into AuroraEngine. Dispose it with that
+owner. The controller reads platform brightness by default; pass
+`systemAppearance:` explicitly for a deterministic host override. Scopes and
+engines observe subsequent device changes.
+
+```dart
+final restored = AuroraSelection.restoreJson(savedSettings,
+    themes: appThemes, fallbackId: appThemes.first.id);
+final controller = AuroraController(
+  contract: appContract, themes: appThemes, initialSelection: restored,
+  fallback: AuroraVariantFallback.preferred,
+);
+```
+
+`restore` also accepts `themeId:` and a preference name. Unknown identities use
+the registered fallback; unknown preferences use system. Restoration does not
+resolve missing variants: choose the runtime fallback policy deliberately.
+`toJson` writes `themeId` and `appearance`; `fromJson` is a strict data decoder,
+while `restoreJson` tolerates retired or malformed stored fields. Aurora performs
+no storage IO. Wrap AuroraSelection in an app settings state when needed; avoid
+maintaining a second appearance authority.
+
+For an existing Cubit, adapt this method to its state and storage types:
+
+```dart
+Future<void> applySelection(AuroraSelection next) async {
+  services.aurora.select(next); // Rejected changes throw before saving/emitting.
+  emit(state.copyWith(selection: next, saveError: null));
+  try {
+    await services.settings.saveSelection(next.toJson());
+  } catch (error) {
+    emit(state.copyWith(saveError: error)); // Keep the applied visual selection.
+  }
+}
+```
+
+Serialize rapid saves in the app's storage layer so an earlier write cannot
+overwrite a later selection. Show save failures using the app's normal error UI.
+
+### Concrete migration audit
+
+Search the target app's `lib/` for `Color(0x`, `Colors.`,
+`ColorScheme.fromSeed`, `themeMode`, and `darkTheme`. Review each result, plus
+colors embedded in TextTheme, button, app-bar, input, card, navigation, and dialog
+themes. Audit nested Theme widgets and custom painters. Convert app UI colors
+by semantic role, then review remaining matches and document explicit exceptions.
+User-authored stored colors (such as traveler colors), logos, and intentional
+categorical chart colors can remain outside the theme as one documented policy.
+
+Use `tokens.read(AppTokens.role)` for typed extension reads; app-owned getters
+may wrap that call, without string paths in widgets. Native status colors are
+available as `Theme.of(context).extension<AuroraStatusColors>()!` when using
+`variant.toThemeData()`. A custom themeBuilder should include
+`AuroraStatusColors.fromTokens(variant.tokens)` in its ThemeData extensions.
+`Color.auroraColor` preserves ARGB, `appearance.brightness` converts to Flutter,
+and `AuroraFlutterAppearance.fromBrightness` converts back. Flutter conversion
+cannot be a core enum constructor because the core must remain pure Dart.
+
 Report integration level, themes/appearances added, extension declarations,
 how selection is controlled, what was verified, and material remaining limitations.
 Link the app files changed. If tooling is unavailable, distinguish implemented
@@ -371,10 +504,10 @@ Read these when the selected route needs them; all links are checkout-relative.
 | --- | --- |
 | Public API and integration patterns | [README.md](README.md) |
 | Complete working Flutter app | [theater example](examples/theater/lib/main.dart) |
-| Generation, overrides, rules, contrast | [generator guide](docs/generator.md) |
-| CLI invocation, installer, JSON protocol | [CLI guide](docs/cli.md) |
+| Generation, overrides, rules, contrast | [generator guide](continuity/developer/generator.md) |
+| CLI invocation, installer, JSON protocol | [CLI guide](continuity/user/usage.md) |
 | Portable recipe fields | [recipe v1](spec/recipe-v1.md) |
-| Token interchange and supported limitations | [DTCG profile](docs/dtcg-profile.md) |
+| Token interchange and supported limitations | [DTCG profile](continuity/data/dtcg-profile.md) |
 | Foundation role paths and descriptions | [foundation v1](spec/foundation-v1.json) |
 | Ownership, scope, navigation examples | [Flutter integration tests](packages/aurora_flutter/test/integration_test.dart) |
 

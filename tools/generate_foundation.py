@@ -111,7 +111,14 @@ extension AuroraMaterialVariant on AuroraThemeVariant {
     brightness: appearance == AuroraAppearance.light ? Brightness.light : Brightness.dark,
 '''
 mapping += ''.join(f'    {name}: colors.{name}.flutterColor,\n' for name in MATERIAL)
-mapping += '  );\n  ThemeData toThemeData() => ThemeData(useMaterial3: true, colorScheme: toColorScheme());\n}\n'
+mapping += '  );\n  ThemeData toThemeData() => ThemeData(useMaterial3: true, colorScheme: toColorScheme(), extensions: [AuroraStatusColors.fromTokens(tokens)]);\n}\n'
+status_names = [name for name, *_ in ROWS if name not in MATERIAL]
+mapping += '\n/// Native status colors, including interpolation during Material theme changes.\nclass AuroraStatusColors extends ThemeExtension<AuroraStatusColors> {\n'
+mapping += '  const AuroraStatusColors({' + ', '.join(f'required this.{name}' for name in status_names) + '});\n'
+mapping += '  factory AuroraStatusColors.fromTokens(AuroraTokens tokens) => AuroraStatusColors(' + ', '.join(f'{name}: tokens.{name}.flutterColor' for name in status_names) + ');\n'
+mapping += ''.join(f'  final Color {name};\n' for name in status_names)
+mapping += '  @override\n  AuroraStatusColors copyWith({' + ', '.join(f'Color? {name}' for name in status_names) + '}) => AuroraStatusColors(' + ', '.join(f'{name}: {name} ?? this.{name}' for name in status_names) + ');\n'
+mapping += '  @override\n  AuroraStatusColors lerp(covariant AuroraStatusColors? other, double t) {\n    if (other == null) return this;\n    return AuroraStatusColors(' + ', '.join(f'{name}: Color.lerp({name}, other.{name}, t)!' for name in status_names) + ');\n  }\n}\n'
 target = ROOT / 'packages/aurora_flutter/lib/src'
 target.mkdir(parents=True, exist_ok=True)
 (target / 'material.dart').write_text(mapping, encoding='utf-8')
@@ -120,6 +127,9 @@ roles = header + "import 'package:material_color_utilities/material_color_utilit
 roles += 'Map<AuroraColorToken, AuroraColor> materialRoleValues(DynamicScheme scheme) => {\n'
 for name in MATERIAL:
     source_name = 'inverseOnSurface' if name == 'onInverseSurface' else name
+    # Flutter ColorScheme.fromSeed uses resolved primary for surfaceTint.
+    if name == 'surfaceTint':
+        source_name = 'primary'
     roles += f'  AuroraFoundation.{name}: AuroraColor(scheme.{source_name}),\n'
 roles += '};\n'
 (ROOT / 'packages/aurora/lib/src/material_roles.dart').write_text(roles, encoding='utf-8')

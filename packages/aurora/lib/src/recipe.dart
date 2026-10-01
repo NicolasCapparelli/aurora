@@ -14,6 +14,7 @@ abstract final class AuroraRecipe {
           'id',
           'name',
           'primary',
+          'scheme',
           'secondary',
           'tertiary',
           'success',
@@ -94,11 +95,19 @@ abstract final class AuroraRecipe {
     AuroraColor? seed(String key) => input[key] == null || input[key] == ''
         ? null
         : AuroraColor.hex(_text(input[key], key));
+    final schemeName = input.containsKey('scheme')
+        ? _text(input['scheme'], 'scheme')
+        : 'tonalSpot';
+    if (!AuroraGenerationScheme.values
+        .any((value) => value.name == schemeName)) {
+      throw FormatException('Unknown scheme $schemeName');
+    }
     return AuroraGenerationRequest(
       contract: contract,
       id: _text(input['id'], 'id'),
       name: _text(input['name'], 'name'),
       primary: AuroraColor.hex(_text(input['primary'], 'primary')),
+      scheme: AuroraGenerationScheme.values.byName(schemeName),
       secondary: seed('secondary'),
       tertiary: seed('tertiary'),
       success: seed('success'),

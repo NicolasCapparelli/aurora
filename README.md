@@ -115,6 +115,9 @@ native Material theming to its descendants. Standard widgets using
 `Theme.of(context)` participate automatically. Siblings stay outside that scope;
 nested scopes can use independent controllers. The caller creates and disposes
 the controller. An optional `themeBuilder` composes app typography and shapes.
+For galleries, `AuroraScope.fixed(variant: variant, child: preview)` applies an
+immutable snapshot without a controller or device subscription. Token reads
+work normally; controller lookup within a fixed scope throws.
 
 ### 3. AuroraEngine: app-wide integration
 
@@ -179,7 +182,14 @@ The scope and engine rebuild dependents and observe device brightness. A system
 preference
 keeps the selected theme identity while resolving light/dark. Explicit light or
 dark ignores device changes. Call `controller.dispose()` from the owning widget;
-the scope and injected-controller engine do not own it. Material receives the
+the scope and injected-controller engine do not own it.
+Controller mutations notify Flutter listeners synchronously after accepted state
+changes. New controllers read initial platform brightness unless supplied explicitly.
+`AuroraSelection.restoreJson(saved, themes: themes, fallbackId: defaultId)`
+restores stored names; `selection.toJson()` serializes without persistence IO.
+See the onboarding state-layer recipe for save ordering and error handling.
+
+Material receives the
 resolved variant's brightness,
 so no second `ThemeMode` selection is needed.
 When migrating an existing MaterialApp, remove its separate `darkTheme` and
@@ -215,7 +225,7 @@ is deferred.
 
 `AuroraDtcg.encode(variant)` returns a JSON-compatible DTCG token document.
 `AuroraDtcg.decode(document, contract: contract, appearance: appearance)` validates
-and constructs a complete variant. See [the supported profile](docs/dtcg-profile.md).
+and constructs a complete variant. See [the supported profile](continuity/data/dtcg-profile.md).
 Identity and appearance are passed separately; no custom envelope is embedded
 inside the token document.
 
@@ -242,15 +252,27 @@ final contrastIssues = result.issues;
 
 This produces complete light/dark variants. Secondary and tertiary seeds are
 optional. Every app extension needs an explicit value or generation rule.
+Choose `scheme: AuroraGenerationScheme.fidelity` (or vibrant, expressive,
+content, monochrome, neutral, rainbow, fruitSalad) when tonal-spot does not suit
+the brand. Each scheme has a pinned algorithm identifier. Defaults retain the
+existing tonal-spot output. At contrast level zero with one seed and no
+overrides, all 46 Material roles match `ColorScheme.fromSeed` on the verified
+Flutter SDK; regression tests check this. Recheck after Flutter upgrades.
+
+For per-entity branding, `AuroraGenerator.variants(seed)` returns immutable light
+and dark foundation-only snapshots without registration. These snapshots cannot
+replace a canonical app variant requiring extensions. Use
+`AuroraContrast.bestOn(background, candidates)` to choose the highest-contrast
+candidate over an opaque background, and `result.debugReport()` to format issues.
 Shared and per-variant overrides preserve exact requested colors; diagnostics
 report contrast problems without silently changing them.
 
 The generator is pure Dart and deterministic, with an explicit algorithm version.
 It returns ordinary Aurora themes and JSON-compatible manifests containing DTCG
-variant documents. See [the generator guide](docs/generator.md) for inputs, rules,
+variant documents. See [the generator guide](continuity/developer/generator.md) for inputs, rules,
 precedence, diagnostics, and portability. Run `dart run example/generate.dart`
 from `packages/aurora` for a standalone example. Agent endpoints and a visual
-preview use this same logic. See [the CLI guide](docs/cli.md).
+preview use this same logic. See [the CLI guide](continuity/user/usage.md).
 
 ## Open the theme generator
 
@@ -263,7 +285,7 @@ dart run aurora generate
 This opens a local HTML/CSS interface in your browser with seed inputs, light/dark
 previews, all foundation tokens, contrast diagnostics, and JSON downloads.
 To use `aurora generate` directly, activate the package as described in the
-[CLI guide](docs/cli.md). Stop the local server with Ctrl+C.
+[CLI guide](continuity/user/usage.md). Stop the local server with Ctrl+C.
 
 Color pickers complement exact hex inputs. Launch with `--project PATH_TO_APP`
 to enable Add to project, which installs a theme bundle and Dart factory while
@@ -309,4 +331,4 @@ dart format packages/aurora/lib packages/aurora_flutter/lib
 The [portable specification](spec/README.md), generated foundation definitions,
 and checked-in JSON conformance cases describe the cross-language boundary.
 
-Terminology and decisions are tracked in [design notes](docs/design-notes.md).
+Terminology and decisions are tracked in [design notes](continuity/decisions/design-notes.md).

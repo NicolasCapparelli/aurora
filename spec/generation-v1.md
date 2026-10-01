@@ -1,8 +1,16 @@
 # Portable generation semantics v1
 
 Algorithm: `aurora-tonal-v1-mcu-0.11.1`.
+This remains the default tonal-spot algorithm. Additive brand strategies use
+`aurora-<schemeName>-v1-mcu-0.11.1`: fidelity, vibrant, expressive, content,
+monochrome, neutral, rainbow, fruitSalad. Scheme names are case-sensitive.
+Select the corresponding pinned MCU scheme at contrast zero; retain the same
+override/rule precedence and independent tonal-spot status schemes. Surface tint
+uses resolved primary, as in Flutter. The new strategies are pinned in
+`fixtures/generation-schemes-v1.json`; normal tests only read them.
+No foundation version or existing expected fixture changes are needed.
 
-The normative algorithm steps and precedence are recorded in `docs/generator.md`.
+The normative algorithm steps and precedence are recorded in `continuity/developer/generator.md`.
 Use a Material Color Utilities implementation equivalent to Dart 0.11.1. Language
 package versions are not interchangeable release identifiers. A new upstream
 algorithm must not silently replace this generator version.

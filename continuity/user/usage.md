@@ -35,6 +35,8 @@ Pick colors visually using the native color pickers, or enter exact six-digit he
 values. Auto clears an optional seed so the generator supplies its default.
 Enter a theme name and ID, a primary seed, and optional secondary,
 tertiary, or status seeds. Choose both appearances or just one, then Generate.
+Choose a scheme (default tonalSpot) to control brand palette style; status
+palettes remain independent. The same names are accepted by recipes and Dart.
 The page shows illustrative components, all 58 tokens with descriptions, and
 contrast diagnostics. Edits take effect when you generate again; exports always
 contain the last successfully generated result.
@@ -79,6 +81,10 @@ your runtime/controller. The factory binds values to your existing typed contrac
 Supply required app fields using its per-appearance `extensionValues` parameter;
 missing extensions still fail validation. The tool installs the bundle without
 editing routing, app startup, dependencies, or your existing theme registry.
+The installed README includes a registration snippet for `lib/main.dart`, and
+installation JSON includes `registrationSnippet`. Adjust its import location,
+canonical contract variable, and registry. This is a manual startup step and
+does not change an already-mounted managed engine's registry.
 
 ## Agent interface
 
@@ -101,7 +107,7 @@ the manifest's `contrast` array; no overrides are silently repaired.
 
 Recipes support full app contracts, alias/tone rules, shared/per-variant values,
 appearance selection, and custom contrast pairs. See
-[recipe v1](../spec/recipe-v1.md) and [the theater recipe](../examples/recipes/theater.json).
+[recipe v1](../../spec/recipe-v1.md) and [the theater recipe](../../examples/recipes/theater.json).
 The pure Dart `AuroraRecipe.decode` API supports the same data without a CLI.
 
 The local HTTP endpoint is an internal UI transport, not a stable public agent API.

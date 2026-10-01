@@ -10,8 +10,15 @@ typedef AuroraThemeBuilder = ThemeData Function(
 
 /// Reactive access to the nearest scope or engine. Call inside build.
 abstract final class Aurora {
-  static AuroraThemeVariant of(BuildContext context) =>
-      controllerOf(context).state.variant;
+  static AuroraThemeVariant of(BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<AuroraInherited>();
+    if (scope == null) {
+      throw FlutterError(
+          'Aurora access requires an AuroraScope or AuroraEngine ancestor.');
+    }
+    return scope.variant ?? scope.notifier!.state.variant;
+  }
+
   static AuroraTokens tokensOf(BuildContext context) => of(context).tokens;
 
   static AuroraController controllerOf(BuildContext context) {
@@ -19,6 +26,9 @@ abstract final class Aurora {
     if (scope == null)
       throw FlutterError(
           'Aurora access requires an AuroraScope or AuroraEngine ancestor.');
+    if (scope.notifier == null) {
+      throw FlutterError('AuroraScope.fixed has no selection controller.');
+    }
     return scope.notifier!;
   }
 }
@@ -30,20 +40,42 @@ class AuroraScope extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.child,
-      this.themeBuilder});
-  final AuroraController controller;
+      this.themeBuilder})
+      : variant = null;
+
+  /// A snapshot preview with no controller or device-brightness subscription.
+  const AuroraScope.fixed(
+      {super.key,
+      required AuroraThemeVariant variant,
+      required this.child,
+      this.themeBuilder})
+      : variant = variant,
+        controller = null;
+  final AuroraController? controller;
+  final AuroraThemeVariant? variant;
   final Widget child;
   final AuroraThemeBuilder? themeBuilder;
 
   @override
-  Widget build(BuildContext context) => AuroraBinding(
-        controller: controller,
-        builder: (context) {
-          final variant = Aurora.of(context);
-          return Theme(
-            data: themeBuilder?.call(context, variant) ?? variant.toThemeData(),
-            child: child,
-          );
-        },
-      );
+  Widget build(BuildContext context) {
+    if (variant != null) {
+      return AuroraInherited(
+          variant: variant,
+          child: Builder(
+              builder: (context) => Theme(
+                  data: themeBuilder?.call(context, variant!) ??
+                      variant!.toThemeData(),
+                  child: child)));
+    }
+    return AuroraBinding(
+      controller: controller!,
+      builder: (context) {
+        final variant = Aurora.of(context);
+        return Theme(
+          data: themeBuilder?.call(context, variant) ?? variant.toThemeData(),
+          child: child,
+        );
+      },
+    );
+  }
 }

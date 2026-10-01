@@ -99,6 +99,23 @@ void main() {
     final result = AuroraGenerator.generate(request);
     final installed = await project.install(result, basic);
     final destination = installed['directory'] as String;
+    final snippet = installed['registrationSnippet'] as String;
+    final snippetFile = File('${root.path}/lib/verify_registration.dart');
+    await snippetFile.writeAsString('''$snippet
+final appContract = AuroraContract(id: 'app');
+void main() {
+  final themes = [generatedTheme];
+  if (themes.single.id != 'demo') throw StateError('Missing registration');
+}
+''');
+    final registered = await Process.run(Platform.resolvedExecutable, [
+      '--packages=${Directory.current.path}/.dart_tool/package_config.json',
+      snippetFile.path,
+    ]);
+    expect(registered.exitCode, 0,
+        reason: '${registered.stdout}\n${registered.stderr}');
+    expect(
+        await File('$destination/README.md').readAsString(), contains(snippet));
     final before = await File('$destination/theme.dart').readAsString();
     await expectLater(project.install(result, basic), throwsFormatException);
     expect(await File('$destination/theme.dart').readAsString(), before);

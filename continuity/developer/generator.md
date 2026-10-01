@@ -79,11 +79,15 @@ Algorithm id: `aurora-tonal-v1-mcu-0.11.1`. The pure Dart Material Color Utiliti
 dependency is pinned to 0.11.1 to avoid silently changing output.
 
 1. Build a tonal-spot scheme from the primary seed at contrast level zero.
+   An explicit `scheme` selects fidelity, vibrant, expressive, content,
+   monochrome, neutral, rainbow, or fruitSalad instead. The default stays fixed.
 2. Keep its primary, neutral, neutral-variant, and default secondary/tertiary palettes.
 3. If secondary/tertiary seeds are supplied, replace those palettes with HCT
    palettes using the supplied seed's actual hue and chroma.
 4. Resolve all 46 Material foundation roles through that dynamic scheme. Aurora's
    `onInverseSurface` maps to MCU's `inverseOnSurface`.
+   `surfaceTint` maps to resolved primary, matching Flutter `fromSeed` (MCU's
+   standalone surfaceTint differs for fidelity/content).
 5. Build independent tonal-spot schemes for the three status seeds. Use each
    scheme's primary/onPrimary/primaryContainer/onPrimaryContainer quartet for
    the corresponding status quartet.
@@ -97,6 +101,21 @@ generated palette even if a single token in that palette was overridden.
 Algorithm changes need a new identifier and reviewed portable fixtures. Future
 TypeScript ports must match the pinned behavior, not merely depend on the latest
 Material library release. See `spec/generation-v1.md`.
+
+Additional identifiers are `aurora-<schemeName>-v1-mcu-0.11.1`, with exact enum
+names. Status quartets always use independent tonal-spot schemes. Extra
+secondary/tertiary seeds replace palettes after scheme selection as before.
+New outputs are pinned separately in `spec/fixtures/generation-schemes-v1.json`;
+the original fixture remains untouched. The deliberate maintenance command is
+`dart run tool/export_scheme_fixture.dart`, never part of normal tests.
+
+`AuroraGenerator.variants(seed, scheme: ...)` returns foundation-only immutable
+snapshots for per-entity branding; there is no registry or app-extension inference.
+Cache these outside widget builds. Use the full request for canonical app contracts.
+Single-seed generation without overrides matches Flutter's `ColorScheme.fromSeed`
+for all 46 supported Material roles at contrast zero on the verified SDK. Adapter
+tests cover three seeds, all schemes, and both appearances; upstream changes may
+break equivalence while Aurora's pinned generation remains stable.
 
 ## Contrast diagnostics
 
@@ -116,6 +135,10 @@ usage pairs, not certification of all text sizes, widget states, or layouts.
 The contrast utility also works independently:
 `AuroraContrast.check(variant, additionalPairs: ...)` and
 `AuroraContrast.ratio(foreground, background)`.
+`AuroraContrast.bestOn(background, candidates)` returns the highest-contrast
+candidate, choosing the first on ties. It rejects empty candidates or translucent
+backgrounds; candidate alpha is composited normally. It makes no minimum-contrast
+promise. `result.debugReport()` formats failed/unknown checks without logging.
 
 Reference: [WCAG contrast guidance](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html).
 
@@ -127,7 +150,7 @@ one DTCG document per variant, and diagnostics. The manifest itself is not DTCG;
 its individual `variants.light` / `variants.dark` values are DTCG documents.
 The manifest has no decoder yet and does not include a replayable input recipe.
 
-The packaged CLI and browser preview consume this core; see `cli.md`.
+The packaged CLI and browser preview consume this core; see [CLI usage](../user/usage.md).
 The agent CLI accepts app recipes through the portable `AuroraRecipe.decode`
 API; see `spec/recipe-v1.md`. Persistence and image extraction remain separate
 capabilities to build on this core.

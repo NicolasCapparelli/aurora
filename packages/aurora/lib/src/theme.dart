@@ -4,7 +4,19 @@ import 'foundation.dart';
 
 enum AuroraAppearance { light, dark }
 
-enum AuroraAppearancePreference { light, dark, system }
+enum AuroraAppearancePreference {
+  light,
+  dark,
+  system;
+
+  /// Exact portable names; unknown values return null for caller-owned fallback.
+  static AuroraAppearancePreference? tryParse(String? name) {
+    for (final value in values) {
+      if (value.name == name) return value;
+    }
+    return null;
+  }
+}
 
 /// Complete, validated values for a single concrete appearance.
 final class AuroraThemeVariant {

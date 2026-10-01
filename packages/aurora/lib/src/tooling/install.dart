@@ -50,6 +50,14 @@ final class AuroraProject {
     final staging = await parent.createTemp('.aurora-');
     try {
       final encoder = const JsonEncoder.withIndent('  ');
+      final registration =
+          "import 'package:$importPackage/$importPackage.dart';\n"
+          "import 'aurora_themes/$id/theme.dart' as generated;\n\n"
+          "// Paste in lib/main.dart (adjust the relative import in other files).\n"
+          "// Add this entry to the registry before creating the controller/runtime.\n"
+          "// appContract is your canonical contract; all required extensions must resolve.\n"
+          "final generatedTheme = generated.createAuroraTheme(contract: appContract);\n"
+          "// themes: [...existingThemes, generatedTheme]\n";
       final files = <String, String>{
         'theme.json': encoder.convert(result.toJson()),
         'recipe.json': encoder.convert(recipe),
@@ -60,7 +68,8 @@ final class AuroraProject {
         'README.md':
             'Import theme.dart and call createAuroraTheme(contract: yourContract).\n'
                 'Supply every required app extension in extensionValues for each appearance.\n'
-                'Register the returned theme with your Aurora runtime/controller.\n',
+                'Register the returned theme with your Aurora runtime/controller.\n\n'
+                '```dart\n$registration```\n',
       };
       for (final entry in files.entries) {
         await File('${staging.path}/${entry.key}')
@@ -75,6 +84,7 @@ final class AuroraProject {
       return {
         'directory': target.path,
         'files': files.keys.toList(),
+        'registrationSnippet': registration,
         'nextStep':
             'Import lib/aurora_themes/$id/theme.dart and register createAuroraTheme(contract: yourContract). Supply required app extensions through extensionValues.'
       };

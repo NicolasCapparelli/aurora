@@ -1,0 +1,59 @@
+# Implementation map
+
+Paths are relative to the repo root. Core = `packages/aurora/lib/src`, Adapter = `packages/aurora_flutter/lib/src`. Core tests run with `dart test` in `packages/aurora`; adapter tests with `flutter test` in `packages/aurora_flutter`; everything with `./tools/check.ps1` ([setup](../developer/setup.md)).
+
+## Routes
+
+| Area (request vocabulary) | Responsibility | Start (source) | Tests | Model / dependencies |
+| --- | --- | --- | --- | --- |
+| **Color value** (hex, ARGB, RGBA, alpha, `AuroraColor`) | Immutable sRGB ARGB; CSS hex parsing | [color.dart](../../packages/aurora/lib/src/color.dart) | `aurora_test.dart` (hex/ARGB cases) | [model](../data/model.md#representations-and-conversions); used by every area |
+| **Token declaration and contract** (`AuroraColorToken`, `AuroraContract`, extensions, namespace, path collision, `AuroraValidationException`) | App contract = foundation + extensions; path rules | [contract.dart](../../packages/aurora/lib/src/contract.dart) | `aurora_test.dart` (redefine/namespace/collision) | [model](../data/model.md#entities-and-semantics); foundation, recipe |
+| **Foundation tokens / roles** (58 colors, Material roles, success/warning/info, `AuroraFoundation`) | Generated typed accessors, descriptions, version | Table: [generate_foundation.py](../../tools/generate_foundation.py); generated [foundation.dart](../../packages/aurora/lib/src/foundation.dart), [spec/foundation-v1.json](../../spec/foundation-v1.json) | `aurora_test.dart` (all roles required) | Do not hand-edit generated files; adding a required token needs a versioning decision; also regenerates [starters.dart](../../packages/aurora/lib/src/starters.dart) and Adapter `material.dart` |
+| **Starter palettes** (presets, `AuroraStarter.variant`, default values) | Explicit foundation presets; never fills app extensions | [starters.dart](../../packages/aurora/lib/src/starters.dart) (generated) | `aurora_test.dart` (presets never fill extensions) | contract, theme; used by [examples/theater/lib/main.dart](../../examples/theater/lib/main.dart) |
+| **Theme and variant** (`AuroraTheme`, `AuroraThemeVariant`, `AuroraTokens`, appearance, preferred appearance, `tokens`/`read`) | Complete validated immutable variants; theme identity | [theme.dart](../../packages/aurora/lib/src/theme.dart); typed accessors on `AuroraTokens` are in [foundation.dart](../../packages/aurora/lib/src/foundation.dart) | `aurora_test.dart` (variant copies, snapshots) | [model](../data/model.md); runtime, DTCG, generator |
+| **Selection runtime** (`AuroraRuntime`, `AuroraSelection`, `AuroraState`, fallback, system appearance, switch theme, dark mode, `changes` stream) | Pure Dart selection, transactional changes, dispose | [runtime.dart](../../packages/aurora/lib/src/runtime.dart) | `aurora_test.dart` (rejected selection, fallback, fixed appearance, dispose) | Wrapped by Adapter controller; semantics in [spec/README.md](../../spec/README.md) |
+| **DTCG import/export** (tokens JSON, `AuroraDtcg.encode/decode`, alias, color space) | Supported DTCG color profile; `FormatException` for unsupported | [dtcg.dart](../../packages/aurora/lib/src/dtcg.dart) | `aurora_test.dart` (DTCG cases), `portable_test.dart` | [profile](../data/dtcg-profile.md), [fixtures](../../spec/fixtures/variant-cases.json), [model](../data/model.md#representations-and-conversions); fixture refresh: `tool/export_portable_fixture.dart` (deliberate only) |
+| **Theme generator** (seed colors, `AuroraGenerator`, `AuroraGenerationRequest`, tone/alias rules, overrides, algorithm) | Deterministic tonal generation, rule resolution, completeness | [generator.dart](../../packages/aurora/lib/src/generator.dart); Material role mapping in [material_roles.dart](../../packages/aurora/lib/src/material_roles.dart) (generated) | `generator_test.dart`, `generation_portable_test.dart` | [generator guide](../developer/generator.md), [generation-v1](../../spec/generation-v1.md), fixture [generation-v1.json](../../spec/fixtures/generation-v1.json); algorithm/dependency pin `material_color_utilities 0.11.1`; fixture refresh: `tool/export_generation_fixture.dart` (deliberate only); example `packages/aurora/example/generate.dart` |
+| **Contrast diagnostics** (WCAG ratio, accessibility check, `AuroraContrast`, pairs, `issues`) | Pair-based luminance contrast; unknown for translucent backgrounds | [contrast.dart](../../packages/aurora/lib/src/contrast.dart) | `generator_test.dart` (contrast math group, translucent-background cases) | Consumed by generator result and manifest; algorithm in generation-v1 spec |
+| **Recipe decoding** (recipe JSON, agent input, `AuroraRecipe.decode`) | Strict portable JSON to generation request | [recipe.dart](../../packages/aurora/lib/src/recipe.dart) | `recipe_cli_test.dart` | [recipe-v1](../../spec/recipe-v1.md), [theater.json](../../examples/recipes/theater.json); generator |
+| **CLI** (`aurora generate`, `--json`, `--input`, `--project`, exit codes) | Arg parsing, JSON mode, structured errors, launches server | [bin/aurora.dart](../../packages/aurora/bin/aurora.dart) | `recipe_cli_test.dart` (agent command JSON-only and errors) | [CLI guide](../user/usage.md); recipe, generator, installer, server. Keep IO out of `aurora.dart` barrel |
+| **Browser generator UI and local server** (preview, color pickers, downloads, loopback, token, CSP) | Foundation-only interactive generation over loopback HTTP | Server: [server.dart](../../packages/aurora/lib/src/tooling/server.dart); page: [ui.dart](../../packages/aurora/lib/src/tooling/ui.dart) | `tooling_test.dart` | `generateToolTheme` in server.dart; installer; full app contracts are not supported here (recipes only) |
+| **Project installer** (add to project, `--project`, `lib/aurora_themes`, `theme.dart`, symlink safety) | Safe non-overwriting theme bundle install | [install.dart](../../packages/aurora/lib/src/tooling/install.dart) | `recipe_cli_test.dart` (installer rejects linked output parents and other installer cases), `tooling_test.dart` | [CLI guide](../user/usage.md); generator output; target app's pubspec |
+| **Flutter controller** (`AuroraController`, ChangeNotifier, select, system appearance) | Synchronous accepted-state notifications; initial platform brightness | [controller.dart](../../packages/aurora_flutter/lib/src/controller.dart) | `aurora_flutter_test.dart`, `integration_test.dart`, `feedback_test.dart` | wraps runtime; used by scope and engine |
+| **Scope and access** (`AuroraScope`, `Aurora.of/tokensOf/controllerOf`, themed subtree, nested scope, `themeBuilder`) | Subtree theming and inherited lookup | [scope.dart](../../packages/aurora_flutter/lib/src/scope.dart) | `integration_test.dart` (scope/siblings/nested/composition) | binding, Material bridge |
+| **Engine** (`AuroraEngine`, `.managed`, app-wide, MaterialApp builder, ownership, engine key) | App-wide integration, controller ownership, fixed managed config | [engine.dart](../../packages/aurora_flutter/lib/src/engine.dart) | `integration_test.dart` (managed/injected/router/navigation/dialog tests) | binding, controller; contributor rules in [AGENTS.md](../../AGENTS.md) |
+| **Device brightness binding** (platform brightness, system appearance, `AuroraBinding`, `AuroraInherited`) | Observes device appearance; provides inherited notifier | [binding.dart](../../packages/aurora_flutter/lib/src/binding.dart) | `aurora_flutter_test.dart` (device brightness, fixed preference) | used by scope and engine |
+| **Material bridge** (`ColorScheme`, `ThemeData`, `flutterColor`, MaterialApp theme) | Maps every foundation role to Material | [material.dart](../../packages/aurora_flutter/lib/src/material.dart) (generated) | `integration_test.dart`, `aurora_flutter_test.dart` | Generated from the foundation table; edit [generate_foundation.py](../../tools/generate_foundation.py) |
+| **Theater example** (demo app, Wicked, Hadestown, ticket tokens, appearance selector) | Reference integration with required extensions | [main.dart](../../examples/theater/lib/main.dart); web shell [index.html](../../examples/theater/web/index.html) | Analyze only (`flutter analyze`); `flutter build web` after web changes | uses Adapter and starters |
+| **Portable spec and fixtures** (TypeScript/React Native port, conformance, cross-language) | Language-neutral behavior and expected outputs | [spec/README.md](../../spec/README.md), [spec/fixtures](../../spec/fixtures) | `portable_test.dart`, `generation_portable_test.dart` | Locked-authority docs; do not regenerate expected fixtures in normal work |
+| **Agent integration docs** (onboarding, integrate Aurora into app, migrate MaterialApp) | Public playbook for integrating Aurora in user apps | [AGENT_ONBOARDING.md](../../AGENT_ONBOARDING.md) | none (documentation) | Update with public API changes ([AGENTS.md](../../AGENTS.md)); [README](../../README.md) |
+
+## Shared foundations and dependency routes
+
+- Integration feedback additions: fixed snapshot scopes in scope.dart/binding.dart,
+  synchronous controller notifications and initial device brightness in controller.dart,
+  Flutter color/appearance conversions in [conversions.dart](../../packages/aurora_flutter/lib/src/conversions.dart).
+  Tests: `feedback_test.dart`, `from_seed_test.dart` in the adapter; core helpers
+  in `integration_feedback_test.dart`. Native `AuroraStatusColors` is generated in
+  material.dart by the foundation table script.
+- Additional generation schemes: generator.dart, recipe.dart, tooling/server.dart,
+  tooling/ui.dart; fixtures [generation-schemes-v1.json](../../spec/fixtures/generation-schemes-v1.json)
+  consumed by `scheme_portable_test.dart`; deliberate maintenance command
+  `tool/export_scheme_fixture.dart`. Default fixtures remain authoritative and unchanged.
+- Selection serialization/restoration: runtime.dart, theme.dart preference parsing;
+  semantics in [selection spec](../../spec/README.md#selection-semantics). Runtime
+  stream remains async; controller notifies directly after mutations, not from it.
+
+- **Contract instance identity**: variants, themes, runtime, generator requests, and recipes must share one `AuroraContract`; any change touching `contains`/`identical` affects theme.dart, runtime.dart, generator.dart, recipe.dart, dtcg.dart.
+- **Foundation table change** (new/renamed token): update the table, run the generator script, format, then check contrast pairs in contrast.dart, generated material_roles.dart, DTCG fixtures, `spec/foundation-v1.json`, onboarding/README token counts (58), and the version decision.
+- **Validation and errors**: `AuroraValidationException` (contract.dart) is mapped to CLI exit 65/`validation` in bin/aurora.dart and HTTP 400 in server.dart; keep rejection semantics aligned.
+- **Generation to output**: generator.dart feeds the CLI manifest, server response, installer files, and portable fixture tests.
+- **Selection semantics**: change in runtime.dart must be checked against Adapter controller/binding/engine and `spec/README.md`.
+
+## Investigation notes
+
+- Exclusions for orientation: `.dart_tool/`, `build/`, `pubspec.lock`, `examples/theater/build`, and `.pub-cache` (all git-ignored or generated).
+- Generated files (foundation.dart, starters.dart, material_roles.dart, Adapter material.dart, `spec/foundation-v1.json`) carry a generated header; edit the table instead.
+- [integration-research](../history/integration-research.md) is dated historical background research; not mapped to a code route.
+- Overall design reasoning and ownership of retained docs: [architecture](../developer/architecture.md).
+- If no route matches or a path is stale, search source and repair this map.

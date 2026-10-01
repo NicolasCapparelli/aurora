@@ -11,6 +11,60 @@ final class AuroraSelection {
       this.appearance = AuroraAppearancePreference.system});
   final String themeId;
   final AuroraAppearancePreference appearance;
+
+  /// Restore settings without performing IO or resolving missing variants.
+  /// The fallback identity must exist; variant policy remains the runtime's job.
+  factory AuroraSelection.restore({
+    String? themeId,
+    String? preference,
+    required Iterable<AuroraTheme> themes,
+    required String fallbackId,
+  }) {
+    final ids = themes.map((theme) => theme.id).toSet();
+    if (!ids.contains(fallbackId)) {
+      throw ArgumentError('Unknown fallback theme $fallbackId');
+    }
+    return AuroraSelection(
+      themeId: ids.contains(themeId) ? themeId! : fallbackId,
+      appearance: AuroraAppearancePreference.tryParse(preference) ??
+          AuroraAppearancePreference.system,
+    );
+  }
+
+  Map<String, Object?> toJson() => {
+        'themeId': themeId,
+        'appearance': appearance.name,
+      };
+
+  /// Forgiving stored-data boundary; malformed fields use restore defaults.
+  factory AuroraSelection.restoreJson(
+    Map<String, dynamic> json, {
+    required Iterable<AuroraTheme> themes,
+    required String fallbackId,
+  }) =>
+      AuroraSelection.restore(
+        themeId: json['themeId'] is String ? json['themeId'] as String : null,
+        preference:
+            json['appearance'] is String ? json['appearance'] as String : null,
+        themes: themes,
+        fallbackId: fallbackId,
+      );
+
+  factory AuroraSelection.fromJson(Map<String, dynamic> json) {
+    final id = json['themeId'];
+    final preference = json['appearance'];
+    final appearance = preference is String
+        ? AuroraAppearancePreference.tryParse(preference)
+        : null;
+    if (id is! String ||
+        id.trim().isEmpty ||
+        appearance == null ||
+        json.keys.any((key) => key != 'themeId' && key != 'appearance')) {
+      throw const FormatException(
+          'Expected themeId and appearance selection fields');
+    }
+    return AuroraSelection(themeId: id, appearance: appearance);
+  }
 }
 
 /// Immutable snapshot of the requested selection and its resolved values.

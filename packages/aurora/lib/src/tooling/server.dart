@@ -126,6 +126,7 @@ AuroraGenerationResult generateToolTheme(Map<String, dynamic> input) {
     'id',
     'name',
     'primary',
+    'scheme',
     'secondary',
     'tertiary',
     'success',
@@ -146,6 +147,10 @@ AuroraGenerationResult generateToolTheme(Map<String, dynamic> input) {
       ? null
       : AuroraColor.hex(text(key));
   final mode = text('appearance', fallback: 'both');
+  final scheme = text('scheme', fallback: 'tonalSpot');
+  if (!AuroraGenerationScheme.values.any((value) => value.name == scheme)) {
+    throw FormatException('Unknown scheme $scheme');
+  }
   if (!{'both', 'light', 'dark'}.contains(mode))
     throw const FormatException('appearance must be both, light, or dark');
   return AuroraGenerator.generate(AuroraGenerationRequest(
@@ -153,6 +158,7 @@ AuroraGenerationResult generateToolTheme(Map<String, dynamic> input) {
     id: text('id'),
     name: text('name'),
     primary: AuroraColor.hex(text('primary')),
+    scheme: AuroraGenerationScheme.values.byName(scheme),
     secondary: optional('secondary'),
     tertiary: optional('tertiary'),
     success: optional('success'),

@@ -59,6 +59,100 @@ extension AuroraMaterialVariant on AuroraThemeVariant {
         inversePrimary: colors.inversePrimary.flutterColor,
         surfaceTint: colors.surfaceTint.flutterColor,
       );
-  ThemeData toThemeData() =>
-      ThemeData(useMaterial3: true, colorScheme: toColorScheme());
+  ThemeData toThemeData() => ThemeData(
+      useMaterial3: true,
+      colorScheme: toColorScheme(),
+      extensions: [AuroraStatusColors.fromTokens(tokens)]);
+}
+
+/// Native status colors, including interpolation during Material theme changes.
+class AuroraStatusColors extends ThemeExtension<AuroraStatusColors> {
+  const AuroraStatusColors(
+      {required this.success,
+      required this.onSuccess,
+      required this.successContainer,
+      required this.onSuccessContainer,
+      required this.warning,
+      required this.onWarning,
+      required this.warningContainer,
+      required this.onWarningContainer,
+      required this.info,
+      required this.onInfo,
+      required this.infoContainer,
+      required this.onInfoContainer});
+  factory AuroraStatusColors.fromTokens(AuroraTokens tokens) =>
+      AuroraStatusColors(
+          success: tokens.success.flutterColor,
+          onSuccess: tokens.onSuccess.flutterColor,
+          successContainer: tokens.successContainer.flutterColor,
+          onSuccessContainer: tokens.onSuccessContainer.flutterColor,
+          warning: tokens.warning.flutterColor,
+          onWarning: tokens.onWarning.flutterColor,
+          warningContainer: tokens.warningContainer.flutterColor,
+          onWarningContainer: tokens.onWarningContainer.flutterColor,
+          info: tokens.info.flutterColor,
+          onInfo: tokens.onInfo.flutterColor,
+          infoContainer: tokens.infoContainer.flutterColor,
+          onInfoContainer: tokens.onInfoContainer.flutterColor);
+  final Color success;
+  final Color onSuccess;
+  final Color successContainer;
+  final Color onSuccessContainer;
+  final Color warning;
+  final Color onWarning;
+  final Color warningContainer;
+  final Color onWarningContainer;
+  final Color info;
+  final Color onInfo;
+  final Color infoContainer;
+  final Color onInfoContainer;
+  @override
+  AuroraStatusColors copyWith(
+          {Color? success,
+          Color? onSuccess,
+          Color? successContainer,
+          Color? onSuccessContainer,
+          Color? warning,
+          Color? onWarning,
+          Color? warningContainer,
+          Color? onWarningContainer,
+          Color? info,
+          Color? onInfo,
+          Color? infoContainer,
+          Color? onInfoContainer}) =>
+      AuroraStatusColors(
+          success: success ?? this.success,
+          onSuccess: onSuccess ?? this.onSuccess,
+          successContainer: successContainer ?? this.successContainer,
+          onSuccessContainer: onSuccessContainer ?? this.onSuccessContainer,
+          warning: warning ?? this.warning,
+          onWarning: onWarning ?? this.onWarning,
+          warningContainer: warningContainer ?? this.warningContainer,
+          onWarningContainer: onWarningContainer ?? this.onWarningContainer,
+          info: info ?? this.info,
+          onInfo: onInfo ?? this.onInfo,
+          infoContainer: infoContainer ?? this.infoContainer,
+          onInfoContainer: onInfoContainer ?? this.onInfoContainer);
+  @override
+  AuroraStatusColors lerp(covariant AuroraStatusColors? other, double t) {
+    if (other == null) return this;
+    return AuroraStatusColors(
+        success: Color.lerp(success, other.success, t)!,
+        onSuccess: Color.lerp(onSuccess, other.onSuccess, t)!,
+        successContainer:
+            Color.lerp(successContainer, other.successContainer, t)!,
+        onSuccessContainer:
+            Color.lerp(onSuccessContainer, other.onSuccessContainer, t)!,
+        warning: Color.lerp(warning, other.warning, t)!,
+        onWarning: Color.lerp(onWarning, other.onWarning, t)!,
+        warningContainer:
+            Color.lerp(warningContainer, other.warningContainer, t)!,
+        onWarningContainer:
+            Color.lerp(onWarningContainer, other.onWarningContainer, t)!,
+        info: Color.lerp(info, other.info, t)!,
+        onInfo: Color.lerp(onInfo, other.onInfo, t)!,
+        infoContainer: Color.lerp(infoContainer, other.infoContainer, t)!,
+        onInfoContainer:
+            Color.lerp(onInfoContainer, other.onInfoContainer, t)!);
+  }
 }

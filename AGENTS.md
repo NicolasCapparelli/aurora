@@ -4,7 +4,7 @@ This file is for Aurora library contributors. `AGENT_ONBOARDING.md` is the
 entry point for agents integrating Aurora into a user's app. Keep its examples
 and instructions aligned with public API changes.
 
-Read `README.md`, `docs/design-notes.md`, and `docs/dtcg-profile.md` before changing
+Read `README.md`, `continuity/decisions/design-notes.md`, and `continuity/data/dtcg-profile.md` before changing
 public APIs. The accepted vocabulary is contract, foundation, contract extension,
 token, role, value, theme, theme variant, appearance, and theme selection.
 Integration levels are AuroraTokens, AuroraScope, and AuroraEngine. The pure Dart
@@ -38,13 +38,17 @@ analyzes both packages and the example, and runs Dart and Flutter tests. Run
 `flutter build web` in `examples/theater` when changing demo web integration.
 Tests should protect behavioral invariants and the public contract.
 
-The seed-based generator lives in the pure Dart core; read `docs/generator.md`
+The seed-based generator lives in the pure Dart core; read `continuity/developer/generator.md`
 and `spec/generation-v1.md` when changing it. The Python maintenance script only
 generates accessor/mapping source. Preserve app-extension completeness: require
 values or declared generation rules. Explicit overrides must not be silently
 repaired. Algorithm/dependency changes need a reviewed version and fixture update.
 The CLI and browser UI live in `packages/aurora/bin` and `lib/src/tooling`.
-Keep their IO imports out of the portable `aurora.dart` barrel. Read `docs/cli.md`
+Keep their IO imports out of the portable `aurora.dart` barrel. Read `continuity/user/usage.md`
 when changing the tool. The agent CLI uses portable `AuroraRecipe.decode`;
 read `spec/recipe-v1.md` before changing its input contract. Project installation
 must preserve existing files and keep required app-extension validation intact.
+
+## Continuity
+
+Before project work, read the project-root `continuity/agent/instructions.md`, `continuity/status.md`, and complete `continuity/agent/map.md`; reuse unchanged loaded context and follow relevant routes into source. Before every otherwise-authorized commit and every handoff, review changes, update affected Continuity documentation alongside implementation, and review status and changed links. Unaffected documents need no ceremonial edit. Follow all applicable repository instructions.

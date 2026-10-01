@@ -35,7 +35,7 @@ Dart object identity checks; they must use an equivalent safe mechanism for bind
 token declarations and themes to their owning contract.
 
 Colors are unsigned 32-bit ARGB internally in Dart; the portable format uses sRGB
-components and alpha. CSS hex input is RGBA, not ARGB. See `docs/dtcg-profile.md`
+components and alpha. CSS hex input is RGBA, not ARGB. See `continuity/data/dtcg-profile.md`
 for the supported interchange subset and 8-bit quantization.
 
 ## Conformance fixtures
@@ -68,6 +68,14 @@ it as part of normal tests; it is a checked-in interoperability reference.
 - A fallback preserves the requested preference even when resolved appearance differs.
 - Theme registration rejects duplicate identities and incompatible contracts.
 - Direct tokens are snapshots; reactive adapters subscribe explicitly.
+
+Selection serialization uses `themeId` and `appearance` (light/dark/system).
+Strict decoding rejects malformed/unknown fields; forgiving restoration uses a
+caller-supplied registered fallback for unknown identities and defaults unknown
+preferences to system. The fallback must be registered. Restoration does not
+resolve missing variants; runtime policy still applies. The runtime stream stays
+asynchronous; Flutter controller mutations notify synchronously after accepted
+state changes.
 
 Seed-based generation is documented in `generation-v1.md`, with additional
 cross-language fixtures. Portable authoring inputs are documented in `recipe-v1.md`.
