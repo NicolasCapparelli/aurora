@@ -1,0 +1,406 @@
+{
+  "version": 1,
+  "namespaces": [
+    "type",
+    "shape",
+    "motion"
+  ],
+  "tokens": [
+    {
+      "path": "type.family.brand",
+      "type": "fontFamily",
+      "description": "Expressive typeface for display and headline text.",
+      "starter": "Roboto"
+    },
+    {
+      "path": "type.family.plain",
+      "type": "fontFamily",
+      "description": "Readable typeface for titles, body and labels.",
+      "starter": "Roboto"
+    },
+    {
+      "path": "type.displayLarge",
+      "type": "typography",
+      "description": "Largest display text, for short hero numbers or words.",
+      "starter": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 57.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": -0.25,
+          "unit": "dp"
+        },
+        "lineHeight": 1.1228070175438596
+      }
+    },
+    {
+      "path": "type.displayMedium",
+      "type": "typography",
+      "description": "Medium display text.",
+      "starter": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 45.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "dp"
+        },
+        "lineHeight": 1.1555555555555554
+      }
+    },
+    {
+      "path": "type.displaySmall",
+      "type": "typography",
+      "description": "Small display text.",
+      "starter": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 36.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "dp"
+        },
+        "lineHeight": 1.2222222222222223
+      }
+    },
+    {
+      "path": "type.headlineLarge",
+      "type": "typography",
+      "description": "Large headlines on prominent screens.",
+      "starter": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 32.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "dp"
+        },
+        "lineHeight": 1.25
+      }
+    },
+    {
+      "path": "type.headlineMedium",
+      "type": "typography",
+      "description": "Medium headlines.",
+      "starter": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 28.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "dp"
+        },
+        "lineHeight": 1.2857142857142858
+      }
+    },
+    {
+      "path": "type.headlineSmall",
+      "type": "typography",
+      "description": "Small headlines.",
+      "starter": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 24.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "dp"
+        },
+        "lineHeight": 1.3333333333333333
+      }
+    },
+    {
+      "path": "type.titleLarge",
+      "type": "typography",
+      "description": "Large titles, such as app bar titles.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 22.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "dp"
+        },
+        "lineHeight": 1.2727272727272727
+      }
+    },
+    {
+      "path": "type.titleMedium",
+      "type": "typography",
+      "description": "Medium titles, such as list headers.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 16.0,
+          "unit": "dp"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.15,
+          "unit": "dp"
+        },
+        "lineHeight": 1.5
+      }
+    },
+    {
+      "path": "type.titleSmall",
+      "type": "typography",
+      "description": "Small titles.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 14.0,
+          "unit": "dp"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.1,
+          "unit": "dp"
+        },
+        "lineHeight": 1.4285714285714286
+      }
+    },
+    {
+      "path": "type.bodyLarge",
+      "type": "typography",
+      "description": "Large body text.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 16.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.5,
+          "unit": "dp"
+        },
+        "lineHeight": 1.5
+      }
+    },
+    {
+      "path": "type.bodyMedium",
+      "type": "typography",
+      "description": "Default body text.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 14.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.25,
+          "unit": "dp"
+        },
+        "lineHeight": 1.4285714285714286
+      }
+    },
+    {
+      "path": "type.bodySmall",
+      "type": "typography",
+      "description": "Small body text, such as captions.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 12.0,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.4,
+          "unit": "dp"
+        },
+        "lineHeight": 1.3333333333333333
+      }
+    },
+    {
+      "path": "type.labelLarge",
+      "type": "typography",
+      "description": "Large labels, such as button text.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 14.0,
+          "unit": "dp"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.1,
+          "unit": "dp"
+        },
+        "lineHeight": 1.4285714285714286
+      }
+    },
+    {
+      "path": "type.labelMedium",
+      "type": "typography",
+      "description": "Medium labels.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 12.0,
+          "unit": "dp"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.5,
+          "unit": "dp"
+        },
+        "lineHeight": 1.3333333333333333
+      }
+    },
+    {
+      "path": "type.labelSmall",
+      "type": "typography",
+      "description": "Small labels, such as badges.",
+      "starter": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 11.0,
+          "unit": "dp"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.5,
+          "unit": "dp"
+        },
+        "lineHeight": 1.4545454545454546
+      }
+    },
+    {
+      "path": "shape.extraSmall",
+      "type": "dimension",
+      "description": "Corner radius for small elements such as text fields and menus.",
+      "starter": {
+        "value": 4.0,
+        "unit": "dp"
+      }
+    },
+    {
+      "path": "shape.small",
+      "type": "dimension",
+      "description": "Corner radius for chips and small cards.",
+      "starter": {
+        "value": 8.0,
+        "unit": "dp"
+      }
+    },
+    {
+      "path": "shape.medium",
+      "type": "dimension",
+      "description": "Corner radius for cards.",
+      "starter": {
+        "value": 12.0,
+        "unit": "dp"
+      }
+    },
+    {
+      "path": "shape.large",
+      "type": "dimension",
+      "description": "Corner radius for large surfaces such as navigation drawers.",
+      "starter": {
+        "value": 16.0,
+        "unit": "dp"
+      }
+    },
+    {
+      "path": "shape.extraLarge",
+      "type": "dimension",
+      "description": "Corner radius for dialogs and sheets.",
+      "starter": {
+        "value": 28.0,
+        "unit": "dp"
+      }
+    },
+    {
+      "path": "motion.short",
+      "type": "duration",
+      "description": "Duration of small, quick transitions such as selection changes.",
+      "starter": {
+        "value": 100.0,
+        "unit": "ms"
+      }
+    },
+    {
+      "path": "motion.medium",
+      "type": "duration",
+      "description": "Duration of standard transitions.",
+      "starter": {
+        "value": 300.0,
+        "unit": "ms"
+      }
+    },
+    {
+      "path": "motion.long",
+      "type": "duration",
+      "description": "Duration of large transitions such as full-screen changes.",
+      "starter": {
+        "value": 500.0,
+        "unit": "ms"
+      }
+    },
+    {
+      "path": "motion.extraLong",
+      "type": "duration",
+      "description": "Duration of slow, emphasized transitions.",
+      "starter": {
+        "value": 800.0,
+        "unit": "ms"
+      }
+    },
+    {
+      "path": "motion.easing.standard",
+      "type": "cubicBezier",
+      "description": "Easing for transitions that begin and end on screen.",
+      "starter": [
+        0.2,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "path": "motion.easing.emphasizedDecelerate",
+      "type": "cubicBezier",
+      "description": "Easing for elements entering the screen.",
+      "starter": [
+        0.05,
+        0.7,
+        0.1,
+        1.0
+      ]
+    },
+    {
+      "path": "motion.easing.emphasizedAccelerate",
+      "type": "cubicBezier",
+      "description": "Easing for elements leaving the screen.",
+      "starter": [
+        0.3,
+        0.0,
+        0.8,
+        0.15
+      ]
+    }
+  ]
+}

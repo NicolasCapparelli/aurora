@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "kind": "texture",
+  "id": "editorial",
+  "name": "Editorial",
+  "base": "material",
+  "contract": {
+    "id": "feel",
+    "version": 1,
+    "extensions": [
+      {
+        "path": "feel.type.family.display",
+        "description": "Family for route codes and hero values.",
+        "type": "fontFamily"
+      },
+      {
+        "path": "feel.type.family.body",
+        "description": "Family for body text and labels.",
+        "type": "fontFamily"
+      },
+      {
+        "path": "feel.type.routeCode",
+        "description": "Airport codes on flight cards.",
+        "type": "typography"
+      },
+      {
+        "path": "feel.type.pageTitle",
+        "description": "Screen titles.",
+        "type": "typography"
+      },
+      {
+        "path": "feel.type.kicker",
+        "description": "Small uppercase labels above values.",
+        "type": "typography"
+      },
+      {
+        "path": "feel.type.body",
+        "description": "Body text.",
+        "type": "typography"
+      },
+      {
+        "path": "feel.shape.card",
+        "description": "Card corners.",
+        "type": "dimension"
+      },
+      {
+        "path": "feel.shape.chip",
+        "description": "Chip corners; large values make a pill.",
+        "type": "dimension"
+      },
+      {
+        "path": "feel.lines.cardBorder",
+        "description": "Whether cards draw a border.",
+        "type": "boolean"
+      },
+      {
+        "path": "feel.lines.card",
+        "description": "Card border.",
+        "type": "border"
+      },
+      {
+        "path": "feel.lines.divider",
+        "description": "Stroke style of dividers inside cards.",
+        "type": "strokeStyle"
+      },
+      {
+        "path": "feel.depth.card",
+        "description": "Card shadow.",
+        "type": "shadow"
+      },
+      {
+        "path": "feel.density.screenMargin",
+        "description": "Horizontal screen margin.",
+        "type": "dimension"
+      },
+      {
+        "path": "feel.density.cardPadding",
+        "description": "Padding inside cards.",
+        "type": "dimension"
+      },
+      {
+        "path": "feel.chrome.emblemShape",
+        "description": "Shape of the airline emblem.",
+        "type": "enum",
+        "values": [
+          "roundedSquare",
+          "circle"
+        ]
+      },
+      {
+        "path": "feel.variants.flightCard",
+        "description": "Default flight card layout.",
+        "type": "enum",
+        "values": [
+          "rich",
+          "compact",
+          "walletPass"
+        ]
+      }
+    ]
+  },
+  "values": {
+    "type.family.brand": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "shape.small": {
+      "value": 2.0,
+      "unit": "dp"
+    },
+    "shape.medium": {
+      "value": 0.0,
+      "unit": "dp"
+    },
+    "feel.type.family.display": "{type.family.brand}",
+    "feel.type.family.body": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "feel.type.routeCode": {
+      "fontFamily": "{feel.type.family.display}",
+      "fontSize": {
+        "value": 30.0,
+        "unit": "dp"
+      },
+      "fontWeight": 400,
+      "letterSpacing": {
+        "value": -0.5,
+        "unit": "dp"
+      },
+      "lineHeight": 1.1
+    },
+    "feel.type.pageTitle": {
+      "fontFamily": "{feel.type.family.display}",
+      "fontSize": {
+        "value": 28.0,
+        "unit": "dp"
+      },
+      "fontWeight": 400,
+      "letterSpacing": {
+        "value": 0.0,
+        "unit": "dp"
+      },
+      "lineHeight": 1.3
+    },
+    "feel.type.kicker": {
+      "fontFamily": "{feel.type.family.body}",
+      "fontSize": {
+        "value": 10.0,
+        "unit": "dp"
+      },
+      "fontWeight": 600,
+      "letterSpacing": {
+        "value": 2.4,
+        "unit": "dp"
+      },
+      "lineHeight": 1.4
+    },
+    "feel.type.body": {
+      "fontFamily": "{feel.type.family.body}",
+      "fontSize": {
+        "value": 15.0,
+        "unit": "dp"
+      },
+      "fontWeight": 400,
+      "letterSpacing": {
+        "value": 0.0,
+        "unit": "dp"
+      },
+      "lineHeight": 1.5
+    },
+    "feel.shape.card": "{shape.medium}",
+    "feel.shape.chip": "{shape.small}",
+    "feel.lines.cardBorder": true,
+    "feel.lines.card": {
+      "color": "{colors.onSurface}",
+      "width": {
+        "value": 1.5,
+        "unit": "dp"
+      },
+      "style": "dashed"
+    },
+    "feel.lines.divider": "dotted",
+    "feel.depth.card": [],
+    "feel.density.screenMargin": {
+      "value": 28.0,
+      "unit": "dp"
+    },
+    "feel.density.cardPadding": {
+      "value": 16.0,
+      "unit": "dp"
+    },
+    "feel.chrome.emblemShape": "roundedSquare",
+    "feel.variants.flightCard": "compact"
+  }
+}

@@ -1,0 +1,715 @@
+{
+  "type": {
+    "family": {
+      "brand": {
+        "$type": "fontFamily",
+        "$description": "Expressive typeface for display and headline text.",
+        "$value": [
+          "Fraunces",
+          "Georgia",
+          "serif"
+        ]
+      },
+      "plain": {
+        "$type": "fontFamily",
+        "$description": "Readable typeface for titles, body and labels.",
+        "$value": "Roboto"
+      }
+    },
+    "displayLarge": {
+      "$type": "typography",
+      "$description": "Largest display text, for short hero numbers or words.",
+      "$value": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 57.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": -0.25,
+          "unit": "px"
+        },
+        "lineHeight": 1.1228070175438596
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "displayMedium": {
+      "$type": "typography",
+      "$description": "Medium display text.",
+      "$value": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 45.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "lineHeight": 1.1555555555555554
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "displaySmall": {
+      "$type": "typography",
+      "$description": "Small display text.",
+      "$value": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 36.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "lineHeight": 1.2222222222222223
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "headlineLarge": {
+      "$type": "typography",
+      "$description": "Large headlines on prominent screens.",
+      "$value": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 32.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "lineHeight": 1.25
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "headlineMedium": {
+      "$type": "typography",
+      "$description": "Medium headlines.",
+      "$value": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 28.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "lineHeight": 1.2857142857142858
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "headlineSmall": {
+      "$type": "typography",
+      "$description": "Small headlines.",
+      "$value": {
+        "fontFamily": "{type.family.brand}",
+        "fontSize": {
+          "value": 24.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "lineHeight": 1.3333333333333333
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "titleLarge": {
+      "$type": "typography",
+      "$description": "Large titles, such as app bar titles.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 22.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "lineHeight": 1.2727272727272727
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "titleMedium": {
+      "$type": "typography",
+      "$description": "Medium titles, such as list headers.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 16.0,
+          "unit": "px"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.15,
+          "unit": "px"
+        },
+        "lineHeight": 1.5
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "titleSmall": {
+      "$type": "typography",
+      "$description": "Small titles.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 14.0,
+          "unit": "px"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.1,
+          "unit": "px"
+        },
+        "lineHeight": 1.4285714285714286
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "bodyLarge": {
+      "$type": "typography",
+      "$description": "Large body text.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 16.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.5,
+          "unit": "px"
+        },
+        "lineHeight": 1.5
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "bodyMedium": {
+      "$type": "typography",
+      "$description": "Default body text.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 14.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.25,
+          "unit": "px"
+        },
+        "lineHeight": 1.4285714285714286
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "bodySmall": {
+      "$type": "typography",
+      "$description": "Small body text, such as captions.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 12.0,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.4,
+          "unit": "px"
+        },
+        "lineHeight": 1.3333333333333333
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "labelLarge": {
+      "$type": "typography",
+      "$description": "Large labels, such as button text.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 14.0,
+          "unit": "px"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.1,
+          "unit": "px"
+        },
+        "lineHeight": 1.4285714285714286
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "labelMedium": {
+      "$type": "typography",
+      "$description": "Medium labels.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 12.0,
+          "unit": "px"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.5,
+          "unit": "px"
+        },
+        "lineHeight": 1.3333333333333333
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "labelSmall": {
+      "$type": "typography",
+      "$description": "Small labels, such as badges.",
+      "$value": {
+        "fontFamily": "{type.family.plain}",
+        "fontSize": {
+          "value": 11.0,
+          "unit": "px"
+        },
+        "fontWeight": 500,
+        "letterSpacing": {
+          "value": 0.5,
+          "unit": "px"
+        },
+        "lineHeight": 1.4545454545454546
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    }
+  },
+  "shape": {
+    "extraSmall": {
+      "$type": "dimension",
+      "$description": "Corner radius for small elements such as text fields and menus.",
+      "$value": {
+        "value": 4.0,
+        "unit": "px"
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "small": {
+      "$type": "dimension",
+      "$description": "Corner radius for chips and small cards.",
+      "$value": {
+        "value": 8.0,
+        "unit": "px"
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "medium": {
+      "$type": "dimension",
+      "$description": "Corner radius for cards.",
+      "$value": {
+        "value": 6.0,
+        "unit": "px"
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "large": {
+      "$type": "dimension",
+      "$description": "Corner radius for large surfaces such as navigation drawers.",
+      "$value": {
+        "value": 16.0,
+        "unit": "px"
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    },
+    "extraLarge": {
+      "$type": "dimension",
+      "$description": "Corner radius for dialogs and sheets.",
+      "$value": {
+        "value": 28.0,
+        "unit": "px"
+      },
+      "$extensions": {
+        "dev.aurora": {
+          "unit": "dp"
+        }
+      }
+    }
+  },
+  "motion": {
+    "short": {
+      "$type": "duration",
+      "$description": "Duration of small, quick transitions such as selection changes.",
+      "$value": {
+        "value": 100.0,
+        "unit": "ms"
+      }
+    },
+    "medium": {
+      "$type": "duration",
+      "$description": "Duration of standard transitions.",
+      "$value": {
+        "value": 300.0,
+        "unit": "ms"
+      }
+    },
+    "long": {
+      "$type": "duration",
+      "$description": "Duration of large transitions such as full-screen changes.",
+      "$value": {
+        "value": 500.0,
+        "unit": "ms"
+      }
+    },
+    "extraLong": {
+      "$type": "duration",
+      "$description": "Duration of slow, emphasized transitions.",
+      "$value": {
+        "value": 800.0,
+        "unit": "ms"
+      }
+    },
+    "easing": {
+      "standard": {
+        "$type": "cubicBezier",
+        "$description": "Easing for transitions that begin and end on screen.",
+        "$value": [
+          0.2,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "emphasizedDecelerate": {
+        "$type": "cubicBezier",
+        "$description": "Easing for elements entering the screen.",
+        "$value": [
+          0.05,
+          0.7,
+          0.1,
+          1.0
+        ]
+      },
+      "emphasizedAccelerate": {
+        "$type": "cubicBezier",
+        "$description": "Easing for elements leaving the screen.",
+        "$value": [
+          0.3,
+          0.0,
+          0.8,
+          0.15
+        ]
+      }
+    }
+  },
+  "demo": {
+    "type": {
+      "serif": {
+        "$type": "fontFamily",
+        "$description": "Serif family for headings.",
+        "$value": "{type.family.brand}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$description": "Heading weight.",
+        "$value": 600
+      },
+      "heading": {
+        "$type": "typography",
+        "$description": "Card headings.",
+        "$value": {
+          "fontFamily": "{demo.type.serif}",
+          "fontSize": {
+            "value": 20.0,
+            "unit": "px"
+          },
+          "fontWeight": "{demo.type.weight}",
+          "letterSpacing": {
+            "value": -0.25,
+            "unit": "px"
+          },
+          "lineHeight": 1.3
+        },
+        "$extensions": {
+          "dev.aurora": {
+            "unit": "dp"
+          }
+        }
+      }
+    },
+    "shape": {
+      "card": {
+        "$type": "dimension",
+        "$description": "Card corner radius.",
+        "$value": "{shape.medium}"
+      },
+      "chip": {
+        "$type": "dimension",
+        "$description": "Chip corner radius.",
+        "$value": {
+          "value": 999.0,
+          "unit": "px"
+        },
+        "$extensions": {
+          "dev.aurora": {
+            "unit": "dp"
+          }
+        }
+      },
+      "web": {
+        "$type": "dimension",
+        "$description": "A web-only radius in px.",
+        "$value": {
+          "value": 3.0,
+          "unit": "px"
+        }
+      }
+    },
+    "density": {
+      "gap": {
+        "$type": "dimension",
+        "$description": "Gap relative to the root font size.",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      }
+    },
+    "depth": {
+      "card": {
+        "$type": "number",
+        "$description": "Card elevation level.",
+        "$value": 1.0
+      },
+      "cardShadow": {
+        "$type": "shadow",
+        "$description": "Card shadow.",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "alpha": 0.2
+            },
+            "offsetX": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 2.0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 6.0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0.0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": "{colors.shadow}",
+            "offsetX": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "offsetY": "{shape.extraSmall}",
+            "blur": {
+              "value": 1.0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": -1.0,
+              "unit": "px"
+            },
+            "inset": true
+          }
+        ],
+        "$extensions": {
+          "dev.aurora": {
+            "unit": "dp"
+          }
+        }
+      }
+    },
+    "lines": {
+      "divider": {
+        "$type": "strokeStyle",
+        "$description": "Divider stroke style.",
+        "$value": {
+          "dashArray": [
+            {
+              "value": 4.0,
+              "unit": "px"
+            },
+            "{shape.extraSmall}"
+          ],
+          "lineCap": "round"
+        },
+        "$extensions": {
+          "dev.aurora": {
+            "unit": "dp"
+          }
+        }
+      },
+      "rule": {
+        "$type": "strokeStyle",
+        "$description": "Rule stroke style.",
+        "$value": "dashed"
+      },
+      "hidden": {
+        "$type": "strokeStyle",
+        "$description": "A stroke that draws nothing.",
+        "$value": {
+          "dashArray": [
+            {
+              "value": 0,
+              "unit": "px"
+            }
+          ],
+          "lineCap": "butt"
+        }
+      },
+      "cardBorder": {
+        "$type": "border",
+        "$description": "Card border.",
+        "$value": {
+          "color": "{colors.outlineVariant}",
+          "width": {
+            "value": 1.5,
+            "unit": "px"
+          },
+          "style": "{demo.lines.rule}"
+        },
+        "$extensions": {
+          "dev.aurora": {
+            "unit": "dp"
+          }
+        }
+      },
+      "bordered": {
+        "$description": "Whether cards draw a border.",
+        "$value": true,
+        "$extensions": {
+          "dev.aurora": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "variants": {
+      "card": {
+        "$description": "Default card layout.",
+        "$value": "walletPass",
+        "$extensions": {
+          "dev.aurora": {
+            "type": "enum",
+            "values": [
+              "rich",
+              "compact",
+              "walletPass"
+            ]
+          }
+        }
+      }
+    },
+    "motion": {
+      "fade": {
+        "$type": "duration",
+        "$description": "Fade duration.",
+        "$value": {
+          "value": 200.0,
+          "unit": "ms"
+        }
+      },
+      "ease": {
+        "$type": "cubicBezier",
+        "$description": "Fade easing.",
+        "$value": "{motion.easing.standard}"
+      }
+    }
+  }
+}

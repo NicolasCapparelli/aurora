@@ -51,11 +51,14 @@ class _AuroraBindingState extends State<AuroraBinding>
 }
 
 class AuroraInherited extends InheritedNotifier<AuroraController> {
-  const AuroraInherited({super.notifier, this.variant, required super.child});
+  const AuroraInherited(
+      {super.notifier, this.variant, this.texture, required super.child});
   final AuroraThemeVariant? variant;
+  final AuroraTexture? texture;
 
   @override
   bool updateShouldNotify(AuroraInherited oldWidget) =>
       !identical(variant, oldWidget.variant) ||
+      !identical(texture, oldWidget.texture) ||
       super.updateShouldNotify(oldWidget);
 }

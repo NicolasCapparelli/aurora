@@ -1,13 +1,7 @@
 import 'foundation.dart';
+import 'token.dart';
 
-/// A typed color field. Declare app tokens once, then reuse those declarations.
-final class AuroraColorToken {
-  const AuroraColorToken(this.path, {required this.description});
-  final String path;
-  final String description;
-  @override
-  String toString() => path;
-}
+export 'token.dart';
 
 /// Foundation plus app-owned additions. Every declared token is required.
 final class AuroraContract {

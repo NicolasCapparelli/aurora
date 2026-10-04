@@ -10,9 +10,13 @@ final class AuroraController extends ChangeNotifier {
     required AuroraSelection initialSelection,
     required AuroraVariantFallback fallback,
     AuroraAppearance? systemAppearance,
+    Iterable<AuroraTexture> textures = const [],
+    Map<String, String> texturePairings = const {},
   }) : _runtime = AuroraRuntime(
           contract: contract,
           themes: themes,
+          textures: textures,
+          texturePairings: texturePairings,
           initialSelection: initialSelection,
           fallback: fallback,
           systemAppearance: systemAppearance ??
@@ -28,6 +32,20 @@ final class AuroraController extends ChangeNotifier {
   AuroraContract get contract => _runtime.contract;
   AuroraState get state => _runtime.state;
   Map<String, AuroraTheme> get themes => _runtime.themes;
+
+  /// Registered textures by id; empty when the app does not use textures.
+  Map<String, AuroraTexture> get textures => _runtime.textures;
+
+  /// Theme id to paired texture id; see [pairTexture].
+  Map<String, String> get texturePairings => _runtime.texturePairings;
+
+  /// Pairs a theme with a texture, or removes the pairing when null.
+  void pairTexture(String themeId, String? textureId) {
+    final previous = state;
+    _runtime.pairTexture(themeId, textureId);
+    if (!identical(previous, state)) notifyListeners();
+  }
+
   void select(AuroraSelection selection) {
     final previous = state;
     _runtime.select(selection);

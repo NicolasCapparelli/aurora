@@ -57,3 +57,41 @@ repairs imported themes.
 
 Interoperability must be tested against the particular external tool and its
 format version; a claim of DTCG support does not imply support for every feature.
+
+# Aurora DTCG texture profile v1
+
+`AuroraTextureDtcg.encode(texture)` / `decode(document, contract:, id:, name:)`.
+One document holds one complete texture (foundation plus extensions). Texture
+identity lives outside the document, as for theme variants. Implementation:
+`texture_dtcg.dart` with the shared value codec in `texture_codec.dart`.
+
+## Types
+
+Written with their DTCG 2025.10 `$type` and `$value` forms: `dimension`
+(`px`/`rem`), `number`, `fontFamily` (string or array), `fontWeight` (number;
+keywords accepted on import), `duration` (exported as `ms`; `s` accepted),
+`cubicBezier`, `strokeStyle` (keywords or `{dashArray, lineCap}`), `border`,
+`shadow` (exported as an array; one object accepted) and `typography`.
+
+Aurora extensions under `$extensions["dev.aurora"]`:
+
+- Booleans and enums have no `$type`; they carry `{"type": "boolean"}` or
+  `{"type": "enum", "values": [...]}`. The recorded set must equal the
+  contract's. Strict third-party tools may reject these tokens.
+- `{"unit": "dp"}` marks a token whose `px` dimensions are Aurora dp. Other tools
+  read them as CSS px (logical pixels). A token may not mix dp and px.
+- `none` strokes are written as a single zero-length dash (`butt` cap), which
+  other tools also draw as nothing; Aurora decodes an all-zero dash pattern as
+  `none`. A literal `"none"` keyword is rejected in DTCG.
+
+## References
+
+Whole-token and composite-field aliases are kept on export and must target a
+declared texture token of the same type. Colour fields may reference theme colour
+tokens (`{colors.outline}`, `{app.ticket}`); these are cross-document references
+resolved against the active theme variant, not within the texture document. Export
+is exact: decode(encode(texture)) re-encodes identically.
+
+Missing or undeclared tokens, range errors, cycles and enum values outside the
+set throw `AuroraValidationException`; other malformed input throws
+`FormatException`. Unknown `dev.aurora` fields are rejected.

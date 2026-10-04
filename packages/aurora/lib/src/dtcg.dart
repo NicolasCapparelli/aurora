@@ -15,15 +15,10 @@ abstract final class AuroraDtcg {
         group = group.putIfAbsent(part, () => <String, Object?>{})
             as Map<String, Object?>;
       }
-      final color = entry.value;
       group[parts.last] = <String, Object?>{
         r'$type': 'color',
         r'$description': entry.key.description,
-        r'$value': <String, Object?>{
-          'colorSpace': 'srgb',
-          'components': [color.red / 255, color.green / 255, color.blue / 255],
-          'alpha': color.alpha / 255,
-        },
+        r'$value': encodeColorValue(entry.value),
       };
     }
     return document;
@@ -115,7 +110,7 @@ abstract final class AuroraDtcg {
       } else {
         if (token.type != 'color')
           throw FormatException('Missing color type at $path');
-        color = _decodeColor(value, path);
+        color = decodeColorValue(value, path);
       }
       visiting.remove(path);
       return resolved[path] = color;
@@ -130,7 +125,16 @@ abstract final class AuroraDtcg {
     );
   }
 
-  static AuroraColor _decodeColor(Object? raw, String path) {
+  /// The structured sRGB `$value` for [color].
+  static Map<String, Object?> encodeColorValue(AuroraColor color) =>
+      <String, Object?>{
+        'colorSpace': 'srgb',
+        'components': [color.red / 255, color.green / 255, color.blue / 255],
+        'alpha': color.alpha / 255,
+      };
+
+  /// Decodes a structured sRGB `$value`; [path] names it in errors.
+  static AuroraColor decodeColorValue(Object? raw, String path) {
     if (raw is! Map<String, Object?> || raw['colorSpace'] != 'srgb') {
       throw FormatException('Expected a structured sRGB color at $path');
     }

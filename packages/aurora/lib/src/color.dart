@@ -1,5 +1,7 @@
+import 'ref.dart';
+
 /// An immutable sRGB color stored as an unsigned 32-bit ARGB value.
-final class AuroraColor {
+final class AuroraColor extends AuroraRef<AuroraColor> {
   factory AuroraColor(int argb) {
     if (argb < 0 || argb > 0xffffffff) {
       throw ArgumentError.value(argb, 'argb', 'Expected a 32-bit ARGB value');

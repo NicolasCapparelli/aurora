@@ -157,3 +157,104 @@ Sources:
   input recipe parsing and export UX.
 - Evaluate app-contract code generation for static completeness guarantees.
 - Evaluate published Resolver packaging before supporting additional contexts.
+
+## Textures: non-colour tokens (decided 2026-10-04)
+
+Source: Trace's handoff "non-colour tokens in Aurora" plus the owner's answers to
+its two open decisions. The owner's answers change the handoff's shape, so the
+mapping below is the authority where they differ. The owner named the layer
+**AuroraTextures** (after Minecraft texture packs). See the README "Textures"
+section.
+
+### Owner decisions
+
+- **Separate selectable layer.** Non-colour design values (type, shape, motion,
+  lines, density, chrome and component defaults) are a *texture*, chosen by the
+  user independently of the colour theme. Selection becomes theme + appearance +
+  texture. Textures are opt-in: an app that registers no textures behaves exactly as
+  before.
+- **Texture foundation plus extensions.** Like themes, a texture contract is an
+  Aurora-owned foundation plus app extensions, and every texture supplies every
+  token in its contract.
+- **Optional, changeable theme pairing.** A developer may pair a theme with a
+  default texture. Pairings are configuration, not hard-coded into themes: they
+  can change at runtime, and a theme may have no texture at all. An explicit
+  user choice wins over the pairing.
+- **Shared across appearances.** A texture has one value set. Light and dark use
+  the same values. Colours a texture needs (border and shadow colours) refer to
+  theme colour tokens and are bound late to the active variant, so they still
+  follow light/dark.
+
+### Mapping from the handoff
+
+- Theme contract, theme variant, generator, theme recipe v1 and colour DTCG stay
+  colour-only and unchanged. Foundation v1 (58 colour roles), generation
+  fixtures and the algorithm id are untouched. `AuroraContract` keeps accepting
+  only `AuroraColorToken`; non-colour tokens are declared on the texture contract.
+- Kept as specified, applied to textures: the sealed `AuroraToken<T>` hierarchy
+  with `AuroraColorToken` as a source-compatible subclass; every listed token
+  type; complete validation reporting all issues; typed `read<T>`; same-type
+  aliases with cycle rejection, kept as references in DTCG; DTCG 2025.10 types
+  with booleans/enums under `$extensions["dev.aurora"]`; recipes; the Flutter
+  conversions and context helpers; portable fixtures.
+- "Generator fills non-colour values" no longer applies: textures are authored
+  values (Dart, DTCG or a texture recipe), starting from an Aurora starter texture.
+
+### Design
+
+- **Tokens.** `sealed class AuroraToken<T>` (path, description) in
+  `token.dart`, re-exported by `contract.dart`. Types: colour, dimension
+  (`AuroraDimension`, unit dp/px/rem), number, fontFamily, fontWeight (1-1000),
+  duration, cubicBezier, strokeStyle (DTCG keywords, `none`, and the dash
+  object form), border, shadow (layers), typography, boolean, and enum (allowed
+  values declared on the token).
+- **References.** `AuroraRef<T>` is either a literal (value classes are their
+  own literal) or `AuroraAlias<T>(token)`. Texture tokens may alias texture tokens
+  of the same type; composite fields may alias their field types. An alias to a
+  colour token inside a border or shadow is a theme colour reference, resolved
+  against the active variant at read time.
+- **Validation.** `AuroraTexture` resolves aliases at construction, rejects
+  cycles, wrong types, ranges and enum values outside the allowed set, and
+  reports every issue in one `AuroraValidationException`. Colour references are
+  checked against the theme contract when the runtime, controller or a fixed
+  scope pairs textures with themes.
+- **Texture foundation v1.** Material 3 baseline roles, kept small because every
+  texture must supply them forever: `type.family.brand` and `type.family.plain`;
+  the 15-role type scale `type.displayLarge` ... `type.labelSmall`;
+  `shape.extraSmall|small|medium|large|extraLarge`;
+  `motion.short|medium|long|extraLong`; and the easings
+  `motion.easing.standard|emphasizedDecelerate|emphasizedAccelerate`. The
+  `type.`, `shape.` and `motion.` namespaces are reserved. Aurora ships an M3
+  baseline starter texture so apps only supply what they change.
+- **Selection and pairing.** `AuroraSelection.textureId` is an optional,
+  explicit user choice, additive in JSON. The runtime holds theme-to-texture
+  pairings (`texturePairings`, `pairTexture(themeId, textureId?)`), validated
+  against registered ids. Active texture = explicit id, else the active theme's
+  pairing, else none (`AuroraState.texture` null). Pairing changes notify only
+  when the active texture changes and never override an explicit choice.
+  Pairings live outside `AuroraTheme` so themes stay pure colour data and the
+  pairing can change without rebuilding themes. Restoration maps unknown ids to
+  null.
+- **DTCG.** One document per texture. Dimensions in dp export as `px` with
+  `$extensions["dev.aurora"].unit = "dp"` so other tools read logical pixels and
+  Aurora round-trips exactly.
+- **Recipes.** A separate texture recipe v1 (`spec/texture-recipe-v1.md`) declares
+  the extension tokens with types and supplies values in DTCG value syntax,
+  optionally starting from a starter `base`. Theme recipe v1 is unchanged.
+- **Encoding details.** A texture token may not mix dp and px (the DTCG marker is
+  per token). `none` strokes export as a single zero-length dash, and an
+  all-zero dash pattern decodes as `none`, so authored zero-only patterns are
+  rejected. Booleans and enums carry no `$type`.
+- **Flutter.** `Aurora.textureOf(context)` returns typed reads plus conversions
+  (dimension to double, typography to TextStyle, border to BorderSide/Border,
+  shadow to BoxShadows, duration, Cubic, nearest FontWeight, stroke style enum).
+  It rebuilds on theme, appearance and texture changes. When a texture is active
+  the default ThemeData also maps the foundation type scale and shapes;
+  colour-only apps get exactly the previous ThemeData.
+
+### Deferred
+
+- Per-theme texture restrictions (limiting which textures a theme allows).
+- Generating textures from inputs; CLI and browser-tool support for texture recipes.
+- Additional foundation roles (elevation, spacing, state layers) need a texture
+  foundation version decision.

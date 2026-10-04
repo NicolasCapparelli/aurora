@@ -1,0 +1,587 @@
+[
+  {
+    "name": "complete texture resolves aliases and keeps units",
+    "mutations": [],
+    "expected": "valid",
+    "values": {
+      "demo.type.serif": [
+        "Fraunces",
+        "Georgia",
+        "serif"
+      ],
+      "demo.type.heading": {
+        "fontFamily": [
+          "Fraunces",
+          "Georgia",
+          "serif"
+        ],
+        "fontSize": {
+          "value": 20,
+          "unit": "dp"
+        },
+        "fontWeight": 600,
+        "letterSpacing": {
+          "value": -0.25,
+          "unit": "dp"
+        },
+        "lineHeight": 1.3
+      },
+      "demo.shape.card": {
+        "value": 6,
+        "unit": "dp"
+      },
+      "demo.shape.chip": {
+        "value": 999,
+        "unit": "dp"
+      },
+      "demo.shape.web": {
+        "value": 3,
+        "unit": "px"
+      },
+      "demo.density.gap": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "demo.depth.card": 1,
+      "demo.lines.divider": {
+        "dashArray": [
+          {
+            "value": 4,
+            "unit": "dp"
+          },
+          {
+            "value": 4,
+            "unit": "dp"
+          }
+        ],
+        "lineCap": "round"
+      },
+      "demo.lines.hidden": "none",
+      "demo.lines.cardBorder": {
+        "color": "{colors.outlineVariant}",
+        "width": {
+          "value": 1.5,
+          "unit": "dp"
+        },
+        "style": "dashed"
+      },
+      "demo.lines.bordered": true,
+      "demo.variants.card": "walletPass",
+      "demo.motion.fade": {
+        "value": 200,
+        "unit": "ms"
+      },
+      "demo.motion.ease": [
+        0.2,
+        0,
+        0,
+        1
+      ],
+      "type.bodyMedium": {
+        "fontFamily": "Roboto",
+        "fontSize": {
+          "value": 14,
+          "unit": "dp"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0.25,
+          "unit": "dp"
+        },
+        "lineHeight": 1.4285714285714286
+      }
+    },
+    "colorReferences": [
+      "colors.outlineVariant",
+      "colors.shadow"
+    ]
+  },
+  {
+    "name": "duration in seconds and font weight keywords decode",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "motion",
+          "fade",
+          "$value"
+        ],
+        "operation": "set",
+        "value": {
+          "value": 0.25,
+          "unit": "s"
+        }
+      },
+      {
+        "path": [
+          "demo",
+          "type",
+          "weight",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "semi-bold"
+      }
+    ],
+    "expected": "valid",
+    "values": {
+      "demo.motion.fade": {
+        "value": 250,
+        "unit": "ms"
+      },
+      "demo.type.weight": 600
+    }
+  },
+  {
+    "name": "group type is inherited",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "density",
+          "$type"
+        ],
+        "operation": "set",
+        "value": "dimension"
+      },
+      {
+        "path": [
+          "demo",
+          "density",
+          "gap",
+          "$type"
+        ],
+        "operation": "remove"
+      }
+    ],
+    "expected": "valid",
+    "values": {
+      "demo.density.gap": {
+        "value": 0.75,
+        "unit": "rem"
+      }
+    }
+  },
+  {
+    "name": "px on a foundation token flows through aliases",
+    "mutations": [
+      {
+        "path": [
+          "shape",
+          "medium",
+          "$value"
+        ],
+        "operation": "set",
+        "value": {
+          "value": 6,
+          "unit": "px"
+        }
+      },
+      {
+        "path": [
+          "shape",
+          "medium",
+          "$extensions"
+        ],
+        "operation": "remove"
+      }
+    ],
+    "expected": "valid",
+    "values": {
+      "demo.shape.card": {
+        "value": 6,
+        "unit": "px"
+      }
+    }
+  },
+  {
+    "name": "a single shadow object is accepted",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "depth",
+          "cardShadow",
+          "$value"
+        ],
+        "operation": "set",
+        "value": {
+          "color": "{colors.shadow}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      }
+    ],
+    "expected": "valid",
+    "values": {
+      "demo.depth.cardShadow": [
+        {
+          "color": "{colors.shadow}",
+          "offsetX": {
+            "value": 0,
+            "unit": "dp"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "dp"
+          },
+          "blur": {
+            "value": 3,
+            "unit": "dp"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "dp"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "app extension is required",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "lines",
+          "bordered"
+        ],
+        "operation": "remove"
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "foundation is required",
+    "mutations": [
+      {
+        "path": [
+          "type",
+          "bodyMedium"
+        ],
+        "operation": "remove"
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "undeclared token is rejected",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "extra"
+        ],
+        "operation": "set",
+        "value": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "px"
+          }
+        }
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "enum value outside the allowed set",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "variants",
+          "card",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "grid"
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "alias cycle",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "card",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "{demo.shape.web}"
+      },
+      {
+        "path": [
+          "demo",
+          "shape",
+          "web",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "{demo.shape.card}"
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "font weight out of range",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "type",
+          "weight",
+          "$value"
+        ],
+        "operation": "set",
+        "value": 0
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "cubic bezier x out of range",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "motion",
+          "ease",
+          "$value"
+        ],
+        "operation": "set",
+        "value": [
+          1.5,
+          0,
+          0,
+          1
+        ]
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "negative duration",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "motion",
+          "fade",
+          "$value"
+        ],
+        "operation": "set",
+        "value": {
+          "value": -1,
+          "unit": "ms"
+        }
+      }
+    ],
+    "expected": "validation"
+  },
+  {
+    "name": "declared type must match the contract",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "chip",
+          "$type"
+        ],
+        "operation": "set",
+        "value": "number"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "boolean needs the dev.aurora marker",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "lines",
+          "bordered",
+          "$extensions"
+        ],
+        "operation": "remove"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "enum must record the contract's allowed set",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "variants",
+          "card",
+          "$extensions",
+          "dev.aurora",
+          "values"
+        ],
+        "operation": "set",
+        "value": [
+          "rich",
+          "compact"
+        ]
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "alias target must exist",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "chip",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "{demo.shape.nope}"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "whole-token alias must have the same type",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "chip",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "{demo.depth.card}"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "composite field alias must have the field type",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "type",
+          "heading",
+          "$value",
+          "fontFamily"
+        ],
+        "operation": "set",
+        "value": "{demo.shape.card}"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "colour field cannot refer to a texture token",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "lines",
+          "cardBorder",
+          "$value",
+          "color"
+        ],
+        "operation": "set",
+        "value": "{demo.shape.card}"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "dp is not a DTCG unit",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "web",
+          "$value"
+        ],
+        "operation": "set",
+        "value": {
+          "value": 3,
+          "unit": "dp"
+        }
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "none is not a DTCG stroke keyword",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "lines",
+          "rule",
+          "$value"
+        ],
+        "operation": "set",
+        "value": "none"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "composite fields are required",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "type",
+          "heading",
+          "$value",
+          "lineHeight"
+        ],
+        "operation": "remove"
+      }
+    ],
+    "expected": "format"
+  },
+  {
+    "name": "unknown dev.aurora fields are rejected",
+    "mutations": [
+      {
+        "path": [
+          "demo",
+          "shape",
+          "chip",
+          "$extensions",
+          "dev.aurora",
+          "density"
+        ],
+        "operation": "set",
+        "value": 2
+      }
+    ],
+    "expected": "format"
+  }
+]

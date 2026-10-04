@@ -1,7 +1,9 @@
 # Aurora
 
 A theme engine with one complete app contract, many named themes, and explicit
-light/dark variants. First implementation: pure Dart core and Flutter adapter.
+light/dark variants. Optional textures let users pick type, shape, motion, lines,
+density and component defaults independently of the colour theme. First
+implementation: pure Dart core and Flutter adapter.
 
 ## Integrate with a coding agent
 
@@ -16,12 +18,17 @@ Flutter starting point. Replace `aurora/` with your checkout's actual location.
 ## Packages
 
 - `packages/aurora`: immutable colors, typed token declarations, contracts,
-  validation, starter palettes, DTCG color files, and selection runtime.
+  validation, starter palettes, DTCG color files, and selection runtime; plus
+  textures: non-colour token types, texture contracts, an M3 starter texture, texture
+  DTCG files and texture recipes.
 - `packages/aurora_flutter`: reactive scope, controller, Flutter colors, and a
   complete Material `ColorScheme` bridge.
 - `examples/theater`: Wicked and Hadestown identities with light/dark variants,
   required ticket colors, and an appearance selector. Palettes are illustrative,
   not official brand assets.
+- `examples/textures`: two colour themes and two textures (Soft and Editorial) chosen
+  independently, with Trace-shaped texture tokens and matching recipes in
+  `examples/recipes/texture-*.json`.
 
 These packages are not published (`publish_to: none`). For an app that builds
 independently of this checkout, export and commit an app-owned snapshot:
@@ -232,6 +239,118 @@ Local scopes update immediately; MaterialApp may animate its native theme while
 direct Aurora tokens already expose the target values. Custom-token interpolation
 is deferred.
 
+## Textures: type, shape, motion and more
+
+AuroraTextures work like texture packs: a texture is a named, complete set of
+non-colour values layered on top of the colour theme. A texture has one value
+set shared by light and dark. Textures are opt-in; an app that registers none is
+unchanged.
+
+Like themes, a texture contract is an Aurora foundation plus app extensions, and
+every texture supplies every token. Texture foundation v1 is the Material 3 baseline:
+`type.family.brand|plain`, the 15-role type scale (`type.displayLarge` ...
+`type.labelSmall`), `shape.extraSmall` ... `shape.extraLarge`,
+`motion.short|medium|long|extraLong` and three easings. The `type`, `shape` and
+`motion` namespaces are reserved. Colours are never texture tokens.
+
+```dart
+abstract final class FeelTokens {
+  static const cardRadius =
+      AuroraDimensionToken('feel.shape.card', description: 'Card corners.');
+  static const title =
+      AuroraTypographyToken('feel.type.title', description: 'Card titles.');
+  static const card =
+      AuroraBorderToken('feel.lines.card', description: 'Card border.');
+  static const flightCard = AuroraEnumToken('feel.variants.flightCard',
+      description: 'Default card layout.', values: ['rich', 'compact']);
+}
+
+final textureContract = AuroraTextureContract(id: 'feel', extensions: [
+  FeelTokens.cardRadius, FeelTokens.title, FeelTokens.card, FeelTokens.flightCard,
+]);
+
+final soft = AuroraTextureStarter.texture( // M3 baseline + your values
+  contract: textureContract,
+  id: 'soft',
+  name: 'Soft',
+  values: {
+    AuroraTextureFoundation.mediumShape: const AuroraDimension.dp(20),
+    FeelTokens.cardRadius: const AuroraAlias(AuroraTextureFoundation.mediumShape),
+    FeelTokens.title: const AuroraTypography(
+        fontFamily: AuroraAlias(AuroraTextureFoundation.plainFamily),
+        fontSize: AuroraDimension.dp(18),
+        fontWeight: AuroraFontWeight.bold,
+        letterSpacing: AuroraDimension.dp(0),
+        lineHeight: AuroraLiteral(1.3)),
+    // Border and shadow colours alias theme colour tokens, so they follow
+    // the active theme and appearance.
+    FeelTokens.card: const AuroraBorder(
+        color: AuroraAlias(AuroraFoundation.outlineVariant),
+        width: AuroraDimension.dp(1),
+        style: AuroraStrokeStyle.solid),
+    FeelTokens.flightCard: 'rich',
+  },
+);
+```
+
+Token types: colour (themes only), dimension (`dp`, `px`, `rem`), number,
+fontFamily, fontWeight, duration, cubicBezier, strokeStyle (keywords, `none`,
+dash patterns), border, shadow, typography, boolean and enum. Values may alias a
+token of the same type with `AuroraAlias`; composite fields may alias their field
+types. Aliases resolve at construction; cycles, wrong types, out-of-range values
+and enum values outside the declared set fail with every issue reported in one
+`AuroraValidationException`. `texture.read(token)` is typed.
+
+Register textures, optionally pair themes with a default texture, and select:
+
+```dart
+AuroraEngine.managed(
+  contract: contract,
+  themes: themes,
+  textures: [soft, editorial],
+  texturePairings: const {'harbor': 'soft', 'ember': 'editorial'},
+  initialSelection: const AuroraSelection(themeId: 'harbor'),
+  fallback: AuroraVariantFallback.preferred,
+  builder: (context, theme) => MaterialApp(theme: theme, home: const Home()),
+);
+
+// In widgets: rebuilds on theme, appearance and texture changes.
+final texture = Aurora.textureOf(context);
+texture.borderRadius(FeelTokens.cardRadius); // BorderRadius
+texture.textStyle(FeelTokens.title);         // TextStyle
+texture.border(FeelTokens.card);             // Border, colour from the theme
+texture.option(FeelTokens.flightCard, FlightCardLayout.values);
+```
+
+The active texture is the selection's `textureId` when the user picked one,
+otherwise the theme's paired texture, otherwise none. A theme does not need a
+pairing. Change pairings at runtime with
+`Aurora.controllerOf(context).pairTexture('ember', 'soft')` (or `null` to
+remove one); an explicit user choice is unaffected. Use `Aurora.textureOf` where
+a texture is always present and `Aurora.maybeTextureOf` where it may not be.
+
+Conversions also cover `dimension` (logical pixels; `rem` × 16 by default),
+`shadows`, `duration`, `curve` (Cubic), `fontWeight` (nearest), `strokeStyle`
+and `dashPattern` (Flutter borders cannot dash; paint dashes yourself, as the
+example does). With a texture active, the default ThemeData also gets the
+foundation type scale and corner shapes for cards, chips, menus, dialogs and
+sheets; colour-only apps get exactly the previous ThemeData. Fonts named in a
+texture must be available to the app (bundle them as assets for web).
+
+Selection JSON gains an optional `textureId`; `AuroraSelection.restore` takes
+`textures` and restores an unknown id to null (the theme's pairing). Pairings
+are app configuration, not part of the stored selection. `AuroraTextureDtcg.encode/decode` and
+`AuroraTextureRecipe.decode` read and write textures; see the
+[DTCG profile](continuity/data/dtcg-profile.md) and
+[texture recipe v1](spec/texture-recipe-v1.md).
+
+**Migration:** nothing changes for existing apps. `AuroraColorToken` is now one
+subclass of the sealed `AuroraToken<T>`, and `AuroraColor` is an
+`AuroraRef<AuroraColor>`; existing code compiles unchanged. To adopt textures,
+declare a texture contract, build textures with `AuroraTextureStarter.texture`,
+pass `textures:` (and optional `texturePairings:`) to the engine or controller,
+and set `textureId` on selections when the user picks a texture.
+
 ## Portable theme values
 
 `AuroraDtcg.encode(variant)` returns a JSON-compatible DTCG token document.
@@ -336,7 +455,9 @@ dart format packages/aurora/lib packages/aurora_flutter/lib
 ## Next milestones
 
 - App-contract authoring support in the visual generator.
-- More portable token types and color-space support as real use cases require.
+- More color-space support as real use cases require.
+- A texture foundation v2 (elevation, spacing, state layers) and themes that
+  recommend a default texture; texture support in the CLI and browser tool.
 - Evaluate the published DTCG Resolver for portable variant packaging.
 - Shared portable fixtures for a future TypeScript / React Native port.
 

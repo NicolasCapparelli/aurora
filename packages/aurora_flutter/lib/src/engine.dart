@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'binding.dart';
 import 'controller.dart';
-import 'material.dart';
 import 'scope.dart';
 
 /// Retain your MaterialApp or MaterialApp.router configuration in this builder.
@@ -23,7 +22,9 @@ class AuroraEngine extends StatefulWidget {
         contract = null,
         themes = null,
         initialSelection = null,
-        fallback = null;
+        fallback = null,
+        textures = null,
+        texturePairings = null;
 
   /// Creates and disposes a controller once for this engine's lifetime.
   /// Configuration is fixed while mounted; select themes via controllerOf.
@@ -34,19 +35,30 @@ class AuroraEngine extends StatefulWidget {
     required Iterable<AuroraTheme> themes,
     required AuroraSelection initialSelection,
     required AuroraVariantFallback fallback,
+    Iterable<AuroraTexture> textures = const [],
+    Map<String, String> texturePairings = const {},
     required this.builder,
     this.themeBuilder,
   })  : controller = null,
         contract = contract,
         themes = List.unmodifiable(themes),
         initialSelection = initialSelection,
-        fallback = fallback;
+        fallback = fallback,
+        textures = List.unmodifiable(textures),
+        texturePairings = Map.unmodifiable(texturePairings);
 
   final AuroraController? controller;
   final AuroraContract? contract;
   final List<AuroraTheme>? themes;
   final AuroraSelection? initialSelection;
   final AuroraVariantFallback? fallback;
+
+  /// Selectable textures for a managed engine; empty when the app uses none.
+  final List<AuroraTexture>? textures;
+
+  /// Initial theme-to-texture pairings for a managed engine. Change them at
+  /// runtime with `Aurora.controllerOf(context).pairTexture`.
+  final Map<String, String>? texturePairings;
   final AuroraAppBuilder builder;
   final AuroraThemeBuilder? themeBuilder;
 
@@ -66,6 +78,8 @@ class _AuroraEngineState extends State<AuroraEngine> {
           themes: widget.themes!,
           initialSelection: widget.initialSelection!,
           fallback: widget.fallback!,
+          textures: widget.textures!,
+          texturePairings: widget.texturePairings!,
           systemAppearance:
               WidgetsBinding.instance.platformDispatcher.platformBrightness ==
                       Brightness.dark
@@ -89,9 +103,12 @@ class _AuroraEngineState extends State<AuroraEngine> {
       final selection = widget.initialSelection!;
       if (!identical(widget.contract, oldWidget.contract) ||
           !listEquals(widget.themes, oldWidget.themes) ||
+          !listEquals(widget.textures, oldWidget.textures) ||
+          !mapEquals(widget.texturePairings, oldWidget.texturePairings) ||
           widget.fallback != oldWidget.fallback ||
           selection.themeId != oldSelection.themeId ||
-          selection.appearance != oldSelection.appearance) {
+          selection.appearance != oldSelection.appearance ||
+          selection.textureId != oldSelection.textureId) {
         throw FlutterError(
             'AuroraEngine.managed configuration is fixed while mounted. '
             'Use Aurora.controllerOf(context).select(...) for selection changes, '
@@ -115,7 +132,7 @@ class _AuroraEngineState extends State<AuroraEngine> {
         builder: (context) {
           final variant = Aurora.of(context);
           final theme = widget.themeBuilder?.call(context, variant) ??
-              variant.toThemeData();
+              auroraDefaultThemeData(context);
           return widget.builder(context, theme);
         },
       );

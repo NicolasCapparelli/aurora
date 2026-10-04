@@ -79,5 +79,44 @@ state changes.
 
 Seed-based generation is documented in `generation-v1.md`, with additional
 cross-language fixtures. Portable authoring inputs are documented in `recipe-v1.md`.
-Persistence, more token types, and system UI chrome are
-separate future capabilities. Do not couple them to framework widget APIs.
+
+## Textures
+
+A texture is a named, complete set of non-colour values selected independently of
+the theme. It has one value set for every appearance. A texture contract is the
+texture foundation (`texture-foundation-v1.json`: 29 Material 3 baseline tokens with
+their starter values) plus app extensions; every texture supplies every token.
+Texture contracts never declare colour tokens. Border and shadow colours are
+literals or references to theme colour tokens, resolved against the active
+variant; a runtime rejects registered textures that refer to colours missing from
+the theme contract.
+
+Token types and validation follow `texture-recipe-v1.md` and the DTCG profile.
+Aliases between texture tokens resolve when a texture is built.
+
+Selection adds an optional `textureId` for an explicit user choice. A runtime
+also holds theme-to-texture pairings (app configuration, changeable at runtime,
+validated against registered themes and textures). The active texture is the
+explicit `textureId`, else the active theme's pairing, else none. An explicit id
+must be registered; a runtime without textures rejects one. Changing only the
+texture, or a pairing that changes the active texture, is a change; pairing
+changes never override an explicit choice. Strict selection JSON accepts an
+optional nonempty `textureId`; forgiving restoration takes the registered
+textures and restores an unknown id to null.
+
+Texture conformance fixtures:
+
+- `fixtures/texture-recipe.json`: a recipe covering every type, aliases, units and
+  theme colour references.
+- `fixtures/texture.tokens.json`: the DTCG export of that recipe. Both must
+  produce the same texture.
+- `fixtures/texture-cases.json`: mutations of the token document, in the same
+  format as `variant-cases.json`. `valid` cases list expected resolved values in
+  texture recipe syntax (dimensions keep their unit, aliases are resolved, theme
+  colour references stay as `{path}`) and may list `colorReferences`.
+
+Dart consumes them in `packages/aurora/test/texture_portable_test.dart`. Refresh
+`texture.tokens.json` and `texture-foundation-v1.json` only deliberately, with
+`dart run tool/export_texture_fixture.dart` from `packages/aurora`.
+
+Persistence and system UI chrome are separate future capabilities. Do not couple them to framework widget APIs.

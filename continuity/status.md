@@ -2,14 +2,16 @@
 
 ## Current state
 
-- All three packages and the example are present and, per the last check run, format-clean, analyzer-clean, and passing tests (see Last verified state). Nothing is known to be broken.
+- All packages and both examples (theater, textures) are present and, per the last check run, format-clean, analyzer-clean, and passing tests (see Last verified state). Nothing is known to be broken.
 - Core (`packages/aurora`): contracts, themes, runtime, DTCG, generator, recipe, CLI, and tooling are implemented in source and exercised by tests.
 - Adapter (`packages/aurora_flutter`): controller, scope, engine, Material bridge implemented and exercised by widget tests.
 - App-owned package distribution is implemented by `tools/vendor.py`; installation/onboarding use committed in-app snapshots. See [installation](user/installation.md).
 - Not exercised in this session: `flutter build web`, `flutter run`, browser UI in a real browser, theme installer against a real app. CLI and theme installer run against temporary projects in tests.
-- Implemented scope is color tokens only; other token types, persistence, resolver packaging, contract codegen, and a TypeScript port are planned/unimplemented ([design notes](decisions/design-notes.md)).
+- Themes are colour-only. Textures (non-colour tokens: type, shape, motion, lines, density, chrome, component defaults) are implemented and merged into `main`: core token hierarchy, texture contract/foundation/starter, validation and aliases, runtime selection, texture DTCG, texture recipes, theme-to-texture pairings, portable fixtures, Flutter bridge, `examples/textures`. Persistence, resolver packaging, contract codegen, and a TypeScript port remain unimplemented ([design notes](decisions/design-notes.md)).
 
 ## Active work and last stopping point
+
+- **AuroraTextures (2026-10-04), merged into `main`.** Implements Trace's handoff `trace/docs/handoffs/aurora-style-tokens.md` as reshaped by the owner: non-colour tokens are a separate texture layer ("AuroraTextures") with a foundation plus extensions, shared across light/dark, and optional runtime-changeable theme-to-texture pairings. Themes, generator, theme recipes and colour fixtures are unchanged. See [design notes](decisions/design-notes.md#textures-non-colour-tokens-decided-2026-10-04). Next: Trace task U3 re-vendors (`tools/vendor.py --project <trace> --replace`) and moves Trace's style packs onto textures, using pairings for Atlas, Fieldnotes and Classic. Trace has not been edited. API summary and the Trace StylePack mapping: [trace-textures-handoff](agent/trace-textures-handoff.md).
 
 - **No active Aurora work. Trace migration is handed off.** Package vendoring, documentation, tests, and the prompt are included in this commit at the user's request. Trace has not been edited. See [Trace migration prompt](agent/trace-vendoring-prompt.md).
 - Investigation confirmed Trace's pubspec, lockfile, and resolved package configuration point to the sibling Aurora checkout. Aurora's former onboarding instructed that integration. The new exporter copies both packages without caches, preserves internal sibling paths, records revision/dirty state/versions/SHA-256, and refuses overwrite or modified snapshots unless an unchanged managed export is explicitly replaced. No runtime APIs changed.
@@ -26,6 +28,13 @@ Requested downstream work: the agent in Trace implements the [migration prompt](
 - Unknown (future-work only): intended foundation versioning policy when adding tokens ([AGENTS.md](../AGENTS.md) says it needs a decision).
 
 ## Last verified state
+
+2026-10-04, AuroraTextures as committed and merged into `main`:
+
+- `./tools/check.ps1`: exit 0; 7 Python exporter tests, formatting and analysis for core, adapter, theater and the textures example; 122 core tests, 30 Flutter adapter tests and 4 textures-example tests pass. Baseline before the change was 73 core and 22 adapter tests, all still passing unchanged.
+- Generation fixtures, `spec/foundation-v1.json` and existing portable fixtures untouched. New texture fixtures were created with `tool/export_texture_fixture.dart` (texture.tokens.json, texture-foundation-v1.json); `texture-cases.json` and `texture-recipe.json` are hand-written.
+- `flutter build web` for the example (before the rename to textures) succeeded and the page was checked in a browser: switching Soft to Editorial changes corners, border dash style, layout and chip shapes. Named fonts (Nunito, Georgia) are not bundled, so the web build falls back to Roboto; widget tests check the requested families. Not rebuilt for web after the rename and pairing changes; widget tests cover them.
+- A scratch copy of Trace's current tree re-vendored from this code analyzes clean and passes all 484 Trace tests, the same as on Trace's existing snapshot. Trace itself was not modified, vendored or built.
 
 2026-10-01, package-vendoring implementation included in this commit:
 
@@ -55,6 +64,8 @@ Date 2026-09-30, base commit `0e782d2` with only untracked `continuity/` and doc
 - Counts are as observed; no historical count was compared.
 
 ## Last meaningful update
+
+2026-10-04 — AuroraTextures (non-colour token layer with optional theme pairings) implemented with tests, fixtures, example and docs; committed on `feat/textures` and merged into `main` at the owner's request.
 
 2026-10-01 — App-owned package snapshots replace external-checkout installation guidance; exporter, integrity checks, regression tests, and Trace migration prompt included in this commit at the user's request. No further Aurora task established.
 

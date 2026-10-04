@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "kind": "texture",
+  "id": "portable-soft",
+  "name": "Portable Soft",
+  "base": "material",
+  "contract": {
+    "id": "portable-texture",
+    "version": 1,
+    "extensions": [
+      {"path": "demo.type.serif", "description": "Serif family for headings.", "type": "fontFamily"},
+      {"path": "demo.type.weight", "description": "Heading weight.", "type": "fontWeight"},
+      {"path": "demo.type.heading", "description": "Card headings.", "type": "typography"},
+      {"path": "demo.shape.card", "description": "Card corner radius.", "type": "dimension"},
+      {"path": "demo.shape.chip", "description": "Chip corner radius.", "type": "dimension"},
+      {"path": "demo.shape.web", "description": "A web-only radius in px.", "type": "dimension"},
+      {"path": "demo.density.gap", "description": "Gap relative to the root font size.", "type": "dimension"},
+      {"path": "demo.depth.card", "description": "Card elevation level.", "type": "number"},
+      {"path": "demo.lines.divider", "description": "Divider stroke style.", "type": "strokeStyle"},
+      {"path": "demo.lines.rule", "description": "Rule stroke style.", "type": "strokeStyle"},
+      {"path": "demo.lines.hidden", "description": "A stroke that draws nothing.", "type": "strokeStyle"},
+      {"path": "demo.lines.cardBorder", "description": "Card border.", "type": "border"},
+      {"path": "demo.depth.cardShadow", "description": "Card shadow.", "type": "shadow"},
+      {"path": "demo.lines.bordered", "description": "Whether cards draw a border.", "type": "boolean"},
+      {"path": "demo.variants.card", "description": "Default card layout.", "type": "enum", "values": ["rich", "compact", "walletPass"]},
+      {"path": "demo.motion.fade", "description": "Fade duration.", "type": "duration"},
+      {"path": "demo.motion.ease", "description": "Fade easing.", "type": "cubicBezier"}
+    ]
+  },
+  "values": {
+    "type.family.brand": ["Fraunces", "Georgia", "serif"],
+    "shape.medium": {"value": 6, "unit": "dp"},
+    "demo.type.serif": "{type.family.brand}",
+    "demo.type.weight": 600,
+    "demo.type.heading": {
+      "fontFamily": "{demo.type.serif}",
+      "fontSize": {"value": 20, "unit": "dp"},
+      "fontWeight": "{demo.type.weight}",
+      "letterSpacing": {"value": -0.25, "unit": "dp"},
+      "lineHeight": 1.3
+    },
+    "demo.shape.card": "{shape.medium}",
+    "demo.shape.chip": {"value": 999, "unit": "dp"},
+    "demo.shape.web": {"value": 3, "unit": "px"},
+    "demo.density.gap": {"value": 0.75, "unit": "rem"},
+    "demo.depth.card": 1,
+    "demo.lines.divider": {
+      "dashArray": [{"value": 4, "unit": "dp"}, "{shape.extraSmall}"],
+      "lineCap": "round"
+    },
+    "demo.lines.rule": "dashed",
+    "demo.lines.hidden": "none",
+    "demo.lines.cardBorder": {
+      "color": "{colors.outlineVariant}",
+      "width": {"value": 1.5, "unit": "dp"},
+      "style": "{demo.lines.rule}"
+    },
+    "demo.depth.cardShadow": [
+      {
+        "color": {"colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.2},
+        "offsetX": {"value": 0, "unit": "dp"},
+        "offsetY": {"value": 2, "unit": "dp"},
+        "blur": {"value": 6, "unit": "dp"},
+        "spread": {"value": 0, "unit": "dp"}
+      },
+      {
+        "color": "{colors.shadow}",
+        "offsetX": {"value": 0, "unit": "dp"},
+        "offsetY": "{shape.extraSmall}",
+        "blur": {"value": 1, "unit": "dp"},
+        "spread": {"value": -1, "unit": "dp"},
+        "inset": true
+      }
+    ],
+    "demo.lines.bordered": true,
+    "demo.variants.card": "walletPass",
+    "demo.motion.fade": {"value": 200, "unit": "ms"},
+    "demo.motion.ease": "{motion.easing.standard}"
+  }
+}

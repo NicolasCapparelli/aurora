@@ -1,6 +1,6 @@
 # Data model
 
-Aurora has no database. Its data is in-memory immutable objects plus portable JSON boundary formats. Everything is color-typed in V1.
+Aurora has no database. Its data is in-memory immutable objects plus portable JSON boundary formats. Themes are colour-typed; textures hold every other token type.
 
 ## Schema routing index
 
@@ -12,6 +12,9 @@ Aurora has no database. Its data is in-memory immutable objects plus portable JS
 | Variant, theme, appearance enums | [theme.dart](../../packages/aurora/lib/src/theme.dart) | runtime, DTCG, generator |
 | Selection, state, fallback | [runtime.dart](../../packages/aurora/lib/src/runtime.dart) | Flutter controller/scope/engine |
 | DTCG variant document | [dtcg.dart](../../packages/aurora/lib/src/dtcg.dart), [profile](dtcg-profile.md), fixtures in [spec/fixtures](../../spec/fixtures) | generator manifest, installer files, UI downloads |
+| Token hierarchy and texture values (`AuroraToken<T>`, `AuroraRef`, `AuroraDimension`, `AuroraTypography`, ...) | [token.dart](../../packages/aurora/lib/src/token.dart), [ref.dart](../../packages/aurora/lib/src/ref.dart), [values.dart](../../packages/aurora/lib/src/values.dart) | textures, DTCG, recipes, Flutter `AuroraTextureTokens` |
+| Texture contract, texture, texture foundation and starter | [texture.dart](../../packages/aurora/lib/src/texture.dart), [texture_foundation.dart](../../packages/aurora/lib/src/texture_foundation.dart), [spec/texture-foundation-v1.json](../../spec/texture-foundation-v1.json) | runtime, Flutter controller/scope/engine |
+| Texture DTCG document and texture recipe | [texture_dtcg.dart](../../packages/aurora/lib/src/texture_dtcg.dart), [texture_recipe.dart](../../packages/aurora/lib/src/texture_recipe.dart), shared [texture_codec.dart](../../packages/aurora/lib/src/texture_codec.dart), [profile](dtcg-profile.md#aurora-dtcg-texture-profile-v1), [texture recipe v1](../../spec/texture-recipe-v1.md) | apps, example recipes, fixtures |
 | Recipe JSON (v1) | [recipe.dart](../../packages/aurora/lib/src/recipe.dart), [recipe-v1](../../spec/recipe-v1.md), example [theater.json](../../examples/recipes/theater.json) | CLI `--json`, installer (stored as `recipe.json`) |
 | Generation request/result/manifest | [generator.dart](../../packages/aurora/lib/src/generator.dart), [generation-v1](../../spec/generation-v1.md), fixture [generation-v1.json](../../spec/fixtures/generation-v1.json) | CLI, server, installer |
 | Contrast pair/check | [contrast.dart](../../packages/aurora/lib/src/contrast.dart) | manifest `contrast` array |
@@ -22,7 +25,9 @@ Aurora has no database. Its data is in-memory immutable objects plus portable JS
 - **Contract**: foundation (version 1) plus app extensions, identified by `id` and a positive integer `version`. A token's identity within a contract is its dotted path, but membership is checked with `identical` against the contract's own declaration instance, so variants, themes, and the runtime must share the same contract instance. Foundation paths live in the reserved `colors.` namespace. A path may not be both a token and a group prefix.
 - **Variant**: complete map of every contract token to an `AuroraColor` for one appearance (light or dark). Inputs are copied into an immutable map; missing, non-color, or undeclared entries fail with all issues listed.
 - **Theme**: id, display name, at most one variant per appearance (same contract instance), and a preferred appearance that must exist. Having both light and dark is not required.
-- **Selection**: theme id plus preference (light/dark/system). System resolves through the host-supplied device appearance; the requested preference is retained even when fallback resolves to another appearance.
+- **Texture contract**: texture foundation v1 (29 tokens in the reserved `type`, `shape`, `motion` namespaces) plus app extensions of any non-colour type; same path, collision and instance-identity rules as theme contracts. Colour tokens are rejected.
+- **Texture**: id, name and a complete value for every texture-contract token, shared by all appearances. Authored values (keeping aliases, for export) and resolved values are both kept, immutable. Colour fields inside borders and shadows stay as literal colours or theme colour references (`colorReferences`), resolved with `variant.resolveColor`.
+- **Selection**: theme id plus preference (light/dark/system), plus an optional explicit `textureId`. The runtime also holds mutable theme-to-texture pairings; the active texture is the explicit id, else the theme's pairing, else none. System resolves through the host-supplied device appearance; the requested preference is retained even when fallback resolves to another appearance.
 - **Registry** (runtime): unique theme ids; every theme's contract identical to the runtime's.
 - **Lifecycle**: all objects are immutable except the runtime's current state. Disposal closes the stream and later writes throw `StateError`. Selection is not persisted.
 

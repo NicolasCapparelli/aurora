@@ -9,7 +9,7 @@ function Invoke-Checked {
 
 Invoke-Checked python @((Join-Path $repoRoot 'tools/test_vendor.py'))
 
-foreach ($package in @('packages/aurora', 'packages/aurora_flutter', 'examples/theater')) {
+foreach ($package in @('packages/aurora', 'packages/aurora_flutter', 'examples/theater', 'examples/textures')) {
     Push-Location (Join-Path $repoRoot $package)
     try {
         if ($package -eq 'packages/aurora') {

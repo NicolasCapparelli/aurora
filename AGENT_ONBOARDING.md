@@ -299,6 +299,24 @@ possible, and semantic Aurora tokens for custom UI. Keep palette authorship,
 settings, and widgets separate using the app's existing architecture conventions.
 Implement the actual requested app, not just a themed starter screen.
 
+### Optional: textures (type, shape, motion, component defaults)
+
+Use textures when the app's non-colour design should be user-selectable or vary
+between looks: fonts, corner radii, borders, density, motion, or which component
+layout is the default. Declare app texture tokens once as typed constants
+(`AuroraDimensionToken`, `AuroraTypographyToken`, `AuroraEnumToken`, ...) in an
+`AuroraTextureContract`; never declare colours there. Build each texture with
+`AuroraTextureStarter.texture(contract:, id:, name:, values:)`, which supplies the
+Material 3 foundation so you only provide app extensions and deliberate
+overrides. Border and shadow colours alias theme colour tokens
+(`AuroraAlias(AuroraFoundation.outlineVariant)`). Pass `textures:` to
+`AuroraEngine.managed` or `AuroraController`, plus `texturePairings:` when themes
+should come with a default texture; set `textureId` on a selection only when the
+user picks a texture. Read values in widgets with `Aurora.textureOf(context)`
+(or `maybeTextureOf` when a theme may have none) rather than hard-coded numbers.
+Textures share values across light and dark. See the README section "Textures"
+and the [textures example](examples/textures/lib/main.dart).
+
 ## 5. Use the agent generator when useful
 
 For per-item branding, generate once per seed outside widget builds:
@@ -520,6 +538,8 @@ Read these when the selected route needs them; all links are checkout-relative.
 | Portable recipe fields | [recipe v1](spec/recipe-v1.md) |
 | Token interchange and supported limitations | [DTCG profile](continuity/data/dtcg-profile.md) |
 | Foundation role paths and descriptions | [foundation v1](spec/foundation-v1.json) |
+| Texture foundation paths and starter values | [texture foundation v1](spec/texture-foundation-v1.json) |
+| Textures in a working app, recipes | [textures example](examples/textures/lib/main.dart), [texture recipe v1](spec/texture-recipe-v1.md) |
 | Ownership, scope, navigation examples | [Flutter integration tests](packages/aurora_flutter/test/integration_test.dart) |
 
 If prose and the installed source differ, inspect the public exports and current
