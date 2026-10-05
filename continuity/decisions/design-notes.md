@@ -295,3 +295,4 @@ and exports design systems).
   wide-gamut colours to 8-bit sRGB, drop extra modes, and leave out extra tokens
   (which the strict profiles reject). Validators in both languages report every
   issue by category and file and must agree.
+- **Strict profiles kept (owner, 2026-10-05).** Producers leave extra tokens out of bundles; Aurora does not accept and drop them.
