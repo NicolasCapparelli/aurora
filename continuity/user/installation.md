@@ -1,5 +1,8 @@
 # Install Aurora in an isolated app
 
+This guide covers Flutter and Dart apps. TypeScript apps use
+`tools/vendor.py --typescript`; see [consuming from TypeScript](typescript.md#install-an-app-owned-snapshot).
+
 Aurora's packages are currently unpublished. App integrations use committed,
 app-owned source snapshots; a build must not require a sibling Aurora checkout.
 The source checkout is needed only when initially exporting or updating. The

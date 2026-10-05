@@ -14,6 +14,7 @@
 | --- | --- | --- | --- |
 | Full verification (Python exporter tests; TS install, typecheck, tests, build; Dart/Flutter pub get, format check, analyze, tests) | repo root | `./tools/check.ps1` | Passed; latest run and scope in [status](../status.md#last-verified-state) |
 | Vendor exporter regression checks (Python 3) | repo root | `python tools/test_vendor.py` | See latest scope in status |
+| Export TypeScript packages to an app | any | `python tools/vendor.py --typescript --project <app>` | Run against a scratch pnpm app; see status |
 | Core tests | `packages/aurora` | `dart pub get; dart test` | Passed; counts in status |
 | TS install / typecheck / tests / build | repo root | `corepack pnpm install --frozen-lockfile`, then `corepack pnpm -r run typecheck`, `-r run test`, `-r run build` | Passed via check.ps1; counts in status |
 | Adapter tests | `packages/aurora_flutter` | `flutter pub get; flutter test` | Passed via check.ps1; counts in status |

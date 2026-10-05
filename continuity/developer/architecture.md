@@ -12,7 +12,7 @@
 | Example | `examples/theater` | Wicked/Hadestown themes with required `theater.*` extensions and an appearance selector. |
 | Specs and fixtures | `spec/` | Language-neutral portable behavior and shared JSON fixtures for future ports. |
 | Maintenance script | `tools/generate_foundation.py` | Generates foundation accessors, starter presets, Material mapping, and `spec/foundation-v1.json` from one table, plus the TS core's foundation, starters, Material role mapping and texture foundation (the latter from `spec/texture-foundation-v1.json`). |
-| Package exporter | `tools/vendor.py` | App-owned copies of both packages with provenance/hashes and explicit verified updates; no app pubspec or runtime changes. [Installation](../user/installation.md). |
+| Package exporter | `tools/vendor.py` | App-owned copies of both Dart packages, or (`--typescript`) built `@aurora/core` and `@aurora/react`, with provenance/hashes and explicit verified updates; no app manifest or runtime changes. [Installation](../user/installation.md). |
 
 ## Representative flows
 

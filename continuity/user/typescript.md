@@ -4,6 +4,55 @@ This guide is for apps (and their coding agents) that use Aurora from
 TypeScript, such as TokenSeed. Contributors working on the packages themselves
 read the [TypeScript contributor guide](../developer/typescript.md).
 
+## Install: an app-owned snapshot
+
+The packages are private and never published to npm. An app commits a built
+snapshot exported from an Aurora checkout, so its CI needs no sibling checkout.
+From any directory, with Python 3 and Node LTS (corepack) available:
+
+```powershell
+python C:\path\to\aurora\tools\vendor.py --typescript --project C:\path\to\my_app
+```
+
+The app must already have a `package.json`. The exporter installs and builds
+both packages in the Aurora checkout (through `corepack pnpm`), then writes:
+
+```text
+vendor/aurora/
+  core/    # @aurora/core: package.json, dist/ (ESM + .d.ts), README, NOTICE, MCU license
+  react/   # @aurora/react: package.json, dist/, README
+  VENDORED.md
+  vendor-manifest.json   # kind "typescript", source HEAD and dirty state,
+                         # package versions, node/pnpm/tsc versions, SHA-256 per file
+```
+
+It exports built ESM with type declarations rather than source, so the app never
+compiles Aurora under its own tsconfig settings and needs no build configuration
+for it. Copied `package.json` files drop `scripts` and `devDependencies`.
+
+Add both as `file:` dependencies, plus React if the app uses the adapter:
+
+```json
+"dependencies": {
+  "@aurora/core": "file:vendor/aurora/core",
+  "@aurora/react": "file:vendor/aurora/react",
+  "react": "^19.0.0"
+}
+```
+
+`@aurora/react` declares `@aurora/core` and `react` as peer dependencies, so pnpm
+links it to the app's single copy of each. This was checked with a scratch pnpm
+app outside the Aurora checkout: the adapter's `@aurora/core` resolves to the same
+file as the app's, the app typechecks with `skipLibCheck: false`, and app-built
+contracts and themes render through `AuroraProvider`. Run `pnpm install` and
+commit the vendor directory, `package.json` and the lockfile.
+
+Updates follow the Dart rules. Exporting onto an existing directory fails; pass
+`--replace` to swap in a new snapshot. Replacement is refused when the snapshot's
+files differ from its manifest (local edits, extra or missing files) or when the
+destination holds a Dart snapshot. `--output` picks another app-relative
+directory. The exporter never edits `package.json` or runs installs in the app.
+
 ## The core API in one page
 
 `@aurora/core` mirrors the Dart core with TypeScript naming. Constructors take
