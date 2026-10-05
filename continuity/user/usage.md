@@ -95,7 +95,9 @@ does not change an already-mounted managed engine's registry.
 Designs made outside Aurora, such as TokenSeed exports, arrive as a
 [portable bundle](../../spec/bundle-v1.md): a single `*.aurora.json` file, or a
 folder with `manifest.json` plus `light.tokens.json`, `dark.tokens.json` and
-`texture.tokens.json`. One command installs it:
+`texture.tokens.json`. One command installs it, run from the app (any app whose
+pubspec depends on `aurora` or `aurora_flutter`, including through a vendored
+snapshot) or from `packages/aurora` in an Aurora checkout:
 
 ```powershell
 dart run aurora install --bundle C:\path\to\ocean.aurora.json --project C:\path\to\my_app

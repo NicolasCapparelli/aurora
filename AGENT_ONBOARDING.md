@@ -14,6 +14,36 @@ Ask only when missing information prevents meaningful progress; continue any
 independent work while waiting. This document does not authorize publishing,
 deployment, or unrelated edits.
 
+## TypeScript and React apps
+
+The rest of this playbook is for Flutter. A TypeScript or React app (such as
+TokenSeed) uses `@aurora/core` and `@aurora/react`; the full guide is
+[consuming Aurora from TypeScript](continuity/user/typescript.md).
+
+1. Export an app-owned snapshot (Python 3 and Node LTS with corepack):
+   `python <aurora>/tools/vendor.py --typescript --project <app>`, which writes
+   `<app>/vendor/aurora/{core,react}` with built ESM, type declarations and a
+   provenance manifest. Commit it.
+2. Depend on it from the app's `package.json`:
+   `"@aurora/core": "file:vendor/aurora/core"` and
+   `"@aurora/react": "file:vendor/aurora/react"` (plus `react` ^19).
+3. Theme the app or a subtree:
+
+   ```tsx
+   <AuroraProvider contract={contract} themes={themes} fallback="preferred"
+     initialSelection={new AuroraSelection({ themeId: 'wicked' })} cssVariables="root">
+     <App />  {/* style with var(--aurora-colors-primary); read tokens with useAuroraTokens() */}
+   </AuroraProvider>
+   ```
+
+   Use `<AuroraFixedScope variant={v} texture={t}>` for previews and thumbnails, and
+   its `update()` handle for per-frame live theming.
+4. To hand designs to Flutter apps, export a portable bundle with
+   `AuroraBundle.encode(...)`, check it with `AuroraBundle.validate(bundle)` in the
+   app's tests on every export, and map roles with the
+   [producer mapping guide](continuity/user/bundle-producers.md). The Flutter app
+   installs it with `dart run aurora install --bundle <file> --project .`.
+
 ## Copyable prompts for developers
 
 **Existing app, complete integration**

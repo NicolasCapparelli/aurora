@@ -23,6 +23,11 @@ Flutter starting point. Replace `aurora/` with your checkout's actual location.
   DTCG files and texture recipes.
 - `packages/aurora_flutter`: reactive scope, controller, Flutter colors, and a
   complete Material `ColorScheme` bridge.
+- `packages/aurora_ts` (`@aurora/core`): the portable core in TypeScript, held to
+  the same `spec/fixtures` as Dart, including byte-for-byte generation.
+- `packages/aurora_react` (`@aurora/react`): React 19 provider, fixed scopes, hooks
+  and CSS custom properties. TypeScript apps start with
+  [consuming from TypeScript](continuity/user/typescript.md).
 - `examples/theater`: Wicked and Hadestown identities with light/dark variants,
   required ticket colors, and an appearance selector. Palettes are illustrative,
   not official brand assets.
@@ -430,6 +435,13 @@ dart run aurora generate --json --input ../../examples/recipes/theater.json
 This accepts a portable app-contract recipe and writes a JSON result to stdout.
 See [recipe v1](spec/recipe-v1.md) for extension rules and overrides.
 
+Themes and textures made in other tools (such as TokenSeed) arrive as a
+[portable bundle](spec/bundle-v1.md). From an app that depends on Aurora:
+
+```powershell
+dart run aurora install --bundle C:\path\to\ocean.aurora.json --project .
+```
+
 ## Run and verify
 
 From `examples/theater`:
@@ -440,8 +452,9 @@ flutter run -d chrome
 ```
 
 From the repository root, run `./tools/check.ps1` for Python exporter tests,
-dependency resolution, format checking, analysis, core tests, widget tests,
-and example analysis. Python 3, Dart, and Flutter must be on PATH.
+TypeScript install, build, typecheck and tests, Dart dependency resolution, format
+checking, analysis, core tests, widget tests, and example analysis. Python 3, Dart,
+Flutter and Node LTS (with corepack) must be on PATH.
 The demo can also be compiled with `flutter build web` in `examples/theater`.
 
 Foundation accessors, explicit presets, and the Material bridge are generated
@@ -459,7 +472,7 @@ dart format packages/aurora/lib packages/aurora_flutter/lib
 - A texture foundation v2 (elevation, spacing, state layers) and themes that
   recommend a default texture; texture support in the CLI and browser tool.
 - Evaluate the published DTCG Resolver for portable variant packaging.
-- Shared portable fixtures for a future TypeScript / React Native port.
+- A React Native adapter on top of `@aurora/core`.
 
 The [portable specification](spec/README.md), generated foundation definitions,
 and checked-in JSON conformance cases describe the cross-language boundary.
