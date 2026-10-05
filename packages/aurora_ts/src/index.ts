@@ -114,3 +114,14 @@ export {
 export { AuroraTextureDtcg, type AuroraTextureDtcgDecodeOptions } from './textureDtcg.js';
 export { AuroraTextureRecipe } from './textureRecipe.js';
 export type { JsonObject, JsonValue } from './json.js';
+export {
+  AuroraBundle,
+  type AuroraBundleContents,
+  type AuroraBundleEncodeInit,
+  type AuroraBundleIssue,
+  type AuroraBundleJson,
+  type AuroraBundleManifest,
+  type AuroraBundleOptions,
+  type AuroraBundleProvenance,
+  type AuroraBundleReport,
+} from './bundle.js';

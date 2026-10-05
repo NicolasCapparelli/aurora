@@ -1,0 +1,2020 @@
+{
+  "manifest": {
+    "bundleVersion": 1,
+    "theme": {
+      "id": "ocean",
+      "name": "Ocean",
+      "preferredAppearance": "light",
+      "variants": [
+        "light",
+        "dark"
+      ]
+    },
+    "texture": {
+      "id": "ocean-soft",
+      "name": "Ocean Soft"
+    },
+    "pairing": {
+      "themeId": "ocean",
+      "textureId": "ocean-soft"
+    },
+    "provenance": {
+      "generator": "aurora-fixture@1",
+      "sourceHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "createdAt": "2026-10-05T00:00:00Z"
+    }
+  },
+  "files": {
+    "light.tokens.json": {
+      "colors": {
+        "primary": {
+          "$type": "color",
+          "$description": "Accent for prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21176470588235294,
+              0.3803921568627451,
+              0.5568627450980392
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimary": {
+          "$type": "color",
+          "$description": "Text and icons on primary.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "primaryContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis container for prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8941176470588236,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimaryContainer": {
+          "$type": "color",
+          "$description": "Text and icons on primaryContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.11372549019607843,
+              0.21176470588235294
+            ],
+            "alpha": 1.0
+          }
+        },
+        "primaryFixed": {
+          "$type": "color",
+          "$description": "Container accent that stays constant across appearances.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8941176470588236,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "primaryFixedDim": {
+          "$type": "color",
+          "$description": "Stronger fixed primary accent.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.792156862745098,
+              0.9921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimaryFixed": {
+          "$type": "color",
+          "$description": "Text and icons on fixed primary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.11372549019607843,
+              0.21176470588235294
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimaryFixedVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis content on fixed primary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.28627450980392155,
+              0.4588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondary": {
+          "$type": "color",
+          "$description": "Accent for less prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3254901960784314,
+              0.37254901960784315,
+              0.4392156862745098
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondary": {
+          "$type": "color",
+          "$description": "Text and icons on secondary.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondaryContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis container for less prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.8901960784313725,
+              0.9725490196078431
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondaryContainer": {
+          "$type": "color",
+          "$description": "Text and icons on secondaryContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06274509803921569,
+              0.10980392156862745,
+              0.16862745098039217
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondaryFixed": {
+          "$type": "color",
+          "$description": "Container accent that stays constant across appearances.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.8901960784313725,
+              0.9725490196078431
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondaryFixedDim": {
+          "$type": "color",
+          "$description": "Stronger fixed secondary accent.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7333333333333333,
+              0.7803921568627451,
+              0.8588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondaryFixed": {
+          "$type": "color",
+          "$description": "Text and icons on fixed secondary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06274509803921569,
+              0.10980392156862745,
+              0.16862745098039217
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondaryFixedVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis content on fixed secondary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.23137254901960785,
+              0.2823529411764706,
+              0.34509803921568627
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiary": {
+          "$type": "color",
+          "$description": "Accent for contrasting accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.49019607843137253,
+              0.3215686274509804,
+              0.3764705882352941
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiary": {
+          "$type": "color",
+          "$description": "Text and icons on tertiary.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiaryContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis container for contrasting accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8509803921568627,
+              0.8901960784313725
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiaryContainer": {
+          "$type": "color",
+          "$description": "Text and icons on tertiaryContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.19215686274509805,
+              0.06666666666666667,
+              0.11372549019607843
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiaryFixed": {
+          "$type": "color",
+          "$description": "Container accent that stays constant across appearances.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8509803921568627,
+              0.8901960784313725
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiaryFixedDim": {
+          "$type": "color",
+          "$description": "Stronger fixed tertiary accent.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9333333333333333,
+              0.7215686274509804,
+              0.7843137254901961
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiaryFixed": {
+          "$type": "color",
+          "$description": "Text and icons on fixed tertiary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.19215686274509805,
+              0.06666666666666667,
+              0.11372549019607843
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiaryFixedVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis content on fixed tertiary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.38823529411764707,
+              0.23137254901960785,
+              0.2823529411764706
+            ],
+            "alpha": 1.0
+          }
+        },
+        "error": {
+          "$type": "color",
+          "$description": "Error and destructive feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7294117647058823,
+              0.10196078431372549,
+              0.10196078431372549
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onError": {
+          "$type": "color",
+          "$description": "Text and icons on error.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "errorContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis error container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8549019607843137,
+              0.8392156862745098
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onErrorContainer": {
+          "$type": "color",
+          "$description": "Text and icons on errorContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2549019607843137,
+              0.0,
+              0.00784313725490196
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$description": "Default page and component surface.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9725490196078431,
+              0.9764705882352941,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSurface": {
+          "$type": "color",
+          "$description": "Primary text and icons on surfaces.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09803921568627451,
+              0.10980392156862745,
+              0.12549019607843137
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceDim": {
+          "$type": "color",
+          "$description": "Dimmest surface tone.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8470588235294118,
+              0.8549019607843137,
+              0.8784313725490196
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceBright": {
+          "$type": "color",
+          "$description": "Brightest surface tone.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9725490196078431,
+              0.9764705882352941,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerLowest": {
+          "$type": "color",
+          "$description": "Lowest surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerLow": {
+          "$type": "color",
+          "$description": "Low surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9490196078431372,
+              0.9529411764705882,
+              0.9803921568627451
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainer": {
+          "$type": "color",
+          "$description": "Default distinct surface container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9254901960784314,
+              0.9333333333333333,
+              0.9568627450980393
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerHigh": {
+          "$type": "color",
+          "$description": "High surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9019607843137255,
+              0.9098039215686274,
+              0.9333333333333333
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerHighest": {
+          "$type": "color",
+          "$description": "Highest surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.8862745098039215,
+              0.9098039215686274
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSurfaceVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis text and icons on surfaces.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2627450980392157,
+              0.2784313725490196,
+              0.3058823529411765
+            ],
+            "alpha": 1.0
+          }
+        },
+        "outline": {
+          "$type": "color",
+          "$description": "Boundaries requiring emphasis.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.45098039215686275,
+              0.4666666666666667,
+              0.4980392156862745
+            ],
+            "alpha": 1.0
+          }
+        },
+        "outlineVariant": {
+          "$type": "color",
+          "$description": "Subtle decorative boundaries and dividers.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7647058823529411,
+              0.7764705882352941,
+              0.8117647058823529
+            ],
+            "alpha": 1.0
+          }
+        },
+        "shadow": {
+          "$type": "color",
+          "$description": "Color of cast shadows.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "scrim": {
+          "$type": "color",
+          "$description": "Color of obscuring modal overlays.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "inverseSurface": {
+          "$type": "color",
+          "$description": "Surface contrasting with surrounding appearance.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1803921568627451,
+              0.19215686274509805,
+              0.20784313725490197
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onInverseSurface": {
+          "$type": "color",
+          "$description": "Text and icons on inverseSurface.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9372549019607843,
+              0.9411764705882353,
+              0.9686274509803922
+            ],
+            "alpha": 1.0
+          }
+        },
+        "inversePrimary": {
+          "$type": "color",
+          "$description": "Primary accent on inverseSurface.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.792156862745098,
+              0.9921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceTint": {
+          "$type": "color",
+          "$description": "Accent used by Material surface tint treatments.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21176470588235294,
+              0.3803921568627451,
+              0.5568627450980392
+            ],
+            "alpha": 1.0
+          }
+        },
+        "success": {
+          "$type": "color",
+          "$description": "Success feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21568627450980393,
+              0.4117647058823529,
+              0.23921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSuccess": {
+          "$type": "color",
+          "$description": "Text and icons on success.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "successContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis success container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7215686274509804,
+              0.9450980392156862,
+              0.7254901960784313
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSuccessContainer": {
+          "$type": "color",
+          "$description": "Text and icons on successContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.12941176470588237,
+              0.03137254901960784
+            ],
+            "alpha": 1.0
+          }
+        },
+        "warning": {
+          "$type": "color",
+          "$description": "Warning feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.49411764705882355,
+              0.3411764705882353,
+              0.058823529411764705
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onWarning": {
+          "$type": "color",
+          "$description": "Text and icons on warning.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "warningContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis warning container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8666666666666667,
+              0.6901960784313725
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onWarningContainer": {
+          "$type": "color",
+          "$description": "Text and icons on warningContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1568627450980392,
+              0.09411764705882353,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "info": {
+          "$type": "color",
+          "$description": "Info feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21176470588235294,
+              0.3803921568627451,
+              0.5568627450980392
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onInfo": {
+          "$type": "color",
+          "$description": "Text and icons on info.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "infoContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis info container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8941176470588236,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onInfoContainer": {
+          "$type": "color",
+          "$description": "Text and icons on infoContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.11372549019607843,
+              0.21176470588235294
+            ],
+            "alpha": 1.0
+          }
+        }
+      }
+    },
+    "dark.tokens.json": {
+      "colors": {
+        "primary": {
+          "$type": "color",
+          "$description": "Accent for prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.792156862745098,
+              0.9921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimary": {
+          "$type": "color",
+          "$description": "Text and icons on primary.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.19607843137254902,
+              0.34509803921568627
+            ],
+            "alpha": 1.0
+          }
+        },
+        "primaryContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis container for prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.28627450980392155,
+              0.4588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimaryContainer": {
+          "$type": "color",
+          "$description": "Text and icons on primaryContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8941176470588236,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "primaryFixed": {
+          "$type": "color",
+          "$description": "Container accent that stays constant across appearances.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8941176470588236,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "primaryFixedDim": {
+          "$type": "color",
+          "$description": "Stronger fixed primary accent.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.792156862745098,
+              0.9921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimaryFixed": {
+          "$type": "color",
+          "$description": "Text and icons on fixed primary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.11372549019607843,
+              0.21176470588235294
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onPrimaryFixedVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis content on fixed primary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.28627450980392155,
+              0.4588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondary": {
+          "$type": "color",
+          "$description": "Accent for less prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7333333333333333,
+              0.7803921568627451,
+              0.8588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondary": {
+          "$type": "color",
+          "$description": "Text and icons on secondary.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1450980392156863,
+              0.19215686274509805,
+              0.25098039215686274
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondaryContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis container for less prominent actions.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.23137254901960785,
+              0.2823529411764706,
+              0.34509803921568627
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondaryContainer": {
+          "$type": "color",
+          "$description": "Text and icons on secondaryContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.8901960784313725,
+              0.9725490196078431
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondaryFixed": {
+          "$type": "color",
+          "$description": "Container accent that stays constant across appearances.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.8901960784313725,
+              0.9725490196078431
+            ],
+            "alpha": 1.0
+          }
+        },
+        "secondaryFixedDim": {
+          "$type": "color",
+          "$description": "Stronger fixed secondary accent.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7333333333333333,
+              0.7803921568627451,
+              0.8588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondaryFixed": {
+          "$type": "color",
+          "$description": "Text and icons on fixed secondary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06274509803921569,
+              0.10980392156862745,
+              0.16862745098039217
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSecondaryFixedVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis content on fixed secondary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.23137254901960785,
+              0.2823529411764706,
+              0.34509803921568627
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiary": {
+          "$type": "color",
+          "$description": "Accent for contrasting accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9333333333333333,
+              0.7215686274509804,
+              0.7843137254901961
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiary": {
+          "$type": "color",
+          "$description": "Text and icons on tertiary.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.28627450980392155,
+              0.1450980392156863,
+              0.19607843137254902
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiaryContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis container for contrasting accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.38823529411764707,
+              0.23137254901960785,
+              0.2823529411764706
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiaryContainer": {
+          "$type": "color",
+          "$description": "Text and icons on tertiaryContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8509803921568627,
+              0.8901960784313725
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiaryFixed": {
+          "$type": "color",
+          "$description": "Container accent that stays constant across appearances.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8509803921568627,
+              0.8901960784313725
+            ],
+            "alpha": 1.0
+          }
+        },
+        "tertiaryFixedDim": {
+          "$type": "color",
+          "$description": "Stronger fixed tertiary accent.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9333333333333333,
+              0.7215686274509804,
+              0.7843137254901961
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiaryFixed": {
+          "$type": "color",
+          "$description": "Text and icons on fixed tertiary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.19215686274509805,
+              0.06666666666666667,
+              0.11372549019607843
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onTertiaryFixedVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis content on fixed tertiary accents.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.38823529411764707,
+              0.23137254901960785,
+              0.2823529411764706
+            ],
+            "alpha": 1.0
+          }
+        },
+        "error": {
+          "$type": "color",
+          "$description": "Error and destructive feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.7058823529411765,
+              0.6705882352941176
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onError": {
+          "$type": "color",
+          "$description": "Text and icons on error.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4117647058823529,
+              0.0,
+              0.0196078431372549
+            ],
+            "alpha": 1.0
+          }
+        },
+        "errorContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis error container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5764705882352941,
+              0.0,
+              0.0392156862745098
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onErrorContainer": {
+          "$type": "color",
+          "$description": "Text and icons on errorContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8549019607843137,
+              0.8392156862745098
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$description": "Default page and component surface.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.0784313725490196,
+              0.09411764705882353
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSurface": {
+          "$type": "color",
+          "$description": "Primary text and icons on surfaces.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.8862745098039215,
+              0.9098039215686274
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceDim": {
+          "$type": "color",
+          "$description": "Dimmest surface tone.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.0784313725490196,
+              0.09411764705882353
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceBright": {
+          "$type": "color",
+          "$description": "Brightest surface tone.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21176470588235294,
+              0.2235294117647059,
+              0.24313725490196078
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerLowest": {
+          "$type": "color",
+          "$description": "Lowest surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.043137254901960784,
+              0.054901960784313725,
+              0.07450980392156863
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerLow": {
+          "$type": "color",
+          "$description": "Low surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09803921568627451,
+              0.10980392156862745,
+              0.12549019607843137
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainer": {
+          "$type": "color",
+          "$description": "Default distinct surface container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11372549019607843,
+              0.12549019607843137,
+              0.1411764705882353
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerHigh": {
+          "$type": "color",
+          "$description": "High surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.15294117647058825,
+              0.16470588235294117,
+              0.1843137254901961
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceContainerHighest": {
+          "$type": "color",
+          "$description": "Highest surface container level.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.19607843137254902,
+              0.20784313725490197,
+              0.22745098039215686
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSurfaceVariant": {
+          "$type": "color",
+          "$description": "Lower-emphasis text and icons on surfaces.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7647058823529411,
+              0.7764705882352941,
+              0.8117647058823529
+            ],
+            "alpha": 1.0
+          }
+        },
+        "outline": {
+          "$type": "color",
+          "$description": "Boundaries requiring emphasis.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5529411764705883,
+              0.5686274509803921,
+              0.6
+            ],
+            "alpha": 1.0
+          }
+        },
+        "outlineVariant": {
+          "$type": "color",
+          "$description": "Subtle decorative boundaries and dividers.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2627450980392157,
+              0.2784313725490196,
+              0.3058823529411765
+            ],
+            "alpha": 1.0
+          }
+        },
+        "shadow": {
+          "$type": "color",
+          "$description": "Color of cast shadows.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "scrim": {
+          "$type": "color",
+          "$description": "Color of obscuring modal overlays.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "inverseSurface": {
+          "$type": "color",
+          "$description": "Surface contrasting with surrounding appearance.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.8862745098039215,
+              0.9098039215686274
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onInverseSurface": {
+          "$type": "color",
+          "$description": "Text and icons on inverseSurface.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1803921568627451,
+              0.19215686274509805,
+              0.20784313725490197
+            ],
+            "alpha": 1.0
+          }
+        },
+        "inversePrimary": {
+          "$type": "color",
+          "$description": "Primary accent on inverseSurface.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21176470588235294,
+              0.3803921568627451,
+              0.5568627450980392
+            ],
+            "alpha": 1.0
+          }
+        },
+        "surfaceTint": {
+          "$type": "color",
+          "$description": "Accent used by Material surface tint treatments.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.792156862745098,
+              0.9921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "success": {
+          "$type": "color",
+          "$description": "Success feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.615686274509804,
+              0.8313725490196079,
+              0.6196078431372549
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSuccess": {
+          "$type": "color",
+          "$description": "Text and icons on success.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.00392156862745098,
+              0.2235294117647059,
+              0.07450980392156863
+            ],
+            "alpha": 1.0
+          }
+        },
+        "successContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis success container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11764705882352941,
+              0.3176470588235294,
+              0.1568627450980392
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onSuccessContainer": {
+          "$type": "color",
+          "$description": "Text and icons on successContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7215686274509804,
+              0.9450980392156862,
+              0.7254901960784313
+            ],
+            "alpha": 1.0
+          }
+        },
+        "warning": {
+          "$type": "color",
+          "$description": "Warning feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9490196078431372,
+              0.7450980392156863,
+              0.43137254901960786
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onWarning": {
+          "$type": "color",
+          "$description": "Text and icons on warning.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.26666666666666666,
+              0.17254901960784313,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "warningContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis warning container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3803921568627451,
+              0.25098039215686274,
+              0.0
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onWarningContainer": {
+          "$type": "color",
+          "$description": "Text and icons on warningContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.8666666666666667,
+              0.6901960784313725
+            ],
+            "alpha": 1.0
+          }
+        },
+        "info": {
+          "$type": "color",
+          "$description": "Info feedback.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.792156862745098,
+              0.9921568627450981
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onInfo": {
+          "$type": "color",
+          "$description": "Text and icons on info.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.19607843137254902,
+              0.34509803921568627
+            ],
+            "alpha": 1.0
+          }
+        },
+        "infoContainer": {
+          "$type": "color",
+          "$description": "Lower-emphasis info container.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.28627450980392155,
+              0.4588235294117647
+            ],
+            "alpha": 1.0
+          }
+        },
+        "onInfoContainer": {
+          "$type": "color",
+          "$description": "Text and icons on infoContainer.",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8941176470588236,
+              1.0
+            ],
+            "alpha": 1.0
+          }
+        }
+      }
+    },
+    "texture.tokens.json": {
+      "type": {
+        "family": {
+          "brand": {
+            "$type": "fontFamily",
+            "$description": "Expressive typeface for display and headline text.",
+            "$value": [
+              "Fraunces",
+              "Georgia",
+              "serif"
+            ]
+          },
+          "plain": {
+            "$type": "fontFamily",
+            "$description": "Readable typeface for titles, body and labels.",
+            "$value": "Roboto"
+          }
+        },
+        "displayLarge": {
+          "$type": "typography",
+          "$description": "Largest display text, for short hero numbers or words.",
+          "$value": {
+            "fontFamily": "{type.family.brand}",
+            "fontSize": {
+              "value": 57.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": -0.25,
+              "unit": "px"
+            },
+            "lineHeight": 1.1228070175438596
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "displayMedium": {
+          "$type": "typography",
+          "$description": "Medium display text.",
+          "$value": {
+            "fontFamily": "{type.family.brand}",
+            "fontSize": {
+              "value": 45.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "lineHeight": 1.1555555555555554
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "displaySmall": {
+          "$type": "typography",
+          "$description": "Small display text.",
+          "$value": {
+            "fontFamily": "{type.family.brand}",
+            "fontSize": {
+              "value": 36.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "lineHeight": 1.2222222222222223
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "headlineLarge": {
+          "$type": "typography",
+          "$description": "Large headlines on prominent screens.",
+          "$value": {
+            "fontFamily": "{type.family.brand}",
+            "fontSize": {
+              "value": 32.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "lineHeight": 1.25
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "headlineMedium": {
+          "$type": "typography",
+          "$description": "Medium headlines.",
+          "$value": {
+            "fontFamily": "{type.family.brand}",
+            "fontSize": {
+              "value": 28.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "lineHeight": 1.2857142857142858
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "headlineSmall": {
+          "$type": "typography",
+          "$description": "Small headlines.",
+          "$value": {
+            "fontFamily": "{type.family.brand}",
+            "fontSize": {
+              "value": 24.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "lineHeight": 1.3333333333333333
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "titleLarge": {
+          "$type": "typography",
+          "$description": "Large titles, such as app bar titles.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 22.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.0,
+              "unit": "px"
+            },
+            "lineHeight": 1.2727272727272727
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "titleMedium": {
+          "$type": "typography",
+          "$description": "Medium titles, such as list headers.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 16.0,
+              "unit": "px"
+            },
+            "fontWeight": 500,
+            "letterSpacing": {
+              "value": 0.15,
+              "unit": "px"
+            },
+            "lineHeight": 1.5
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "titleSmall": {
+          "$type": "typography",
+          "$description": "Small titles.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 14.0,
+              "unit": "px"
+            },
+            "fontWeight": 500,
+            "letterSpacing": {
+              "value": 0.1,
+              "unit": "px"
+            },
+            "lineHeight": 1.4285714285714286
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "bodyLarge": {
+          "$type": "typography",
+          "$description": "Large body text.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 16.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.5,
+              "unit": "px"
+            },
+            "lineHeight": 1.5
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "bodyMedium": {
+          "$type": "typography",
+          "$description": "Default body text.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 14.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.25,
+              "unit": "px"
+            },
+            "lineHeight": 1.4285714285714286
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "bodySmall": {
+          "$type": "typography",
+          "$description": "Small body text, such as captions.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 12.0,
+              "unit": "px"
+            },
+            "fontWeight": 400,
+            "letterSpacing": {
+              "value": 0.4,
+              "unit": "px"
+            },
+            "lineHeight": 1.3333333333333333
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "labelLarge": {
+          "$type": "typography",
+          "$description": "Large labels, such as button text.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 14.0,
+              "unit": "px"
+            },
+            "fontWeight": 500,
+            "letterSpacing": {
+              "value": 0.1,
+              "unit": "px"
+            },
+            "lineHeight": 1.4285714285714286
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "labelMedium": {
+          "$type": "typography",
+          "$description": "Medium labels.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 12.0,
+              "unit": "px"
+            },
+            "fontWeight": 500,
+            "letterSpacing": {
+              "value": 0.5,
+              "unit": "px"
+            },
+            "lineHeight": 1.3333333333333333
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "labelSmall": {
+          "$type": "typography",
+          "$description": "Small labels, such as badges.",
+          "$value": {
+            "fontFamily": "{type.family.plain}",
+            "fontSize": {
+              "value": 11.0,
+              "unit": "px"
+            },
+            "fontWeight": 500,
+            "letterSpacing": {
+              "value": 0.5,
+              "unit": "px"
+            },
+            "lineHeight": 1.4545454545454546
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        }
+      },
+      "shape": {
+        "extraSmall": {
+          "$type": "dimension",
+          "$description": "Corner radius for small elements such as text fields and menus.",
+          "$value": {
+            "value": 4.0,
+            "unit": "px"
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "small": {
+          "$type": "dimension",
+          "$description": "Corner radius for chips and small cards.",
+          "$value": {
+            "value": 8.0,
+            "unit": "px"
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "medium": {
+          "$type": "dimension",
+          "$description": "Corner radius for cards.",
+          "$value": {
+            "value": 16.0,
+            "unit": "px"
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        },
+        "large": {
+          "$type": "dimension",
+          "$description": "Corner radius for large surfaces such as navigation drawers.",
+          "$value": "{shape.medium}"
+        },
+        "extraLarge": {
+          "$type": "dimension",
+          "$description": "Corner radius for dialogs and sheets.",
+          "$value": {
+            "value": 28.0,
+            "unit": "px"
+          },
+          "$extensions": {
+            "dev.aurora": {
+              "unit": "dp"
+            }
+          }
+        }
+      },
+      "motion": {
+        "short": {
+          "$type": "duration",
+          "$description": "Duration of small, quick transitions such as selection changes.",
+          "$value": {
+            "value": 120.0,
+            "unit": "ms"
+          }
+        },
+        "medium": {
+          "$type": "duration",
+          "$description": "Duration of standard transitions.",
+          "$value": {
+            "value": 300.0,
+            "unit": "ms"
+          }
+        },
+        "long": {
+          "$type": "duration",
+          "$description": "Duration of large transitions such as full-screen changes.",
+          "$value": {
+            "value": 500.0,
+            "unit": "ms"
+          }
+        },
+        "extraLong": {
+          "$type": "duration",
+          "$description": "Duration of slow, emphasized transitions.",
+          "$value": {
+            "value": 800.0,
+            "unit": "ms"
+          }
+        },
+        "easing": {
+          "standard": {
+            "$type": "cubicBezier",
+            "$description": "Easing for transitions that begin and end on screen.",
+            "$value": [
+              0.2,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "emphasizedDecelerate": {
+            "$type": "cubicBezier",
+            "$description": "Easing for elements entering the screen.",
+            "$value": [
+              0.05,
+              0.7,
+              0.1,
+              1.0
+            ]
+          },
+          "emphasizedAccelerate": {
+            "$type": "cubicBezier",
+            "$description": "Easing for elements leaving the screen.",
+            "$value": [
+              0.3,
+              0.0,
+              0.8,
+              0.15
+            ]
+          }
+        }
+      }
+    }
+  }
+}

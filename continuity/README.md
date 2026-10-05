@@ -22,6 +22,7 @@ Implemented (source-observed; checks in [status](status.md)): immutable colors, 
 | Use the CLI / theme generator | [CLI guide](user/usage.md) |
 | Integrate Aurora into an app | [Root README](../README.md), [agent onboarding](../AGENT_ONBOARDING.md) |
 | Use Aurora from TypeScript | [Consuming from TypeScript](user/typescript.md) |
+| Export designs to Aurora from another tool | [Bundle spec](../spec/bundle-v1.md), [producer mapping guide](user/bundle-producers.md) |
 | Understand components and flows | [Architecture](developer/architecture.md) |
 | Understand data and schema ownership | [Data model](data/model.md) |
 | Resume work after an absence | [Status](status.md) |

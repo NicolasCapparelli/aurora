@@ -1,0 +1,175 @@
+[
+  {
+    "name": "complete bundle with texture and pairing",
+    "mutations": [],
+    "expected": "valid",
+    "values": {
+      "light": {"colors.primary": "#36618eff", "colors.tertiary": "#7d5260ff"},
+      "dark": {"colors.primary": "#a0cafdff"},
+      "texture": {"shape.large": {"value": 16, "unit": "dp"}, "motion.short": {"value": 120, "unit": "ms"}}
+    }
+  },
+  {
+    "name": "theme-only bundle",
+    "mutations": [
+      {"path": ["manifest", "texture"], "operation": "remove"},
+      {"path": ["manifest", "pairing"], "operation": "remove"},
+      {"path": ["files", "texture.tokens.json"], "operation": "remove"}
+    ],
+    "expected": "valid"
+  },
+  {
+    "name": "dark-only bundle",
+    "mutations": [
+      {"path": ["manifest", "theme", "variants"], "operation": "set", "value": ["dark"]},
+      {"path": ["manifest", "theme", "preferredAppearance"], "operation": "set", "value": "dark"},
+      {"path": ["files", "light.tokens.json"], "operation": "remove"}
+    ],
+    "expected": "valid",
+    "values": {"dark": {"colors.primary": "#a0cafdff"}}
+  },
+  {
+    "name": "texture without a pairing",
+    "mutations": [{"path": ["manifest", "pairing"], "operation": "remove"}],
+    "expected": "valid"
+  },
+  {
+    "name": "app contract extensions are still required",
+    "appExtensions": [{"path": "app.ticket", "description": "Ticket background."}],
+    "mutations": [],
+    "expected": [
+      {"category": "validation", "file": "light.tokens.json"},
+      {"category": "validation", "file": "dark.tokens.json"}
+    ]
+  },
+  {
+    "name": "missing foundation tokens in both variants are all reported",
+    "mutations": [
+      {"path": ["files", "light.tokens.json", "colors", "primary"], "operation": "remove"},
+      {"path": ["files", "dark.tokens.json", "colors", "onSurface"], "operation": "remove"}
+    ],
+    "expected": [
+      {"category": "validation", "file": "light.tokens.json"},
+      {"category": "validation", "file": "dark.tokens.json"}
+    ]
+  },
+  {
+    "name": "extra tokens are undeclared",
+    "mutations": [
+      {"path": ["files", "dark.tokens.json", "colors", "highContrastPrimary"], "operation": "set",
+       "value": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0, 0, 0], "alpha": 1}}}
+    ],
+    "expected": [{"category": "validation", "file": "dark.tokens.json"}]
+  },
+  {
+    "name": "wide-gamut colours are rejected",
+    "mutations": [
+      {"path": ["files", "light.tokens.json", "colors", "primary", "$value", "colorSpace"], "operation": "set", "value": "display-p3"}
+    ],
+    "expected": [{"category": "format", "file": "light.tokens.json"}]
+  },
+  {
+    "name": "texture alias of the wrong type",
+    "mutations": [
+      {"path": ["files", "texture.tokens.json", "type", "family", "brand", "$value"], "operation": "set", "value": "{shape.medium}"}
+    ],
+    "expected": [{"category": "format", "file": "texture.tokens.json"}]
+  },
+  {
+    "name": "texture value out of range",
+    "mutations": [
+      {"path": ["files", "texture.tokens.json", "motion", "short", "$value", "value"], "operation": "set", "value": -5}
+    ],
+    "expected": [{"category": "validation", "file": "texture.tokens.json"}]
+  },
+  {
+    "name": "listed variant file is missing",
+    "mutations": [{"path": ["files", "dark.tokens.json"], "operation": "remove"}],
+    "expected": [{"category": "format", "file": "dark.tokens.json"}]
+  },
+  {
+    "name": "unlisted file is present",
+    "mutations": [
+      {"path": ["manifest", "theme", "variants"], "operation": "set", "value": ["light"]}
+    ],
+    "expected": [{"category": "format", "file": "dark.tokens.json"}]
+  },
+  {
+    "name": "texture file without a manifest texture",
+    "mutations": [
+      {"path": ["manifest", "texture"], "operation": "remove"},
+      {"path": ["manifest", "pairing"], "operation": "remove"}
+    ],
+    "expected": [{"category": "format", "file": "texture.tokens.json"}]
+  },
+  {
+    "name": "pairing must match the bundled ids",
+    "mutations": [{"path": ["manifest", "pairing", "textureId"], "operation": "set", "value": "other"}],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "pairing needs a texture",
+    "mutations": [
+      {"path": ["manifest", "texture"], "operation": "remove"},
+      {"path": ["files", "texture.tokens.json"], "operation": "remove"}
+    ],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "unsupported bundle version",
+    "mutations": [{"path": ["manifest", "bundleVersion"], "operation": "set", "value": 2}],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "theme id must be installable",
+    "mutations": [{"path": ["manifest", "theme", "id"], "operation": "set", "value": "Ocean Theme"}],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "preferred appearance must be bundled",
+    "mutations": [
+      {"path": ["manifest", "theme", "variants"], "operation": "set", "value": ["dark"]},
+      {"path": ["files", "light.tokens.json"], "operation": "remove"}
+    ],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "extra modes are not variants",
+    "mutations": [
+      {"path": ["manifest", "theme", "variants"], "operation": "set", "value": ["light", "dark", "highContrast"]}
+    ],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "provenance is required and checked",
+    "mutations": [
+      {"path": ["manifest", "provenance", "createdAt"], "operation": "set", "value": "yesterday"},
+      {"path": ["manifest", "provenance", "generator"], "operation": "set", "value": ""}
+    ],
+    "expected": [{"category": "format", "file": "manifest"}]
+  },
+  {
+    "name": "unknown manifest and bundle fields",
+    "mutations": [
+      {"path": ["manifest", "modes"], "operation": "set", "value": ["highContrast"]},
+      {"path": ["signature"], "operation": "set", "value": "abc"}
+    ],
+    "expected": [
+      {"category": "format", "file": "manifest"},
+      {"category": "format", "file": "bundle"}
+    ]
+  },
+  {
+    "name": "issues across the manifest and token files are all reported",
+    "mutations": [
+      {"path": ["manifest", "provenance", "sourceHash"], "operation": "remove"},
+      {"path": ["files", "light.tokens.json", "colors", "primary"], "operation": "remove"},
+      {"path": ["files", "texture.tokens.json", "motion", "short", "$value", "value"], "operation": "set", "value": -5}
+    ],
+    "expected": [
+      {"category": "format", "file": "manifest"},
+      {"category": "validation", "file": "light.tokens.json"},
+      {"category": "validation", "file": "texture.tokens.json"}
+    ]
+  }
+]

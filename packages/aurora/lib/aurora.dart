@@ -3,6 +3,7 @@ library;
 
 export 'src/recipe.dart';
 
+export 'src/bundle.dart';
 export 'src/color.dart';
 export 'src/contract.dart';
 export 'src/contrast.dart';
