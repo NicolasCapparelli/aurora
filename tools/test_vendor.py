@@ -133,5 +133,87 @@ class VendorTest(unittest.TestCase):
         self.assertEqual(list(outside.iterdir()), [])
 
 
+class TypeScriptVendorTest(unittest.TestCase):
+    TOOLCHAIN = {"node": "v24", "pnpm": "10.28.0", "typescript": "Version 5.9.3"}
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.app = self.root / "app"
+        self.app.mkdir()
+        (self.app / "package.json").write_text('{"name": "app"}')
+        self.source = self.root / "source"
+        for package, name, _ in vendor.TS_PACKAGES:
+            root = self.source / "packages" / package
+            (root / "dist").mkdir(parents=True)
+            (root / "dist" / "index.js").write_text("export {};\n")
+            (root / "dist" / "index.d.ts").write_text("export {};\n")
+            (root / "src").mkdir()
+            (root / "src" / "index.ts").write_text("// source\n")
+            (root / "node_modules").mkdir()
+            (root / "README.md").write_text(name)
+            (root / "package.json").write_text(json.dumps({
+                "name": f"@aurora/{name}", "version": "0.1.0", "private": True,
+                "scripts": {"build": "tsc"}, "devDependencies": {"typescript": "~5.9.3"},
+                **({"peerDependencies": {"@aurora/core": "0.1.0", "react": "^19.0.0"}}
+                   if name == "react" else {})}))
+        patcher = patch.object(vendor, "SOURCE", self.source)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.builds = 0
+
+    def build(self):
+        self.builds += 1
+        return self.TOOLCHAIN
+
+    def test_exports_built_packages_with_provenance(self):
+        target = vendor.export_typescript(self.app, build=self.build)
+        self.assertEqual(self.builds, 1)
+        manifest = json.loads((target / "vendor-manifest.json").read_text())
+        self.assertEqual(manifest["kind"], "typescript")
+        self.assertEqual(manifest["toolchain"], self.TOOLCHAIN)
+        self.assertEqual(manifest["packageVersions"], {"@aurora/core": "0.1.0", "@aurora/react": "0.1.0"})
+        self.assertEqual(manifest["files"], vendor.hashes(target))
+        self.assertTrue((target / "core" / "dist" / "index.d.ts").is_file())
+        self.assertFalse((target / "core" / "src").exists())
+        self.assertFalse((target / "core" / "node_modules").exists())
+        react = json.loads((target / "react" / "package.json").read_text())
+        self.assertNotIn("scripts", react)
+        self.assertNotIn("devDependencies", react)
+        self.assertEqual(react["peerDependencies"]["@aurora/core"], "0.1.0")
+        self.assertEqual((self.app / "package.json").read_text(), '{"name": "app"}')
+
+    def test_updates_are_explicit_and_refuse_edits(self):
+        target = vendor.export_typescript(self.app, build=self.build)
+        with self.assertRaisesRegex(ValueError, "Destination exists"):
+            vendor.export_typescript(self.app, build=self.build)
+        vendor.export_typescript(self.app, replace=True, build=self.build)
+        (target / "core" / "dist" / "index.js").write_text("// app edit\n")
+        with self.assertRaisesRegex(ValueError, "local edits"):
+            vendor.export_typescript(self.app, replace=True, build=self.build)
+
+    def test_refuses_missing_build_output_and_wrong_project(self):
+        (self.source / "packages" / "aurora_react" / "dist" / "index.d.ts").unlink()
+        with self.assertRaisesRegex(ValueError, "Missing built package output"):
+            vendor.export_typescript(self.app, build=self.build)
+        self.assertFalse((self.app / "vendor").exists())
+        dart_app = self.root / "dart_app"
+        dart_app.mkdir()
+        (dart_app / "pubspec.yaml").write_text("name: app\n")
+        with self.assertRaisesRegex(ValueError, "package.json"):
+            vendor.export_typescript(dart_app, build=self.build)
+
+    def test_refuses_to_replace_a_dart_snapshot(self):
+        (self.app / "pubspec.yaml").write_text("name: app\n")
+        for package in vendor.PACKAGES:
+            root = self.source / "packages" / package
+            (root / "lib").mkdir(parents=True)
+            (root / "pubspec.yaml").write_text(f"name: {package}\nversion: 0.1.0\n")
+        vendor.export(self.app)
+        with self.assertRaisesRegex(ValueError, "dart snapshot"):
+            vendor.export_typescript(self.app, replace=True, build=self.build)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -7,9 +7,12 @@
 - Adapter (`packages/aurora_flutter`): controller, scope, engine, Material bridge implemented and exercised by widget tests.
 - App-owned package distribution is implemented by `tools/vendor.py`; installation/onboarding use committed in-app snapshots. See [installation](user/installation.md).
 - Not exercised in this session: `flutter build web`, `flutter run`, browser UI in a real browser, theme installer against a real app. CLI and theme installer run against temporary projects in tests.
-- Themes are colour-only. Textures (non-colour tokens: type, shape, motion, lines, density, chrome, component defaults) are implemented and merged into `main`: core token hierarchy, texture contract/foundation/starter, validation and aliases, runtime selection, texture DTCG, texture recipes, theme-to-texture pairings, portable fixtures, Flutter bridge, `examples/textures`. Persistence, resolver packaging, contract codegen, and a TypeScript port remain unimplemented ([design notes](decisions/design-notes.md)).
+- Themes are colour-only. Textures (non-colour tokens: type, shape, motion, lines, density, chrome, component defaults) are implemented and merged into `main`: core token hierarchy, texture contract/foundation/starter, validation and aliases, runtime selection, texture DTCG, texture recipes, theme-to-texture pairings, portable fixtures, Flutter bridge, `examples/textures`. Persistence, resolver packaging and contract codegen remain unimplemented ([design notes](decisions/design-notes.md)).
+- TypeScript core (`packages/aurora_ts`, `@aurora/core`) is implemented on branch `feat/typescript-port` and passes every `spec/fixtures` file unchanged, including generation and scheme fixtures (Dart MCU 0.11.1 ported into the package). See [TypeScript guide](developer/typescript.md).
 
 ## Active work and last stopping point
+
+- **TypeScript port and TokenSeed pipeline (2026-10-05), complete on `feat/typescript-port`, not merged.** Requested by the owner for TokenSeed (a React app that themes its own UI with Aurora and exports Aurora themes/textures for Flutter apps). Delivered: `@aurora/core` (`packages/aurora_ts`, with Dart MCU 0.11.1 ported in), `@aurora/react` (`packages/aurora_react`), `tools/vendor.py --typescript`, `spec/bundle-v1.md` with `AuroraBundle` in Dart and TypeScript and shared fixtures, `aurora install --bundle` for Flutter apps, the [producer mapping guide](user/bundle-producers.md) and the [TypeScript consuming guide](user/typescript.md), linked from `AGENT_ONBOARDING.md`. Decisions: [design notes](decisions/design-notes.md#typescript-port-and-the-tokenseed-pipeline-decided-2026-10-05). Next: the owner reviews and decides on merging into `main`; TokenSeed's agent then runs the export into TokenSeed and writes its exporter from the mapping guide. TokenSeed was not edited from here. Open question for the owner: the brief says extra producer tokens are "ignored", but the strict profiles reject undeclared tokens, so bundles must leave them out; accepting and dropping them would be a profile change.
 
 - **AuroraTextures (2026-10-04), merged into `main`.** Implements Trace's handoff `trace/docs/handoffs/aurora-style-tokens.md` as reshaped by the owner: non-colour tokens are a separate texture layer ("AuroraTextures") with a foundation plus extensions, shared across light/dark, and optional runtime-changeable theme-to-texture pairings. Themes, generator, theme recipes and colour fixtures are unchanged. See [design notes](decisions/design-notes.md#textures-non-colour-tokens-decided-2026-10-04). Next: Trace task U3 re-vendors (`tools/vendor.py --project <trace> --replace`) and moves Trace's style packs onto textures, using pairings for Atlas, Fieldnotes and Classic. Trace has not been edited. API summary and the Trace StylePack mapping: [trace-textures-handoff](agent/trace-textures-handoff.md).
 
@@ -28,6 +31,14 @@ Requested downstream work: the agent in Trace implements the [migration prompt](
 - Unknown (future-work only): intended foundation versioning policy when adding tokens ([AGENTS.md](../AGENTS.md) says it needs a decision).
 
 ## Last verified state
+
+2026-10-05, `feat/typescript-port` as committed:
+
+- `./tools/check.ps1`: exit 0, in the working tree and again in a fresh clone of the branch (no `node_modules` or `dist`). 11 Python exporter tests (7 Dart-mode, 4 TypeScript-mode); TypeScript install, build, typecheck and tests (97 `@aurora/core`, 11 `@aurora/react`); Dart/Flutter formatting and analysis; 148 core tests (the previous 122 unchanged plus 24 bundle conformance and 2 bundle install tests), 30 Flutter adapter tests and 4 textures-example tests.
+- Every `spec/fixtures` file passes unchanged in TypeScript, including `generation-v1.json` and `generation-schemes-v1.json`. Existing fixtures, `spec/foundation-v1.json` and `spec/texture-foundation-v1.json` are untouched; `generate_foundation.py` reproduces the Dart outputs byte for byte. New fixtures: `bundle.json` (created with `tool/export_bundle_fixture.dart`) and hand-written `bundle-cases.json`; TypeScript `AuroraBundle.encode` reproduces `bundle.json` exactly.
+- `vendor.py --typescript` was run against a scratch pnpm app outside the checkout: `file:` dependencies install, the app typechecks with `skipLibCheck: false`, app-built contracts render through `AuroraProvider` server-side, and the adapter resolves the app's single `@aurora/core`. Not tested in a browser or a Vite build; jsdom covers the React adapter.
+- `aurora install --bundle` installed the fixture bundle into temporary Dart projects; the generated snippet compiled and ran with app extensions, the texture and the pairing, and an invalid bundle exited 65 without writing. In a scratch Flutter app depending only on a vendored `aurora_flutter`, `dart run aurora install --bundle ... --project .` installed the fixture, a second install was refused, and `flutter analyze` passed on a `main.dart` registering the theme, texture and pairing with `AuroraEngine.managed`. The app was not built or run.
+- 242 relative documentation links and anchors resolved. One spec text fix: `texture-recipe-v1.md` said `kind: "style"`; the code and fixture use `"texture"`.
 
 2026-10-04, AuroraTextures as committed and merged into `main`:
 
@@ -64,6 +75,8 @@ Date 2026-09-30, base commit `0e782d2` with only untracked `continuity/` and doc
 - Counts are as observed; no historical count was compared.
 
 ## Last meaningful update
+
+2026-10-05 — TypeScript port, React adapter, TypeScript vendoring, portable bundles and the Flutter bundle installer completed on `feat/typescript-port` and pushed; merging is the owner's call.
 
 2026-10-04 — AuroraTextures (non-colour token layer with optional theme pairings) implemented with tests, fixtures, example and docs; committed on `feat/textures` and merged into `main` at the owner's request.
 

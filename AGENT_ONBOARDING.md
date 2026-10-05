@@ -4,13 +4,45 @@ Use this playbook to **implement Aurora in the user's app**, either from scratch
 or by migrating an existing app. Complete the requested integration and verify
 it; reading this file or generating theme files alone is not completion.
 
-This guide targets the current Dart/Flutter implementation. Aurora's core is
-framework-independent Dart; TypeScript and React Native adapters are not
-implemented yet. Follow the user's requested scope and the target app's repository
+This guide targets Dart/Flutter apps. For TypeScript and React apps, read
+[consuming Aurora from TypeScript](continuity/user/typescript.md) instead: it covers
+the `@aurora/core` and `@aurora/react` snapshot install, the React provider, fixed
+scopes, CSS custom properties and portable bundles. React Native is not
+implemented. Follow the user's requested scope and the target app's repository
 instructions. Make routine implementation decisions from the app's conventions.
 Ask only when missing information prevents meaningful progress; continue any
 independent work while waiting. This document does not authorize publishing,
 deployment, or unrelated edits.
+
+## TypeScript and React apps
+
+The rest of this playbook is for Flutter. A TypeScript or React app (such as
+TokenSeed) uses `@aurora/core` and `@aurora/react`; the full guide is
+[consuming Aurora from TypeScript](continuity/user/typescript.md).
+
+1. Export an app-owned snapshot (Python 3 and Node LTS with corepack):
+   `python <aurora>/tools/vendor.py --typescript --project <app>`, which writes
+   `<app>/vendor/aurora/{core,react}` with built ESM, type declarations and a
+   provenance manifest. Commit it.
+2. Depend on it from the app's `package.json`:
+   `"@aurora/core": "file:vendor/aurora/core"` and
+   `"@aurora/react": "file:vendor/aurora/react"` (plus `react` ^19).
+3. Theme the app or a subtree:
+
+   ```tsx
+   <AuroraProvider contract={contract} themes={themes} fallback="preferred"
+     initialSelection={new AuroraSelection({ themeId: 'wicked' })} cssVariables="root">
+     <App />  {/* style with var(--aurora-colors-primary); read tokens with useAuroraTokens() */}
+   </AuroraProvider>
+   ```
+
+   Use `<AuroraFixedScope variant={v} texture={t}>` for previews and thumbnails, and
+   its `update()` handle for per-frame live theming.
+4. To hand designs to Flutter apps, export a portable bundle with
+   `AuroraBundle.encode(...)`, check it with `AuroraBundle.validate(bundle)` in the
+   app's tests on every export, and map roles with the
+   [producer mapping guide](continuity/user/bundle-producers.md). The Flutter app
+   installs it with `dart run aurora install --bundle <file> --project .`.
 
 ## Copyable prompts for developers
 
@@ -536,6 +568,8 @@ Read these when the selected route needs them; all links are checkout-relative.
 | Generation, overrides, rules, contrast | [generator guide](continuity/developer/generator.md) |
 | CLI invocation, installer, JSON protocol | [CLI guide](continuity/user/usage.md) |
 | Portable recipe fields | [recipe v1](spec/recipe-v1.md) |
+| Installing a theme/texture bundle made by another tool (TokenSeed) | [bundle v1](spec/bundle-v1.md), [CLI guide](continuity/user/usage.md#install-a-bundle-from-another-tool) |
+| TypeScript and React apps | [consuming from TypeScript](continuity/user/typescript.md) |
 | Token interchange and supported limitations | [DTCG profile](continuity/data/dtcg-profile.md) |
 | Foundation role paths and descriptions | [foundation v1](spec/foundation-v1.json) |
 | Texture foundation paths and starter values | [texture foundation v1](spec/texture-foundation-v1.json) |

@@ -90,6 +90,31 @@ installation JSON includes `registrationSnippet`. Adjust its import location,
 canonical contract variable, and registry. This is a manual startup step and
 does not change an already-mounted managed engine's registry.
 
+## Install a bundle from another tool
+
+Designs made outside Aurora, such as TokenSeed exports, arrive as a
+[portable bundle](../../spec/bundle-v1.md): a single `*.aurora.json` file, or a
+folder with `manifest.json` plus `light.tokens.json`, `dark.tokens.json` and
+`texture.tokens.json`. One command installs it, run from the app (any app whose
+pubspec depends on `aurora` or `aurora_flutter`, including through a vendored
+snapshot) or from `packages/aurora` in an Aurora checkout:
+
+```powershell
+dart run aurora install --bundle C:\path\to\ocean.aurora.json --project C:\path\to\my_app
+```
+
+The bundle is validated first (foundation-only, every issue reported; exit 65 with
+`validation` issues or 64 for format issues) and installed with the same safety
+as Add to project: a new `lib/aurora_themes/<theme-id>/` folder, never an
+overwrite, staged before it appears. It contains `bundle.json` (the manifest),
+the variant token files, `theme.dart` (`createAuroraTheme`), and, when the bundle
+has a texture, `texture.tokens.json` and `texture.dart`
+(`createAuroraTexture(contract:, extensionValues:)`, which binds the bundled
+foundation values to your texture contract). The JSON output's
+`registrationSnippet` (also in the folder's README) registers the theme, the
+texture and the bundle's suggested pairing (`texturePairings`). App extensions
+are still required: pass them through `extensionValues` on both factories.
+
 ## Agent interface
 
 ```powershell

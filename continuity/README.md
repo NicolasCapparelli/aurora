@@ -1,6 +1,6 @@
 # Aurora
 
-Aurora is a theme engine with one complete app contract, many named themes, and explicit light/dark variants. The first implementation is a pure Dart core plus a Flutter/Material adapter. A future TypeScript / React Native port is a stated goal (planned, not implemented), which is why the core and the `spec/` folder stay framework-free.
+Aurora is a theme engine with one complete app contract, many named themes, and explicit light/dark variants. The first implementation is a pure Dart core plus a Flutter/Material adapter. A TypeScript port of the core (`packages/aurora_ts`) follows the same `spec/` fixtures; the core and `spec/` stay framework-free so ports can share behavior.
 
 ## Purpose and audience
 
@@ -21,6 +21,8 @@ Implemented (source-observed; checks in [status](status.md)): immutable colors, 
 | Install, build, run, or test | [Setup](developer/setup.md) |
 | Use the CLI / theme generator | [CLI guide](user/usage.md) |
 | Integrate Aurora into an app | [Root README](../README.md), [agent onboarding](../AGENT_ONBOARDING.md) |
+| Use Aurora from TypeScript | [Consuming from TypeScript](user/typescript.md) |
+| Export designs to Aurora from another tool | [Bundle spec](../spec/bundle-v1.md), [producer mapping guide](user/bundle-producers.md) |
 | Understand components and flows | [Architecture](developer/architecture.md) |
 | Understand data and schema ownership | [Data model](data/model.md) |
 | Resume work after an absence | [Status](status.md) |

@@ -33,8 +33,11 @@ selection runtime is AuroraRuntime. Read `spec/README.md` for portability rules.
 
 ## Verification
 
-Run `./tools/check.ps1` from the root. It resolves dependencies, checks formatting,
-analyzes both packages and the example, and runs Dart and Flutter tests. Run
+Run `./tools/check.ps1` from the root. It runs the Python exporter tests; installs,
+builds, typechecks and tests the TypeScript packages through `corepack pnpm`;
+resolves Dart dependencies, checks formatting, analyzes the packages and examples,
+and runs Dart and Flutter tests. The TypeScript core (`packages/aurora_ts`) must keep
+passing every `spec/fixtures` file; behavior changes land in both languages. Run
 `flutter build web` in `examples/theater` when changing demo web integration.
 Tests should protect behavioral invariants and the public contract.
 

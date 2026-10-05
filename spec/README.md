@@ -119,4 +119,12 @@ Dart consumes them in `packages/aurora/test/texture_portable_test.dart`. Refresh
 `texture.tokens.json` and `texture-foundation-v1.json` only deliberately, with
 `dart run tool/export_texture_fixture.dart` from `packages/aurora`.
 
+## Bundles
+
+`bundle-v1.md` specifies a portable bundle: one theme (light and/or dark DTCG
+documents) and an optional texture, with a manifest carrying identity, the
+suggested pairing and provenance, for producers outside Aurora such as TokenSeed.
+Both cores decode and validate it (`AuroraBundle`) and consume
+`fixtures/bundle.json` and `fixtures/bundle-cases.json`.
+
 Persistence and system UI chrome are separate future capabilities. Do not couple them to framework widget APIs.

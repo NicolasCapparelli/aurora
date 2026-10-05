@@ -14,6 +14,10 @@ Future<void> main(List<String> args) async {
     return;
   }
   try {
+    if (args.first == 'install') {
+      stdout.writeln(jsonEncode(await _installBundle(args.skip(1).toList())));
+      return;
+    }
     if (args.first != 'generate')
       throw FormatException('Unknown command ${args.first}');
     var open = true;
@@ -122,4 +126,61 @@ Future<void> main(List<String> args) async {
     stderr.writeln('Could not start Aurora: ${error.message}');
     exitCode = 1;
   }
+}
+
+/// `aurora install --bundle PATH --project PATH`: installs a portable bundle
+/// (spec/bundle-v1.md) produced outside Aurora, such as a TokenSeed export.
+Future<Map<String, Object?>> _installBundle(List<String> args) async {
+  String? bundlePath;
+  String? projectPath;
+  for (var i = 0; i < args.length; i++) {
+    switch (args[i]) {
+      case '--bundle':
+        if (++i >= args.length)
+          throw const FormatException('Missing bundle path');
+        bundlePath = args[i];
+      case '--project':
+        if (++i >= args.length)
+          throw const FormatException('Missing project path');
+        projectPath = args[i];
+      default:
+        throw FormatException('Unknown option ${args[i]}');
+    }
+  }
+  if (bundlePath == null || projectPath == null) {
+    throw const FormatException('install requires --bundle and --project');
+  }
+  final project = await AuroraProject.open(projectPath);
+  final installation =
+      await project.installBundle(await _readBundle(bundlePath));
+  return {'schemaVersion': 1, 'installation': installation};
+}
+
+/// Reads the single-file form, or a folder's manifest.json and token files.
+Future<Object?> _readBundle(String path) async {
+  Object? read(String content) {
+    try {
+      return jsonDecode(content);
+    } on FormatException catch (error) {
+      throw FormatException('Invalid JSON: ${error.message}');
+    }
+  }
+
+  if (await FileSystemEntity.isDirectory(path)) {
+    final manifest = File('$path/manifest.json');
+    if (!await manifest.exists()) {
+      throw const FormatException('Bundle folder needs a manifest.json');
+    }
+    final files = <String, Object?>{};
+    for (final name in const [
+      'light.tokens.json',
+      'dark.tokens.json',
+      'texture.tokens.json'
+    ]) {
+      final file = File('$path/$name');
+      if (await file.exists()) files[name] = read(await file.readAsString());
+    }
+    return AuroraBundle.fromFolder(read(await manifest.readAsString()), files);
+  }
+  return read(await File(path).readAsString());
 }

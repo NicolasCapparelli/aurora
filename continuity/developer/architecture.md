@@ -7,10 +7,12 @@
 | Core (pure Dart) | `packages/aurora/lib` | Colors, token declarations, contract, validated variants/themes, selection runtime, DTCG codec, generator, contrast, recipe decoding. No Flutter or `dart:ui`. Barrel: `lib/aurora.dart`. |
 | Tooling (IO) | `packages/aurora/bin/aurora.dart`, `lib/src/tooling/` | CLI, local HTTP server with embedded HTML UI, project installer. Deliberately **not** exported from the barrel. |
 | Flutter adapter | `packages/aurora_flutter/lib` | `AuroraController` (ChangeNotifier over `AuroraRuntime`), `AuroraScope`, `AuroraEngine`, `AuroraBinding` (device brightness observer + inherited notifier), Material `ColorScheme`/`ThemeData` bridge. |
+| TypeScript core | `packages/aurora_ts` (`@aurora/core`) | Port of the portable core (not tooling), including a port of the needed MCU 0.11.1 sources so generation matches Dart. No DOM/React/Node APIs. Private pnpm workspace package. [Contributor guide](typescript.md). |
+| React adapter | `packages/aurora_react` (`@aurora/react`) | `AuroraController` (synchronous notifications over the runtime), `AuroraProvider` (owns or borrows a controller, follows `prefers-color-scheme`), `AuroraFixedScope`, hooks, and a CSS custom-property emitter in place of the Material bridge. Peer-depends on `@aurora/core` and React 19. |
 | Example | `examples/theater` | Wicked/Hadestown themes with required `theater.*` extensions and an appearance selector. |
 | Specs and fixtures | `spec/` | Language-neutral portable behavior and shared JSON fixtures for future ports. |
-| Maintenance script | `tools/generate_foundation.py` | Generates foundation accessors, starter presets, Material mapping, and `spec/foundation-v1.json` from one table. |
-| Package exporter | `tools/vendor.py` | App-owned copies of both packages with provenance/hashes and explicit verified updates; no app pubspec or runtime changes. [Installation](../user/installation.md). |
+| Maintenance script | `tools/generate_foundation.py` | Generates foundation accessors, starter presets, Material mapping, and `spec/foundation-v1.json` from one table, plus the TS core's foundation, starters, Material role mapping and texture foundation (the latter from `spec/texture-foundation-v1.json`). |
+| Package exporter | `tools/vendor.py` | App-owned copies of both Dart packages, or (`--typescript`) built `@aurora/core` and `@aurora/react`, with provenance/hashes and explicit verified updates; no app manifest or runtime changes. [Installation](../user/installation.md). |
 
 ## Representative flows
 
@@ -23,7 +25,7 @@
 
 Sources: [AGENTS.md invariants](../../AGENTS.md), [design notes](../decisions/design-notes.md).
 
-- The core stays Flutter-free so a TypeScript/React Native port can share behavior; the adapter owns subscription, ThemeData mapping, and device access.
+- The core stays Flutter-free so ports share behavior; the TypeScript core (`packages/aurora_ts`) is that port and is held to the same `spec/fixtures`. Adapters own subscription, native theme mapping, and device access.
 - Direct tokens are immutable snapshots; there is no global active theme.
 - Controller ownership: the engine owns a controller only in `AuroraEngine.managed`; injected controllers are never disposed by the engine; managed configuration changes throw `FlutterError` and need a new engine key; theme changes do not reset navigation (covered by tests).
 - Contract completeness and foundation immutability are enforced at construction/import time rather than by generated constructors (design notes record code generation as an open question).
