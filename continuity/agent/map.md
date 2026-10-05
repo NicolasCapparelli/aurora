@@ -1,6 +1,6 @@
 # Implementation map
 
-Paths are relative to the repo root. Core = `packages/aurora/lib/src`, Adapter = `packages/aurora_flutter/lib/src`. Core tests run with `dart test` in `packages/aurora`; adapter tests with `flutter test` in `packages/aurora_flutter`; everything with `./tools/check.ps1` ([setup](../developer/setup.md)).
+Paths are relative to the repo root. Core = `packages/aurora/lib/src`, Adapter = `packages/aurora_flutter/lib/src`, TS core = `packages/aurora_ts/src`. Core tests run with `dart test` in `packages/aurora`; adapter tests with `flutter test` in `packages/aurora_flutter`; everything with `./tools/check.ps1` ([setup](../developer/setup.md)).
 
 ## Routes
 
@@ -30,7 +30,8 @@ Paths are relative to the repo root. Core = `packages/aurora/lib/src`, Adapter =
 | **Flutter textures** (`Aurora.textureOf`, `AuroraTextureTokens`, textStyle, borderRadius, dashPattern, texture ThemeData) | Typed texture reads and Flutter conversions bound to the active variant; default ThemeData applies the texture foundation | [texture.dart](../../packages/aurora_flutter/lib/src/texture.dart); access in [scope.dart](../../packages/aurora_flutter/lib/src/scope.dart) | `aurora_flutter/test/texture_test.dart` | controller, binding (`AuroraInherited.style`), engine |
 | **Textures example** (Soft, Editorial, Trace-shaped texture tokens, flight card) | Reference integration of textures; recipes `examples/recipes/texture-*.json` | [tokens.dart](../../examples/textures/lib/tokens.dart), [main.dart](../../examples/textures/lib/main.dart) | `examples/textures/test/textures_test.dart` (run by check.ps1) | Adapter |
 | **Theater example** (demo app, Wicked, Hadestown, ticket tokens, appearance selector) | Reference integration with required extensions | [main.dart](../../examples/theater/lib/main.dart); web shell [index.html](../../examples/theater/web/index.html) | Analyze only (`flutter analyze`); `flutter build web` after web changes | uses Adapter and starters |
-| **Portable spec and fixtures** (TypeScript/React Native port, conformance, cross-language) | Language-neutral behavior and expected outputs | [spec/README.md](../../spec/README.md), [spec/fixtures](../../spec/fixtures) | `portable_test.dart`, `generation_portable_test.dart` | Locked-authority docs; do not regenerate expected fixtures in normal work |
+| **Portable spec and fixtures** (TypeScript/React Native port, conformance, cross-language) | Language-neutral behavior and expected outputs | [spec/README.md](../../spec/README.md), [spec/fixtures](../../spec/fixtures) | `portable_test.dart`, `generation_portable_test.dart`, `scheme_portable_test.dart`, `texture_portable_test.dart`; TS `portable.test.ts` | Locked-authority docs; do not regenerate expected fixtures in normal work |
+| **TypeScript core** (`@aurora/core`, TS port, MCU port, `AuroraValidationError`, Node/pnpm workspace) | TypeScript port of the portable core (everything but tooling), generator with MCU 0.11.1 ported | [packages/aurora_ts/src/index.ts](../../packages/aurora_ts/src/index.ts); MCU port in [src/mcu](../../packages/aurora_ts/src/mcu) | `packages/aurora_ts/test/portable.test.ts` (every `spec/fixtures` file), `core.test.ts`, `mcu.test.ts`; run by check.ps1 | [TypeScript contributor guide](../developer/typescript.md), [consuming guide](../user/typescript.md); generated `foundation.ts`, `starters.ts`, `materialRoles.ts`, `textureFoundation.ts` come from [generate_foundation.py](../../tools/generate_foundation.py) |
 | **Agent integration docs** (onboarding, integrate Aurora into app, migrate MaterialApp) | Public playbook for integrating Aurora in user apps | [AGENT_ONBOARDING.md](../../AGENT_ONBOARDING.md) | none (documentation) | Update with public API changes ([AGENTS.md](../../AGENTS.md)); [README](../../README.md) |
 
 ## Shared foundations and dependency routes
@@ -50,14 +51,14 @@ Paths are relative to the repo root. Core = `packages/aurora/lib/src`, Adapter =
   stream remains async; controller notifies directly after mutations, not from it.
 
 - **Contract instance identity**: variants, themes, runtime, generator requests, and recipes must share one `AuroraContract`; any change touching `contains`/`identical` affects theme.dart, runtime.dart, generator.dart, recipe.dart, dtcg.dart.
-- **Foundation table change** (new/renamed token): update the table, run the generator script, format, then check contrast pairs in contrast.dart, generated material_roles.dart, DTCG fixtures, `spec/foundation-v1.json`, onboarding/README token counts (58), and the version decision.
+- **Foundation table change** (new/renamed token): update the table, run the generator script (it also writes the TS core's generated files), format, then check contrast pairs in contrast.dart, generated material_roles.dart, DTCG fixtures, `spec/foundation-v1.json`, onboarding/README token counts (58), and the version decision.
 - **Validation and errors**: `AuroraValidationException` (contract.dart) is mapped to CLI exit 65/`validation` in bin/aurora.dart and HTTP 400 in server.dart; keep rejection semantics aligned.
 - **Generation to output**: generator.dart feeds the CLI manifest, server response, installer files, and portable fixture tests.
 - **Selection semantics**: change in runtime.dart must be checked against Adapter controller/binding/engine and `spec/README.md`.
 
 ## Investigation notes
 
-- Exclusions for orientation: `.dart_tool/`, `build/`, `pubspec.lock`, `examples/theater/build`, and `.pub-cache` (all git-ignored or generated).
+- Exclusions for orientation: `.dart_tool/`, `build/`, `pubspec.lock`, `examples/theater/build`, `.pub-cache`, `node_modules/` and `dist/` (all git-ignored or generated).
 - Generated files (foundation.dart, starters.dart, material_roles.dart, Adapter material.dart, `spec/foundation-v1.json`) carry a generated header; edit the table instead.
 - [integration-research](../history/integration-research.md) is dated historical background research; not mapped to a code route.
 - Overall design reasoning and ownership of retained docs: [architecture](../developer/architecture.md).

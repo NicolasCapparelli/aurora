@@ -1,0 +1,5 @@
+packages:
+  - packages/aurora_ts
+  - packages/aurora_react
+onlyBuiltDependencies:
+  - esbuild

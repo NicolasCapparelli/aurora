@@ -144,3 +144,122 @@ spec.mkdir(exist_ok=True)
                for name, desc, _, _ in ROWS],
 }, indent=2) + '\n', encoding='utf-8')
 print(f'Generated {len(ROWS)} foundation roles ({len(MATERIAL)} Material + 12 status).')
+
+# ---------------------------------------------------------------- TypeScript
+# The TypeScript core (@aurora/core in packages/aurora_ts) reads the same table.
+# Its texture foundation comes from spec/texture-foundation-v1.json, which the
+# Dart texture foundation exports (packages/aurora/tool/export_texture_fixture.dart).
+ts_src = ROOT / 'packages/aurora_ts/src'
+ts_src.mkdir(parents=True, exist_ok=True)
+q = json.dumps
+
+ts = header + "import type { AuroraColor } from './color.js';\nimport { AuroraColorToken } from './token.js';\nimport type { AuroraThemeVariant } from './theme.js';\n\n"
+for name, desc, _, _ in ROWS:
+    ts += f"const {name} = new AuroraColorToken('colors.{name}', {{ description: {q(desc)} }});\n"
+ts += '\n/** Aurora foundation v1: current Material color roles plus status roles. */\nexport const AuroraFoundation = Object.freeze({\n  version: 1 as const,\n'
+ts += ''.join(f'  {name},\n' for name, *_ in ROWS)
+ts += '  tokens: Object.freeze([\n' + ''.join(f'    {name},\n' for name, *_ in ROWS) + '  ]) as readonly AuroraColorToken[],\n});\n\n'
+ts += '/** Direct immutable values for the entire app contract. No global active theme. */\nexport class AuroraTokens {\n  constructor(private readonly variant: AuroraThemeVariant) {}\n\n  read(token: AuroraColorToken): AuroraColor {\n    return this.variant.read(token);\n  }\n'
+for name, desc, *_ in ROWS:
+    ts += f'\n  /** {desc} */\n  get {name}(): AuroraColor {{\n    return this.variant.read({name});\n  }}\n'
+ts += '}\n'
+(ts_src / 'foundation.ts').write_text(ts, encoding='utf-8')
+
+ts = header + "import { AuroraColor } from './color.js';\nimport type { AuroraColorToken } from './token.js';\nimport { AuroraFoundation as F } from './foundation.js';\n\n"
+ts += 'function preset(entries: [AuroraColorToken, string][]): ReadonlyMap<AuroraColorToken, AuroraColor> {\n  return new Map(entries.map(([token, hex]) => [token, AuroraColor.hex(hex)]));\n}\n\n'
+ts += '/** Complete explicit foundation presets; app extensions are still required. */\nexport const AuroraStarterValues = Object.freeze({\n'
+for appearance, index in [('light', 2), ('dark', 3)]:
+    ts += f'  {appearance}: preset([\n' + ''.join(f"    [F.{row[0]}, '#{row[index]}'],\n" for row in ROWS) + '  ]),\n'
+ts += '});\n'
+(ts_src / 'starters.ts').write_text(ts, encoding='utf-8')
+
+ts = header + "import { AuroraColor } from './color.js';\nimport type { AuroraColorToken } from './token.js';\nimport { AuroraFoundation as F } from './foundation.js';\nimport type { DynamicScheme } from './mcu/dynamic.js';\n\n"
+ts += 'export function materialRoleValues(scheme: DynamicScheme): Map<AuroraColorToken, AuroraColor> {\n  return new Map<AuroraColorToken, AuroraColor>([\n'
+for name in MATERIAL:
+    source_name = 'inverseOnSurface' if name == 'onInverseSurface' else name
+    # Flutter ColorScheme.fromSeed uses resolved primary for surfaceTint.
+    if name == 'surfaceTint':
+        source_name = 'primary'
+    ts += f'    [F.{name}, new AuroraColor(scheme.{source_name})],\n'
+ts += '  ]);\n}\n'
+(ts_src / 'materialRoles.ts').write_text(ts, encoding='utf-8')
+
+# Texture accessor names follow the Dart AuroraTextureFoundation fields; the
+# remaining tokens use the last path segment (type.displayLarge -> displayLarge).
+TEXTURE_NAMES = {
+    'type.family.brand': 'brandFamily', 'type.family.plain': 'plainFamily',
+    'shape.extraSmall': 'extraSmallShape', 'shape.small': 'smallShape', 'shape.medium': 'mediumShape',
+    'shape.large': 'largeShape', 'shape.extraLarge': 'extraLargeShape',
+    'motion.short': 'shortDuration', 'motion.medium': 'mediumDuration', 'motion.long': 'longDuration',
+    'motion.extraLong': 'extraLongDuration', 'motion.easing.standard': 'easingStandard',
+    'motion.easing.emphasizedDecelerate': 'easingEmphasizedDecelerate',
+    'motion.easing.emphasizedAccelerate': 'easingEmphasizedAccelerate',
+}
+TOKEN_CLASSES = {'fontFamily': 'AuroraFontFamilyToken', 'typography': 'AuroraTypographyToken',
+                 'dimension': 'AuroraDimensionToken', 'duration': 'AuroraDurationToken',
+                 'cubicBezier': 'AuroraCubicBezierToken'}
+texture_spec = json.loads((spec / 'texture-foundation-v1.json').read_text(encoding='utf-8'))
+texture_names = {}
+for token in texture_spec['tokens']:
+    path = token['path']
+    texture_names[path] = TEXTURE_NAMES.get(path) or path.rsplit('.', 1)[1]
+if len(set(texture_names.values())) != len(texture_names):
+    raise SystemExit('Texture accessor names must be unique')
+
+
+def ts_number(value):
+    return repr(float(value)) if isinstance(value, float) else str(value)
+
+
+def ts_ref(value, kind):
+    if isinstance(value, str) and value.startswith('{'):
+        return f'new AuroraAlias({texture_names[value[1:-1]]})'
+    if kind == 'dimension':
+        return f"AuroraDimension.{value['unit']}({ts_number(value['value'])})"
+    if kind == 'fontFamily':
+        return f'new AuroraFontFamily({q(value if isinstance(value, list) else [value])})'
+    if kind == 'fontWeight':
+        return f'new AuroraFontWeight({value})'
+    if kind == 'number':
+        return f'new AuroraLiteral({ts_number(value)})'
+    raise SystemExit(f'Unsupported texture starter field type {kind}')
+
+
+def ts_starter(token):
+    kind, value = token['type'], token['starter']
+    if kind == 'typography':
+        fields = [('fontFamily', 'fontFamily'), ('fontSize', 'dimension'), ('fontWeight', 'fontWeight'),
+                  ('letterSpacing', 'dimension'), ('lineHeight', 'number')]
+        return 'new AuroraTypography({\n' + ''.join(
+            f'      {field}: {ts_ref(value[field], field_kind)},\n' for field, field_kind in fields) + '    })'
+    if kind == 'duration':
+        if value['unit'] != 'ms':
+            raise SystemExit('Texture starter durations must be in ms')
+        return f"AuroraDuration.ms({ts_number(value['value'])})"
+    if kind == 'cubicBezier':
+        return 'new AuroraCubicBezier(' + ', '.join(ts_number(v) for v in value) + ')'
+    return ts_ref(value, kind)
+
+
+ts = header + '// Source: spec/texture-foundation-v1.json, exported from the Dart texture foundation.\n'
+ts += "import { AuroraAlias, AuroraLiteral } from './ref.js';\nimport {\n" + ''.join(
+    f'  {cls},\n' for cls in sorted(set(TOKEN_CLASSES.values()))) + "  type AuroraToken,\n} from './token.js';\n"
+ts += "import {\n  AuroraCubicBezier,\n  AuroraDimension,\n  AuroraDuration,\n  AuroraFontFamily,\n  AuroraFontWeight,\n  AuroraTypography,\n} from './values.js';\n\n"
+for token in texture_spec['tokens']:
+    ts += f"const {texture_names[token['path']]} = new {TOKEN_CLASSES[token['type']]}({q(token['path'])}, {{\n  description: {q(token['description'])},\n}});\n"
+ts += ('\n/**\n * Aurora texture foundation v1: the Material 3 baseline type scale, corner\n'
+       ' * shapes and motion. Every texture supplies these; apps add their own tokens as\n'
+       ' * texture contract extensions. The `type`, `shape` and `motion` namespaces are\n'
+       ' * reserved.\n */\nexport const AuroraTextureFoundation = Object.freeze({\n')
+ts += f"  version: {texture_spec['version']} as const,\n  namespaces: Object.freeze({q(texture_spec['namespaces'])}) as readonly string[],\n"
+ts += ''.join(f"  {texture_names[t['path']]},\n" for t in texture_spec['tokens'])
+ts += '  tokens: Object.freeze([\n' + ''.join(
+    f"    {texture_names[t['path']]},\n" for t in texture_spec['tokens']) + '  ]) as readonly AuroraToken<unknown>[],\n});\n\n'
+ts += ('/** Material 3 baseline values for every texture foundation token. */\n'
+       'export const auroraMaterialTextureValues: ReadonlyMap<AuroraToken<unknown>, unknown> = new Map<\n'
+       '  AuroraToken<unknown>,\n  unknown\n>([\n')
+for token in texture_spec['tokens']:
+    ts += f"  [\n    {texture_names[token['path']]},\n    {ts_starter(token)},\n  ],\n"
+ts += ']);\n'
+(ts_src / 'textureFoundation.ts').write_text(ts, encoding='utf-8')
+print(f'Generated TypeScript foundation ({len(ROWS)} colour roles, {len(texture_spec["tokens"])} texture tokens).')

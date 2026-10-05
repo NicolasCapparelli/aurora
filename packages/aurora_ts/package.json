@@ -1,0 +1,28 @@
+{
+  "name": "@aurora/core",
+  "version": "0.1.0",
+  "description": "Platform-independent Aurora theme contracts, textures, runtime, DTCG codecs and generator.",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "license": "SEE LICENSE IN NOTICE.md",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "NOTICE.md", "LICENSE-material-color-utilities"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit && tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "~5.9.3",
+    "vitest": "^3.2.7"
+  }
+}

@@ -9,6 +9,19 @@ function Invoke-Checked {
 
 Invoke-Checked python @((Join-Path $repoRoot 'tools/test_vendor.py'))
 
+# TypeScript packages (@aurora/core, @aurora/react). pnpm is reached through
+# corepack, which reads the pinned version from package.json; a bare pnpm is not
+# assumed to be on PATH.
+Push-Location $repoRoot
+try {
+    Invoke-Checked corepack @('pnpm', 'install', '--frozen-lockfile')
+    Invoke-Checked corepack @('pnpm', '-r', 'run', 'typecheck')
+    Invoke-Checked corepack @('pnpm', '-r', 'run', 'test')
+    Invoke-Checked corepack @('pnpm', '-r', 'run', 'build')
+} finally {
+    Pop-Location
+}
+
 foreach ($package in @('packages/aurora', 'packages/aurora_flutter', 'examples/theater', 'examples/textures')) {
     Push-Location (Join-Path $repoRoot $package)
     try {
