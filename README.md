@@ -28,6 +28,11 @@ Flutter starting point. Replace `aurora/` with your checkout's actual location.
 - `packages/aurora_react` (`@aurora/react`): React 19 provider, fixed scopes, hooks
   and CSS custom properties. TypeScript apps start with
   [consuming from TypeScript](continuity/user/typescript.md).
+- `packages/aurora_react_native` (`@aurora/react-native`): React Native provider,
+  fixed scopes and hooks over `Appearance`, plus explicit native style
+  conversions. It is self-contained (no DOM or CSS) and exported with
+  `tools/vendor.py --react-native`.
+- `examples/react_native`: a minimal Expo app that consumes the native snapshot.
 - `examples/theater`: Wicked and Hadestown identities with light/dark variants,
   required ticket colors, and an appearance selector. Palettes are illustrative,
   not official brand assets.

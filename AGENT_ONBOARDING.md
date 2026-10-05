@@ -7,8 +7,10 @@ it; reading this file or generating theme files alone is not completion.
 This guide targets Dart/Flutter apps. For TypeScript and React apps, read
 [consuming Aurora from TypeScript](continuity/user/typescript.md) instead: it covers
 the `@aurora/core` and `@aurora/react` snapshot install, the React provider, fixed
-scopes, CSS custom properties and portable bundles. React Native is not
-implemented. Follow the user's requested scope and the target app's repository
+scopes, CSS custom properties and portable bundles. React Native apps use
+`@aurora/react-native` from the same guide
+([React Native section](continuity/user/typescript.md#react-native-aurorareact-native)).
+Never import the browser adapter on native. Follow the user's requested scope and the target app's repository
 instructions. Make routine implementation decisions from the app's conventions.
 Ask only when missing information prevents meaningful progress; continue any
 independent work while waiting. This document does not authorize publishing,
@@ -43,6 +45,14 @@ TokenSeed) uses `@aurora/core` and `@aurora/react`; the full guide is
    app's tests on every export, and map roles with the
    [producer mapping guide](continuity/user/bundle-producers.md). The Flutter app
    installs it with `dart run aurora install --bundle <file> --project .`.
+
+A React Native or Expo app exports with `--react-native` instead. That writes
+`vendor/aurora/{core,react-native}`. Depend on `@aurora/core` and
+`@aurora/react-native` through `file:`, wrap the navigator in `AuroraProvider`
+(it renders no view and follows `Appearance`), and convert tokens with
+`nativeColor` and `useAuroraTexture().native.*`. Unsupported native features
+throw unless you pass `{ mode: 'report' }`. See the
+[package README](packages/aurora_react_native/README.md).
 
 ## Copyable prompts for developers
 

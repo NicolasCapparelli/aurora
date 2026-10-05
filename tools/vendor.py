@@ -3,7 +3,9 @@
 
 Dart mode (default) copies packages/aurora and packages/aurora_flutter for a
 Flutter or Dart app. TypeScript mode (--typescript) builds and copies
-@aurora/core and @aurora/react for a pnpm app."""
+@aurora/core and @aurora/react for a pnpm app. React Native mode
+(--react-native) builds and copies @aurora/core and @aurora/react-native for an
+npm, pnpm or Yarn app."""
 
 import argparse
 import hashlib
@@ -22,6 +24,11 @@ TS_PACKAGES = (
     ("aurora_ts", "core", ("README.md", "NOTICE.md", "LICENSE-material-color-utilities")),
     ("aurora_react", "react", ("README.md",)),
 )
+RN_PACKAGES = (
+    TS_PACKAGES[0],
+    ("aurora_react_native", "react-native", ("README.md",)),
+)
+JS_KINDS = ("typescript", "react-native")
 
 
 def ordinary(path):
@@ -75,7 +82,7 @@ def prepare_target(project, output, replace, kind):
     """Validates the destination; returns (target, manifest being replaced or None)."""
     project = Path(os.path.abspath(project))
     ordinary(project)
-    marker = "package.json" if kind == "typescript" else "pubspec.yaml"
+    marker = "package.json" if kind in JS_KINDS else "pubspec.yaml"
     if not (project / marker).is_file():
         raise ValueError(f"Project needs a {marker}")
     relative = Path(output)
@@ -208,11 +215,11 @@ def corepack(*args):
                           capture_output=True, text=True).stdout.strip()
 
 
-def build_typescript():
-    """Builds both packages in the source checkout; returns the toolchain versions."""
+def build_typescript(filters=("@aurora/core", "@aurora/react")):
+    """Builds the packages in the source checkout; returns the toolchain versions."""
     try:
         corepack("pnpm", "install", "--frozen-lockfile")
-        corepack("pnpm", "--filter", "@aurora/core", "--filter", "@aurora/react", "run", "build")
+        corepack("pnpm", *[arg for name in filters for arg in ("--filter", name)], "run", "build")
         node = subprocess.run([shutil.which("node") or "node", "--version"],
                               check=True, capture_output=True, text=True).stdout.strip()
         return {"node": node, "pnpm": corepack("pnpm", "--version"),
@@ -221,24 +228,35 @@ def build_typescript():
         raise ValueError(f"TypeScript build failed: {error.stderr or error.stdout}") from error
 
 
-def vendored_package_json(path):
-    """The package manifest without scripts or development dependencies."""
+def vendored_package_json(path, siblings=None):
+    """The package manifest without scripts or development dependencies.
+
+    A workspace: specifier on a runtime dependency becomes a file: path to the
+    sibling in [siblings] (vendored directory names by package name). Peer
+    dependencies keep their version ranges so the app supplies one copy."""
     data = json.loads(path.read_text(encoding="utf-8"))
     for field in ("scripts", "devDependencies"):
         data.pop(field, None)
+    for field in ("dependencies", "optionalDependencies"):
+        for name, spec in data.get(field, {}).items():
+            if spec.startswith("workspace:"):
+                if siblings is None or name not in siblings:
+                    raise ValueError(f"Cannot vendor {data['name']}: unresolved {spec} dependency on {name}")
+                data[field][name] = f"file:../{siblings[name]}"
     return data
 
 
-def export_typescript(project, output="vendor/aurora", replace=False, build=None):
-    """Exports built ESM plus .d.ts for @aurora/core and @aurora/react.
+def export_javascript(kind, packages, project, output, replace, build, notes):
+    """Exports built ESM plus .d.ts for [packages] as a [kind] snapshot.
 
     Built output rather than source, so the app never compiles Aurora under its
     own tsconfig flags and needs no build configuration for it."""
-    target, original_manifest = prepare_target(project, output, replace, "typescript")
-    toolchain = (build or build_typescript)()
+    target, original_manifest = prepare_target(project, output, replace, kind)
+    toolchain = build()
+    siblings = {f"@aurora/{name}": name for _, name, _ in packages}
     payload = {}
     versions = {}
-    for package, name, extras in TS_PACKAGES:
+    for package, name, extras in packages:
         root = SOURCE / "packages" / package
         ordinary(root)
         manifest = root / "package.json"
@@ -248,7 +266,7 @@ def export_typescript(project, output="vendor/aurora", replace=False, build=None
         dist = root / "dist"
         if not (dist / "index.js").is_file() or not (dist / "index.d.ts").is_file():
             raise ValueError(f"Missing built package output: {dist}")
-        data = vendored_package_json(manifest)
+        data = vendored_package_json(manifest, siblings)
         versions[data["name"]] = data["version"]
         payload[f"{name}/package.json"] = (json.dumps(data, indent=2) + "\n").encode()
         for extra in extras:
@@ -260,7 +278,15 @@ def export_typescript(project, output="vendor/aurora", replace=False, build=None
             payload[f"{name}/dist/{relative}"] = file.read_bytes()
     root_notices(payload)
     revision, dirty = source_state()
-    payload["VENDORED.md"] = (
+    payload["VENDORED.md"] = notes.encode()
+    return install(target, original_manifest, payload,
+                   {"schemaVersion": 1, "kind": kind, "sourceRevision": revision,
+                    "sourceDirty": dirty, "packageVersions": versions, "toolchain": toolchain})
+
+
+def export_typescript(project, output="vendor/aurora", replace=False, build=None):
+    """Exports built ESM plus .d.ts for @aurora/core and @aurora/react."""
+    return export_javascript("typescript", TS_PACKAGES, project, output, replace, build or build_typescript, (
         "# Vendored Aurora (TypeScript)\n\n"
         "App-owned snapshot exported by Aurora tools/vendor.py --typescript. Commit this entire directory.\n"
         "core/ is @aurora/core and react/ is @aurora/react, as built ESM with type declarations.\n"
@@ -270,28 +296,57 @@ def export_typescript(project, output="vendor/aurora", replace=False, build=None
         "  \"@aurora/react\": \"file:vendor/aurora/react\"\n"
         "@aurora/react takes @aurora/core and react as peer dependencies, so the app's one copy is used.\n"
         "vendor-manifest.json records source HEAD, working-tree state, versions, toolchain and SHA-256 files.\n"
-    ).encode()
-    return install(target, original_manifest, payload,
-                   {"schemaVersion": 1, "kind": "typescript", "sourceRevision": revision,
-                    "sourceDirty": dirty, "packageVersions": versions, "toolchain": toolchain})
+    ))
+
+
+def build_react_native():
+    return build_typescript(("@aurora/core", "@aurora/react-native"))
+
+
+def export_react_native(project, output="vendor/aurora", replace=False, build=None):
+    """Exports built ESM plus .d.ts for @aurora/core and @aurora/react-native, never @aurora/react."""
+    return export_javascript("react-native", RN_PACKAGES, project, output, replace, build or build_react_native, (
+        "# Vendored Aurora (React Native)\n\n"
+        "App-owned snapshot exported by Aurora tools/vendor.py --react-native. Commit this entire directory.\n"
+        "core/ is @aurora/core and react-native/ is @aurora/react-native, as built ESM with type declarations.\n"
+        "Do not edit files here; update from Aurora with the exporter and --replace.\n"
+        "Depend on both from the app's package.json with file: specifiers, then run npm install\n"
+        "(pnpm and Yarn work too):\n"
+        "  \"@aurora/core\": \"file:vendor/aurora/core\"\n"
+        "  \"@aurora/react-native\": \"file:vendor/aurora/react-native\"\n"
+        "@aurora/react-native takes @aurora/core, react and react-native as peer dependencies,\n"
+        "so the app's one copy of each is used. Check with: npm ls @aurora/core react\n"
+        "vendor-manifest.json records source HEAD, working-tree state, versions, toolchain and SHA-256 files.\n"
+    ))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", required=True,
-                        help="App root containing pubspec.yaml (or package.json with --typescript)")
-    parser.add_argument("--typescript", action="store_true",
-                        help="Build and export @aurora/core and @aurora/react for a pnpm app")
+                        help="App root containing pubspec.yaml (or package.json with --typescript or --react-native)")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--typescript", action="store_true",
+                       help="Build and export @aurora/core and @aurora/react for a pnpm app")
+    modes.add_argument("--react-native", action="store_true", dest="react_native",
+                       help="Build and export @aurora/core and @aurora/react-native for an npm, pnpm or Yarn app")
     parser.add_argument("--output", default="vendor/aurora", help="App-relative destination")
     parser.add_argument("--replace", action="store_true", help="Update an unchanged managed snapshot")
     args = parser.parse_args()
     try:
         if args.typescript:
             target = export_typescript(args.project, args.output, args.replace)
+        elif args.react_native:
+            target = export_react_native(args.project, args.output, args.replace)
         else:
             target = export(args.project, args.output, args.replace)
     except (ValueError, OSError) as error:
         parser.exit(1, f"Aurora export failed: {error}\n")
+    if args.react_native:
+        print(f"Exported Aurora to {target}. Commit the snapshot, add to the app's package.json\n"
+              '  "@aurora/core": "file:vendor/aurora/core"\n'
+              '  "@aurora/react-native": "file:vendor/aurora/react-native"\n'
+              "and run npm install (pnpm and Yarn work too).")
+        return
     dependencies = "file: dependencies" if args.typescript else "app-relative path dependencies"
     print(f"Exported Aurora to {target}. Commit the snapshot and use {dependencies}.")
 
