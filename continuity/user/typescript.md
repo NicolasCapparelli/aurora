@@ -206,3 +206,31 @@ same name are rejected.
 
 Theme colour references inside textures (`{colors.outline}`) resolve against the
 variant the texture is shown with, so borders and shadows follow light and dark.
+
+## Portable bundles: exporting designs to Flutter apps
+
+A TypeScript producer exports a theme and an optional texture as an
+[Aurora bundle](../../spec/bundle-v1.md); a Flutter app installs it with
+`dart run aurora install --bundle <file-or-folder> --project <app>` (see the
+[CLI guide](usage.md#install-a-bundle-from-another-tool)).
+
+```ts
+import { AuroraBundle } from '@aurora/core';
+
+// theme and texture use AuroraBundle.foundationContract and
+// AuroraBundle.textureFoundationContract (foundation-only by default).
+const bundle = AuroraBundle.encode({
+  theme,
+  texture,                         // optional; pairing suggested by default
+  provenance: { generator: 'tokenseed@0.2.0', sourceHash: 'sha256:…', createdAt: new Date().toISOString() },
+});
+const report = AuroraBundle.validate(bundle);   // { valid, issues: [{ category, file, message }], contents }
+```
+
+Run `AuroraBundle.validate` in the producer's tests on every export; the Dart
+validator accepts exactly the same bundles (shared fixtures check it).
+`AuroraBundle.load` returns the theme, texture and pairing or throws by category.
+What each of the 58 colour roles and 29 texture tokens means, and how to map
+wide-gamut colours, extra modes and extra tokens, is in the
+[producer mapping guide](bundle-producers.md).
+

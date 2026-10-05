@@ -4,9 +4,11 @@ Use this playbook to **implement Aurora in the user's app**, either from scratch
 or by migrating an existing app. Complete the requested integration and verify
 it; reading this file or generating theme files alone is not completion.
 
-This guide targets the current Dart/Flutter implementation. Aurora's core is
-framework-independent Dart; TypeScript and React Native adapters are not
-implemented yet. Follow the user's requested scope and the target app's repository
+This guide targets Dart/Flutter apps. For TypeScript and React apps, read
+[consuming Aurora from TypeScript](continuity/user/typescript.md) instead: it covers
+the `@aurora/core` and `@aurora/react` snapshot install, the React provider, fixed
+scopes, CSS custom properties and portable bundles. React Native is not
+implemented. Follow the user's requested scope and the target app's repository
 instructions. Make routine implementation decisions from the app's conventions.
 Ask only when missing information prevents meaningful progress; continue any
 independent work while waiting. This document does not authorize publishing,
@@ -536,6 +538,8 @@ Read these when the selected route needs them; all links are checkout-relative.
 | Generation, overrides, rules, contrast | [generator guide](continuity/developer/generator.md) |
 | CLI invocation, installer, JSON protocol | [CLI guide](continuity/user/usage.md) |
 | Portable recipe fields | [recipe v1](spec/recipe-v1.md) |
+| Installing a theme/texture bundle made by another tool (TokenSeed) | [bundle v1](spec/bundle-v1.md), [CLI guide](continuity/user/usage.md#install-a-bundle-from-another-tool) |
+| TypeScript and React apps | [consuming from TypeScript](continuity/user/typescript.md) |
 | Token interchange and supported limitations | [DTCG profile](continuity/data/dtcg-profile.md) |
 | Foundation role paths and descriptions | [foundation v1](spec/foundation-v1.json) |
 | Texture foundation paths and starter values | [texture foundation v1](spec/texture-foundation-v1.json) |

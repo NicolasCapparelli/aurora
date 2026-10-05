@@ -258,3 +258,40 @@ section.
 - Generating textures from inputs; CLI and browser-tool support for texture recipes.
 - Additional foundation roles (elevation, spacing, state layers) need a texture
   foundation version decision.
+
+## TypeScript port and the TokenSeed pipeline (decided 2026-10-05)
+
+Source: the owner's brief for TokenSeed (a React 19 web app that generates, forks
+and exports design systems).
+
+### Owner decisions
+
+- **Aurora themes TokenSeed's own UI at runtime.** The app chrome follows the design
+  system being edited; gallery thumbnails use fixed scopes side by side.
+- **TokenSeed exports Aurora themes and textures** so a Flutter app can drop in a
+  system made in TokenSeed. TokenSeed keeps its own generator (OKLCH ramps,
+  display-p3, high-contrast modes, an open token tree) and maps it onto Aurora's
+  contract on export. Aurora's foundation and profiles do not grow to fit it;
+  any such change is a versioning decision for the owner.
+- **Private packages.** `@aurora/core` and `@aurora/react` are `"private": true`
+  and reach apps as committed snapshots from `tools/vendor.py --typescript`, like
+  the Dart distribution decision of 2026-10-01.
+
+### Design
+
+- **Port, not wrapper.** `packages/aurora_ts` ports the portable core and is held to
+  every `spec/fixtures` file. No npm `material-color-utilities` release reproduces
+  the pinned algorithm, so the needed Dart MCU 0.11.1 sources are ported into the
+  package (Apache-2.0 notice kept). See the [TypeScript guide](../developer/typescript.md).
+- **React adapter** mirrors the Flutter ownership rules (owned vs borrowed
+  controller, managed configuration fixed while mounted). CSS custom properties
+  (`--aurora-<path with dashes>`) replace the Material bridge. Live updates write
+  only changed variables imperatively and re-render only hook readers.
+- **Snapshots ship built ESM and declarations**, not source, so apps never compile
+  Aurora under their own tsconfig. `@aurora/react` peer-depends on `@aurora/core`
+  because contract membership is identity-based and needs one core instance.
+- **Bundles** (`spec/bundle-v1.md`) carry metadata only in a manifest and reuse the
+  existing DTCG profiles unchanged, foundation-only by default. Producers convert
+  wide-gamut colours to 8-bit sRGB, drop extra modes, and leave out extra tokens
+  (which the strict profiles reject). Validators in both languages report every
+  issue by category and file and must agree.

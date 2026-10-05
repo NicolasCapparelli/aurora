@@ -5,7 +5,7 @@ A language-independent JSON object describing one texture. Decode in Dart with
 IO, Flutter or filesystem dependency. Theme recipe v1 (`recipe-v1.md`) is
 unchanged; the two are distinguished by `kind`.
 
-Required fields: `schemaVersion: 1`, `kind: "style"`, nonempty string `id` and
+Required fields: `schemaVersion: 1`, `kind: "texture"`, nonempty string `id` and
 nonempty string `name`.
 
 `base` is `"material"` (default) or `"none"`. `material` starts from Aurora's
