@@ -15,9 +15,10 @@ Invoke-Checked python @((Join-Path $repoRoot 'tools/test_vendor.py'))
 Push-Location $repoRoot
 try {
     Invoke-Checked corepack @('pnpm', 'install', '--frozen-lockfile')
+    # Build first: @aurora/react typechecks and tests against @aurora/core's dist.
+    Invoke-Checked corepack @('pnpm', '-r', 'run', 'build')
     Invoke-Checked corepack @('pnpm', '-r', 'run', 'typecheck')
     Invoke-Checked corepack @('pnpm', '-r', 'run', 'test')
-    Invoke-Checked corepack @('pnpm', '-r', 'run', 'build')
 } finally {
     Pop-Location
 }

@@ -60,3 +60,100 @@ matches Dart. A validation error lists every issue in `issues`.
 Token paths, values, validation results and selection behavior are those of the
 [portable spec](../../spec/README.md). Generation is the pinned
 `aurora-*-v1-mcu-0.11.1` algorithm and matches Dart byte for byte at 8 bits.
+
+## React: `@aurora/react`
+
+The counterpart of the Flutter controller, scope and engine. `react` ^19 and
+`@aurora/core` are peer dependencies: the app installs both, so there is exactly
+one core instance. Token membership is checked by identity, so a second copy of
+the core would make the app's tokens unknown to the adapter's foundation.
+
+```tsx
+import { AuroraFixedScope, AuroraProvider, useAuroraController, useAuroraTokens } from '@aurora/react';
+
+<AuroraProvider
+  contract={contract}
+  themes={[wicked, hadestown]}
+  initialSelection={new AuroraSelection({ themeId: 'wicked' })}
+  fallback="preferred"
+  cssVariables="root"           // or 'element' (default) or 'none'
+>
+  <App />
+</AuroraProvider>;
+
+function Header() {
+  const tokens = useAuroraTokens();              // re-renders on accepted changes only
+  const controller = useAuroraController();      // select(), pairTexture()
+  return <h1 style={{ color: 'var(--aurora-colors-primary)' }}>…</h1>;
+}
+```
+
+- **Ownership.** Pass `controller={c}` to borrow a controller you created
+  (`new AuroraController({...})`, or `AuroraController.borrow(runtime)` over a
+  runtime you own); the provider never disposes it. Pass runtime options instead
+  and the provider creates the controller and disposes it on unmount
+  (StrictMode-safe). Managed configuration (contract, fallback, themes,
+  textures) is fixed while mounted: changing it throws, so give the provider a
+  new `key`.
+- **System appearance** comes from `matchMedia('(prefers-color-scheme: dark)')`
+  and follows live changes (`followSystemAppearance={false}` to opt out). A
+  change the selection cannot show under the `reject` fallback leaves the state
+  unchanged and goes to `onSystemAppearanceError` (or `reportError`).
+- **Hooks:** `useAuroraTokens()`, `useAuroraVariant()`, `useAuroraTexture()`
+  (throws without a texture), `useMaybeAuroraTexture()`, `useAuroraToken(token)`
+  (typed read of any token: a colour token reads the variant, a texture token
+  reads the texture), `useAuroraController()` (throws in a fixed scope),
+  `useAuroraState()` and `useAuroraScope()`.
+- **Fixed scopes** (`<AuroraFixedScope variant={v} texture={t}>`) theme a subtree
+  with no controller or media subscription. They are cheap enough to nest by the
+  dozen for gallery thumbnails; emitted declarations are cached per variant and
+  texture.
+
+### Live theming
+
+For a chrome that follows a system being edited, give a fixed scope a new variant
+on every frame, either as a prop from a parent whose `children` element is
+stable, or without rendering at all through its handle:
+
+```tsx
+const scope = useRef<AuroraScopeHandle>(null);
+<AuroraFixedScope ref={scope} variant={initial}>{chrome}</AuroraFixedScope>;
+// on each slider frame:
+scope.current!.update(nextVariant, nextTexture);
+```
+
+Either path writes CSS variables to the scope's element imperatively, touching
+only those whose values changed, and re-renders only components that read
+Aurora through hooks. Style the chrome with `var(--aurora-…)` so it updates
+without React work.
+
+### CSS custom properties
+
+`auroraCssVariables(variant, texture?, { prefix })` returns the declarations as an
+object; `auroraCssText(selector, declarations)` renders a rule;
+`applyAuroraCssVariables(element, next, previous)` writes a diff. All work
+outside React.
+
+Names are stable: `--{prefix}-{token path with "." replaced by "-"}`, keeping
+case. The default prefix is `aurora`, so `colors.onPrimaryContainer` is
+`--aurora-colors-onPrimaryContainer` and `type.bodyLarge` is
+`--aurora-type-bodyLarge`. A theme token and a texture token that would produce the
+same name are rejected.
+
+| Value | CSS |
+| --- | --- |
+| colour | `#rrggbb`, or `#rrggbbaa` when translucent |
+| dimension | `12px` for dp and px (1dp = 1px), `0.75rem` for rem |
+| number, fontWeight | the number |
+| fontFamily | quoted names, generic families (`serif`, `system-ui`, …) unquoted |
+| duration | `200ms` |
+| cubicBezier | `cubic-bezier(0.2, 0, 0, 1)` |
+| strokeStyle | a `border-style` keyword; a dash pattern becomes `dashed` plus `-dashArray` (`4px 2px`) and `-lineCap` |
+| border | the `border` shorthand, plus `-width`, `-style`, `-color` |
+| shadow | the `box-shadow` list (`inset` first when set), or `none` |
+| typography | the `font` shorthand (`600 20px/1.3 "Fraunces", serif`), plus `-fontFamily`, `-fontSize`, `-fontWeight`, `-letterSpacing`, `-lineHeight` |
+| boolean | `1` or `0` |
+| enum | the value |
+
+Theme colour references inside textures (`{colors.outline}`) resolve against the
+variant the texture is shown with, so borders and shadows follow light and dark.
