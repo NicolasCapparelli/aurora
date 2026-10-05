@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Aurora Example",
+    "slug": "aurora-react-native-example",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "dev.aurora.example"
+    },
+    "ios": {
+      "bundleIdentifier": "dev.aurora.example"
+    }
+  }
+}

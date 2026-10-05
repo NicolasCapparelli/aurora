@@ -8,9 +8,12 @@
 - App-owned package distribution is implemented by `tools/vendor.py`; installation/onboarding use committed in-app snapshots. See [installation](user/installation.md).
 - Not exercised in this session: `flutter build web`, `flutter run`, browser UI in a real browser, theme installer against a real app. CLI and theme installer run against temporary projects in tests.
 - Themes are colour-only. Textures (non-colour tokens: type, shape, motion, lines, density, chrome, component defaults) are implemented and merged into `main`: core token hierarchy, texture contract/foundation/starter, validation and aliases, runtime selection, texture DTCG, texture recipes, theme-to-texture pairings, portable fixtures, Flutter bridge, `examples/textures`. Persistence, resolver packaging and contract codegen remain unimplemented ([design notes](decisions/design-notes.md)).
+- React Native adapter (`packages/aurora_react_native`, `@aurora/react-native`), the `tools/vendor.py --react-native` export mode and `examples/react_native` are implemented and merged into `main` (see Active work).
 - TypeScript core (`packages/aurora_ts`, `@aurora/core`) is implemented on branch `feat/typescript-port` and passes every `spec/fixtures` file unchanged, including generation and scheme fixtures (Dart MCU 0.11.1 ported into the package). See [TypeScript guide](developer/typescript.md).
 
 ## Active work and last stopping point
+
+- **React Native support for Primer (2026-10-05), implemented, verified and merged into `main` at the owner's request.** Requested by the owner for Primer (Expo/React Native). Delivered: self-contained `@aurora/react-native` (controller, provider and fixed scope with no host view, hooks, `Appearance`, explicit native conversions with strict unsupported reporting), `tools/vendor.py --react-native` with regression tests, `examples/react_native`, docs and the [Primer native handoff](agent/primer-native-handoff.md). `@aurora/core` and `@aurora/react` are unchanged. Decision: [design notes](decisions/design-notes.md#react-native-adapter-decided-2026-10-05). Next: Primer's agent exports from `main` and integrates. Primer was not edited. Open: the exporter refuses destinations inside the Aurora checkout, so the example's git-ignored `vendor/` is exported through a scratch app (see its README).
 
 - **TypeScript port and TokenSeed pipeline (2026-10-05), complete, merged into `main` at the owner's request (2026-10-05).** Requested by the owner for TokenSeed (a React app that themes its own UI with Aurora and exports Aurora themes/textures for Flutter apps). Delivered: `@aurora/core` (`packages/aurora_ts`, with Dart MCU 0.11.1 ported in), `@aurora/react` (`packages/aurora_react`), `tools/vendor.py --typescript`, `spec/bundle-v1.md` with `AuroraBundle` in Dart and TypeScript and shared fixtures, `aurora install --bundle` for Flutter apps, the [producer mapping guide](user/bundle-producers.md) and the [TypeScript consuming guide](user/typescript.md), linked from `AGENT_ONBOARDING.md`. Decisions: [design notes](decisions/design-notes.md#typescript-port-and-the-tokenseed-pipeline-decided-2026-10-05). Next: TokenSeed's agent runs the export into TokenSeed and writes its exporter from the mapping guide. TokenSeed was not edited from here. Decided by the owner: the profiles stay strict. The brief said extra producer tokens are "ignored", but undeclared tokens are rejected, so producers must leave them out; accepting and dropping them would be a profile change.
 
@@ -31,6 +34,14 @@ Requested downstream work: the agent in Trace implements the [migration prompt](
 - Unknown (future-work only): intended foundation versioning policy when adding tokens ([AGENTS.md](../AGENTS.md) says it needs a decision).
 
 ## Last verified state
+
+2026-10-05, `feat/react-native` as committed (base `58dc00c`):
+
+- `./tools/check.ps1`: exit 0 after the documentation updates. 17 Python exporter tests (the earlier 11 plus 6 React Native mode); `@aurora/core` 97, `@aurora/react` 11 and `@aurora/react-native` 40 tests; Dart and Flutter unchanged and passing. No fixtures changed.
+- `examples/react_native` (Expo ~57.0.26, React 19.2.3, React Native 0.86.3, TypeScript 6.0.3) consumed a `--react-native` snapshot through npm `file:` dependencies; `npm ls` showed one `@aurora/core` and one `react`. `npx tsc --noEmit` passed. With `skipLibCheck: false` the only error was Expo's own missing `@react-native/assets-registry` types.
+- `npx expo export --platform android` produced Hermes bytecode (611 modules). In a non-minified bundle, the 34 Aurora and app modules contain no `window`, `matchMedia`, `reportError`, `process.env`, `Buffer` or `fs`. `document` appears only as a local name in core's DTCG decoder and in comments. Single copies of core, the controller and React.
+- Android 34 emulator (x86_64, AVD `aurora_smoke`), release build through `expo prebuild` and Gradle: the app ran on Hermes with no JS or runtime errors. `adb shell cmd uimode night yes/no` and the in-app theme and appearance buttons changed the variant with the mount counter staying at 1. A screenshot showed the fixed dark canvas inside light chrome.
+- iOS was not built or run (Windows host). jsdom tests cover adapter behavior only; native compatibility rests on the Metro/Hermes bundle and the emulator run.
 
 2026-10-05, `feat/typescript-port` as committed:
 

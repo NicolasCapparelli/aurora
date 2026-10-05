@@ -9,6 +9,19 @@ of Dart's `publish_to: none`) and reach apps as vendored snapshots (see
 | --- | --- | --- |
 | `@aurora/core` | `packages/aurora_ts` | `packages/aurora/lib/src` except `tooling/` |
 | `@aurora/react` | `packages/aurora_react` | `packages/aurora_flutter` controller, scope and engine (no Material bridge) |
+| `@aurora/react-native` | `packages/aurora_react_native` | Same as `@aurora/react`, over React Native `Appearance`, with native style conversions in `src/native.ts` |
+
+`@aurora/react-native` deliberately duplicates the small controller and store
+code from `@aurora/react` instead of sharing it, so native apps never install the
+browser adapter (see [design notes](../decisions/design-notes.md#react-native-adapter-decided-2026-10-05)).
+A behavior change to one controller or provider must be mirrored in the other, with
+matching tests. Its tests run in Vitest with jsdom and alias `react-native` to
+`test/react-native-mock.ts`. They prove behavior, not native compatibility, which
+comes from the Metro/Hermes bundle and the device run of `examples/react_native`.
+The package pins React 19.2.3 and React Native 0.86.3 as devDependencies (the
+browser adapter keeps its own React). `src` must not touch DOM, Node or browser
+globals. Check that by searching `dist` for `window`, `document`, `matchMedia`,
+`reportError`, `process` and `Buffer`.
 
 ## Toolchain
 

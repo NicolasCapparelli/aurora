@@ -215,5 +215,115 @@ class TypeScriptVendorTest(unittest.TestCase):
             vendor.export_typescript(self.app, replace=True, build=self.build)
 
 
+class ReactNativeVendorTest(unittest.TestCase):
+    TOOLCHAIN = {"node": "v24", "pnpm": "10.28.0", "typescript": "Version 5.9.3"}
+    PEERS = {
+        "core": {},
+        "react": {"@aurora/core": "0.1.0", "react": "^19.0.0"},
+        "react-native": {"@aurora/core": "0.1.0", "react": ">=19.0.0 <20", "react-native": ">=0.79.0"},
+    }
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.app = self.root / "app"
+        self.app.mkdir()
+        (self.app / "package.json").write_text('{"name": "app"}')
+        self.source = self.root / "source"
+        for package, name, _ in (*vendor.TS_PACKAGES, vendor.RN_PACKAGES[1]):
+            root = self.source / "packages" / package
+            (root / "dist").mkdir(parents=True)
+            (root / "dist" / "index.js").write_text("export {};\n")
+            (root / "dist" / "index.d.ts").write_text("export {};\n")
+            (root / "src").mkdir()
+            (root / "node_modules").mkdir()
+            (root / "README.md").write_text(name)
+            data = {"name": f"@aurora/{name}", "version": "0.1.0", "private": True,
+                    "scripts": {"build": "tsc"}, "devDependencies": {"@aurora/core": "workspace:*"}}
+            if self.PEERS[name]:
+                data["peerDependencies"] = self.PEERS[name]
+            (root / "package.json").write_text(json.dumps(data))
+        patcher = patch.object(vendor, "SOURCE", self.source)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.builds = 0
+
+    def build(self):
+        self.builds += 1
+        return self.TOOLCHAIN
+
+    def test_exports_core_and_react_native_only(self):
+        target = vendor.export_react_native(self.app, build=self.build)
+        self.assertEqual(self.builds, 1)
+        manifest = json.loads((target / "vendor-manifest.json").read_text())
+        self.assertEqual(manifest["kind"], "react-native")
+        self.assertEqual(manifest["toolchain"], self.TOOLCHAIN)
+        self.assertEqual(manifest["packageVersions"], {"@aurora/core": "0.1.0", "@aurora/react-native": "0.1.0"})
+        self.assertEqual(manifest["files"], vendor.hashes(target))
+        self.assertEqual(sorted(p.name for p in target.iterdir() if p.is_dir()), ["core", "react-native"])
+        self.assertFalse((target / "react").exists())
+        self.assertTrue((target / "react-native" / "dist" / "index.d.ts").is_file())
+        self.assertFalse((target / "react-native" / "src").exists())
+        package = json.loads((target / "react-native" / "package.json").read_text())
+        self.assertNotIn("scripts", package)
+        self.assertNotIn("devDependencies", package)
+        self.assertEqual(package["peerDependencies"]["@aurora/core"], "0.1.0")
+        self.assertIn("file:vendor/aurora/react-native", (target / "VENDORED.md").read_text())
+        self.assertEqual((self.app / "package.json").read_text(), '{"name": "app"}')
+
+    def test_workspace_runtime_dependencies_become_file_siblings(self):
+        path = self.source / "packages" / "aurora_react_native" / "package.json"
+        data = json.loads(path.read_text())
+        data["dependencies"] = {"@aurora/core": "workspace:*"}
+        path.write_text(json.dumps(data))
+        target = vendor.export_react_native(self.app, build=self.build)
+        package = json.loads((target / "react-native" / "package.json").read_text())
+        self.assertEqual(package["dependencies"], {"@aurora/core": "file:../core"})
+        data["dependencies"] = {"left-pad": "workspace:*"}
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "unresolved"):
+            vendor.export_react_native(self.app, "second", build=self.build)
+
+    def test_replace_unchanged_works_and_edits_are_refused(self):
+        target = vendor.export_react_native(self.app, build=self.build)
+        with self.assertRaisesRegex(ValueError, "Destination exists"):
+            vendor.export_react_native(self.app, build=self.build)
+        vendor.export_react_native(self.app, replace=True, build=self.build)
+        self.assertEqual(self.builds, 2)
+        (target / "react-native" / "dist" / "index.js").write_text("// app edit\n")
+        with self.assertRaisesRegex(ValueError, "local edits"):
+            vendor.export_react_native(self.app, replace=True, build=self.build)
+
+    def test_refuses_replacing_a_snapshot_of_another_kind_in_both_directions(self):
+        vendor.export_react_native(self.app, build=self.build)
+        with self.assertRaisesRegex(ValueError, "react-native snapshot, not typescript"):
+            vendor.export_typescript(self.app, replace=True, build=self.build)
+        other = self.root / "other"
+        other.mkdir()
+        (other / "package.json").write_text('{"name": "other"}')
+        vendor.export_typescript(other, build=self.build)
+        with self.assertRaisesRegex(ValueError, "typescript snapshot, not react-native"):
+            vendor.export_react_native(other, replace=True, build=self.build)
+
+    def test_refuses_missing_build_output_and_wrong_project(self):
+        (self.source / "packages" / "aurora_react_native" / "dist" / "index.d.ts").unlink()
+        with self.assertRaisesRegex(ValueError, "Missing built package output"):
+            vendor.export_react_native(self.app, build=self.build)
+        self.assertFalse((self.app / "vendor").exists())
+        dart_app = self.root / "dart_app"
+        dart_app.mkdir()
+        (dart_app / "pubspec.yaml").write_text("name: app\n")
+        with self.assertRaisesRegex(ValueError, "package.json"):
+            vendor.export_react_native(dart_app, build=self.build)
+
+    def test_command_line_rejects_both_modes(self):
+        with patch("sys.argv", ["vendor.py", "--project", str(self.app), "--typescript", "--react-native"]):
+            with self.assertRaises(SystemExit) as raised:
+                vendor.main()
+        self.assertEqual(raised.exception.code, 2)
+        self.assertFalse((self.app / "vendor").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

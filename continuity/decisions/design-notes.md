@@ -296,3 +296,29 @@ and exports design systems).
   (which the strict profiles reject). Validators in both languages report every
   issue by category and file and must agree.
 - **Strict profiles kept (owner, 2026-10-05).** Producers leave extra tokens out of bundles; Aurora does not accept and drop them.
+
+## React Native adapter (decided 2026-10-05)
+
+Source: the owner's brief for Primer, an Expo/React Native app (Expo 57, React
+19.2.3, React Native 0.86.3, Hermes) that needs Aurora on native rather than a
+theming runtime of its own.
+
+- **Separate, self-contained package.** `@aurora/react-native` duplicates the small
+  controller and store code from `@aurora/react` rather than sharing it. Sharing
+  would mean putting a controller into `@aurora/core`, which has no Dart
+  counterpart (subscription belongs in adapters), or shipping a third package.
+  Either way native apps would install browser code. `@aurora/core` and
+  `@aurora/react` are unchanged. The two adapters must keep the same semantics.
+- **No host view.** The provider and fixed scope render only a context provider, so
+  theme changes cannot remount navigation.
+- **Explicit conversions, strict by default.** dp and px are 1:1. rem uses an
+  explicit base (default 16). Line height becomes absolute dp. Weight is RN's
+  string. Colours are `#rrggbb(aa)`. Shadows use the New Architecture
+  `boxShadow`. Features React Native cannot draw (double, groove, ridge, inset
+  and outset strokes, dash patterns, line caps, off-step weights) throw
+  `AuroraNativeUnsupportedError` unless the caller asks for a report.
+- **Font loading stays with the app.** A `fontFamilyResolver` hook covers
+  per-weight family names.
+- **Distribution.** `tools/vendor.py --react-native` exports core and the native
+  adapter only (manifest kind `react-native`). It never replaces a snapshot of
+  another kind. Consumers install with npm, pnpm or Yarn through `file:`.

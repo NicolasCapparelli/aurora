@@ -207,6 +207,70 @@ same name are rejected.
 Theme colour references inside textures (`{colors.outline}`) resolve against the
 variant the texture is shown with, so borders and shadows follow light and dark.
 
+## React Native: `@aurora/react-native`
+
+A separate, self-contained native adapter (`packages/aurora_react_native`). It
+never imports `@aurora/react`, and it has no DOM, CSS, `window`, `matchMedia` or
+Node code. Peer dependencies are `@aurora/core` (one instance, as above), `react`
+`>=19.0.0 <20` and `react-native` `>=0.79.0`. The qualified combination is Expo
+~57.0.26, React 19.2.3, React Native 0.86.3, TypeScript 6.0.3 and Hermes, on
+Android only. iOS has not been built or run. The full API, the conversion
+table and the font notes are in the
+[package README](../../packages/aurora_react_native/README.md).
+
+Install with the native export mode. It writes `core/` and `react-native/`
+(never `react/`) and a manifest of kind `react-native`:
+
+```powershell
+python C:\path\to\aurora\tools\vendor.py --react-native --project C:\path\to\my_app
+```
+
+```json
+"dependencies": {
+  "@aurora/core": "file:vendor/aurora/core",
+  "@aurora/react-native": "file:vendor/aurora/react-native"
+}
+```
+
+Then run `npm install` (pnpm and Yarn work too), check `npm ls @aurora/core react`
+shows one copy of each, and commit the snapshot, `package.json` and lockfile.
+npm links `file:` dependencies into `node_modules`, and Metro resolves them
+through the packages' `exports`. Replacement follows the rules above. A
+snapshot of another kind (`typescript` or Dart) is never replaced, and
+`--typescript` with `--react-native` is rejected.
+
+It differs from the browser adapter in a few ways:
+
+- **`AuroraProvider` and `AuroraFixedScope` render no native view.** They render
+  only a context provider, so theme and appearance changes never remount
+  navigation. They take no CSS or wrapper props.
+- **System appearance comes from `Appearance`.** The provider reads
+  `getColorScheme()` initially, then follows `addChangeListener`. `dark` is
+  dark, and anything else (including `null`) is light. A rejected change goes to
+  `onSystemAppearanceError`, or to `console.error` when that is absent.
+- **The rules carry over.** Ownership, StrictMode-safe disposal, fixed managed
+  configuration, hooks and fixed-scope `update()` handles behave as described
+  above.
+- **Native conversions are explicit.**
+  - `nativeColor` returns `#rrggbb`, or `#rrggbbaa` when the colour has alpha.
+  - `nativeDimension` maps dp and px 1:1 and multiplies rem by `remBase`
+    (default 16).
+  - `nativeTypography` gives line height as absolute dp (Aurora's multiplier
+    times the font size) and weight as `'100'`…`'900'`. An optional
+    `fontFamilyResolver` picks a family per weight.
+  - Also available: `nativeBorder`, `nativeShadow` (RN `boxShadow`, New
+    Architecture), `nativeDuration` (ms) and `nativeCubicBezier`.
+  - `useAuroraTexture().native.*` does the same from texture tokens, resolving
+    colour aliases against the active variant.
+- **Unsupported features throw.** By default `AuroraNativeUnsupportedError`
+  names the token path and the feature. With `{ mode: 'report' }` you get
+  `{ style, unsupported }` instead. Unsupported features are the stroke keywords
+  `double`, `groove`, `ridge`, `outset` and `inset`, custom dash patterns, line
+  caps, and font weights that aren't a multiple of 100 in 100…900.
+- **Fonts are the app's job.** The app loads and bundles them.
+
+`examples/react_native` is a runnable reference that consumes the exported snapshot.
+
 ## Portable bundles: exporting designs to Flutter apps
 
 A TypeScript producer exports a theme and an optional texture as an
