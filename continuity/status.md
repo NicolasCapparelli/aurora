@@ -76,7 +76,7 @@ Date 2026-09-30, base commit `0e782d2` with only untracked `continuity/` and doc
 
 ## Last meaningful update
 
-2026-10-05 — TypeScript port, React adapter, TypeScript vendoring, portable bundles and the Flutter bundle installer completed and merged into `main` at the owner's request. No active Aurora work; TokenSeed integration is handed off to the TokenSeed agent.
+2026-10-05 — TypeScript port, React adapter, TypeScript vendoring, portable bundles and the Flutter bundle installer completed and merged into `main` at the owner's request. No active Aurora work; TokenSeed integration is handed off with the [TokenSeed integration prompt](agent/tokenseed-integration-prompt.md).
 
 2026-10-04 — AuroraTextures (non-colour token layer with optional theme pairings) implemented with tests, fixtures, example and docs; committed on `feat/textures` and merged into `main` at the owner's request.
 
